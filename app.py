@@ -169,21 +169,32 @@ def split_ingredient_list(raw_text: str) -> list[str]:
         items.append(tail)
     return [item for index, item in enumerate(items) if item and item not in items[:index]]
 
+def empty_analytics_payload() -> dict[str, Any]:
+    return {
+        "totals": {"searches": 0, "ingredient_pages": 0, "index_pages": 0},
+        "ingredient_queries": {},
+        "product_queries": {},
+        "pageviews": {},
+        "recent_events": [],
+    }
+
+
 def load_analytics() -> dict[str, Any]:
     if not ANALYTICS_PATH.exists():
-        return {
-            "totals": {"searches": 0, "ingredient_pages": 0, "index_pages": 0},
-            "ingredient_queries": {},
-            "product_queries": {},
-            "pageviews": {},
-            "recent_events": [],
-        }
-    return json.loads(ANALYTICS_PATH.read_text(encoding="utf-8"))
+        return empty_analytics_payload()
+    try:
+        return json.loads(ANALYTICS_PATH.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return empty_analytics_payload()
 
 
 def save_analytics(payload: dict[str, Any]) -> None:
-    DATA_DIR.mkdir(exist_ok=True)
-    ANALYTICS_PATH.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    try:
+        DATA_DIR.mkdir(exist_ok=True)
+        ANALYTICS_PATH.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    except OSError:
+        # Serverless hosts such as Vercel may expose a read-only filesystem.
+        return
 
 
 def log_search(query_text: str, mode: str) -> None:

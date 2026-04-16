@@ -1,11 +1,11 @@
 {
   "totals": {
-    "searches": 6,
-    "ingredient_pages": 21,
-    "index_pages": 3
+    "searches": 7,
+    "ingredient_pages": 22,
+    "index_pages": 4
   },
   "ingredient_queries": {
-    "carrageenan": 1,
+    "carrageenan": 2,
     "ploster": 2,
     "turmeric": 1
   },
@@ -14,7 +14,7 @@
     "water, almondmilk, carrageenan, sea salt": 1
   },
   "pageviews": {
-    "carrageenan": 2,
+    "carrageenan": 3,
     "dextrose": 1,
     "natural-flavor": 1,
     "red-40": 1,
@@ -29,6 +29,10 @@
     "turmeric": 1
   },
   "recent_events": [
+    {
+      "kind": "search:ingredient",
+      "value": "carrageenan"
+    },
     {
       "kind": "search:ingredient",
       "value": "turmeric"
