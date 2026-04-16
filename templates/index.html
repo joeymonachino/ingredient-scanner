@@ -3,7 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ingredient Scanner</title>
+    <title>{{ page_title or 'Ingredient Scanner' }}</title>
+    <meta name="description" content="{{ page_description or 'Cleaner-label ingredient and product analysis.' }}">
+    <link rel="canonical" href="{{ canonical_url }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
@@ -13,68 +15,151 @@
     <div class="page-shell">
         <section class="hero-card">
             <div class="hero-copy">
-                <p class="eyebrow">MVP Ingredient Intelligence</p>
-                <h1>Scan the label mentally before you buy it.</h1>
+                <p class="eyebrow">Cleaner-Label Ingredient Scanner</p>
+                <h1>Paste one ingredient or a full label into the same box.</h1>
                 <p class="hero-text">
-                    Start with one ingredient. The app gives a quick category breakdown, a cautious shopper signal,
-                    and a plain-English blurb so people can decide whether something fits their standards.
+                    This tool is built for ingredient-conscious shoppers who want a stricter, cleaner-label read on what is in a product.
+                    It is not medical advice and it does not replace personal judgment, but it can help you spot ingredients that are more processed, vague, or strongly out of step with a simple ingredient standard.
                 </p>
-                <form class="search-form" method="post" action="/analyze">
-                    <label class="search-label" for="ingredient">Ingredient name</label>
+
+                <form class="product-form" method="post" action="/analyze">
+                    <label class="search-label" for="query-text">Ingredient or full ingredient list</label>
+                    <textarea
+                        id="query-text"
+                        name="query_text"
+                        rows="6"
+                        placeholder="Try carrageenan or Ingredients: Potatoes, sunflower oil, sea salt"
+                        required
+                    >{{ query_text or '' }}</textarea>
                     <div class="search-row">
-                        <input
-                            id="ingredient"
-                            name="ingredient"
-                            type="text"
-                            placeholder="Try sodium benzoate, turmeric, citric acid..."
-                            value="{{ ingredient or '' }}"
-                            required
-                        >
                         <button type="submit">Analyze</button>
                     </div>
                 </form>
-                <div class="sample-row">
-                    {% for term in sample_terms %}
-                    <button class="sample-chip" type="button" data-sample="{{ term }}">{{ term }}</button>
+
+                <div class="sample-row sample-list-row">
+                    {% for sample in sample_queries %}
+                    <button class="sample-chip" type="button" data-sample-query="{{ sample }}">Use sample</button>
                     {% endfor %}
                 </div>
+
                 <p class="micro-note">
-                    Photo scanning is a future step. This first version focuses on single-ingredient lookups.
+                    This text box is the main check flow today. Photo scanning can become the second input method later.
                 </p>
             </div>
 
             <div class="hero-panel">
                 <div class="metric">
-                    <span class="metric-label">Today’s Promise</span>
-                    <strong>Fast ingredient context</strong>
+                    <span class="metric-label">Input</span>
+                    <strong>One ingredient or a full label in the same box</strong>
                 </div>
                 <div class="metric">
-                    <span class="metric-label">Output</span>
-                    <strong>Organic vs inorganic, source, okay/caution/avoid signal, blurb</strong>
+                    <span class="metric-label">Confidence</span>
+                    <strong>Policy-backed, heuristic-only, or unknown</strong>
                 </div>
                 <div class="metric">
-                    <span class="metric-label">Later Upgrade</span>
-                    <strong>Saved avoid / prefer presets</strong>
+                    <span class="metric-label">Browse</span>
+                    <strong><a class="ingredient-name-link" href="{{ url_for('ingredient_index') }}">Ingredient index</a> for catalog-backed pages</strong>
                 </div>
             </div>
         </section>
 
+        {% if product_report %}
+        <section class="results-grid product-results-grid">
+            <article class="result-card spotlight {{ product_report.signal_class }} wide">
+                <p class="eyebrow">Product Verdict</p>
+                <h2>{{ product_report.verdict_title }}</h2>
+                <div class="signal-pill">{{ product_report.overall_signal }}</div>
+                <p class="result-copy">{{ product_report.verdict_summary }}</p>
+
+                <div class="meta-grid product-summary-grid">
+                    <div class="meta-item">
+                        <span class="meta-label">Ingredients Parsed</span>
+                        <strong>{{ product_report.ingredient_count }}</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Avoid</span>
+                        <strong>{{ product_report.flag_counts.avoid }}</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Caution</span>
+                        <strong>{{ product_report.flag_counts.caution }}</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Okay</span>
+                        <strong>{{ product_report.flag_counts.okay }}</strong>
+                    </div>
+                </div>
+            </article>
+
+            <article class="result-card">
+                <p class="eyebrow">Top Concerns</p>
+                <h3>What drove the verdict</h3>
+                {% if product_report.top_concerns %}
+                <ul class="detail-list">
+                    {% for item in product_report.top_concerns %}
+                    <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="soft-copy">No major concern markers were triggered by this label.</p>
+                {% endif %}
+            </article>
+
+            <article class="result-card">
+                <p class="eyebrow">Positive Signals</p>
+                <h3>What reads cleaner</h3>
+                {% if product_report.positive_signals %}
+                <ul class="detail-list">
+                    {% for item in product_report.positive_signals %}
+                    <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="soft-copy">This label did not surface strong positive signals by the current ruleset.</p>
+                {% endif %}
+            </article>
+
+            <article class="result-card wide">
+                <p class="eyebrow">Ingredient Breakdown</p>
+                <h3>Every ingredient, strongest flags first</h3>
+                <div class="ingredient-breakdown">
+                    {% for item in product_report.ingredients %}
+                    <article class="ingredient-row {{ item.signal_class }}">
+                        <div>
+                            <div class="ingredient-row-top">
+                                <a class="ingredient-name-link" href="{{ url_for('ingredient_detail', slug=ingredient_slug(item.ingredient)) }}">{{ item.ingredient }}</a>
+                                <span class="signal-pill small">{{ item.shopper_signal }}</span>
+                                <span class="confidence-pill {{ item.confidence_label|replace(' ', '-') }}">{{ item.confidence_label }}</span>
+                            </div>
+                            <p class="soft-copy row-copy">{{ item.quick_blurb }}</p>
+                        </div>
+                        <div class="ingredient-meta">
+                            <span class="info-pill">{{ item.processing_level }}</span>
+                            <span class="info-pill">{{ item.source_profile }}</span>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+            </article>
+        </section>
+        {% endif %}
+
         {% if report %}
         <section class="results-grid">
-            <article class="result-card spotlight {{ report.signal_class }}">
-                <p class="eyebrow">Primary Read</p>
-                <h2>{{ report.ingredient }}</h2>
-                <div class="signal-pill">{{ report.shopper_signal }}</div>
+            <article class="result-card spotlight {{ report.signal_class }} wide">
+                <p class="eyebrow">Ingredient Read</p>
+                <h2><a class="ingredient-name-link" href="{{ url_for('ingredient_detail', slug=ingredient_slug(report.ingredient)) }}">{{ report.ingredient }}</a></h2>
+                <div class="sample-row inline-status-row">
+                    <span class="signal-pill">{{ report.shopper_signal }}</span>
+                    <span class="confidence-pill {{ report.confidence_label|replace(' ', '-') }}">{{ report.confidence_label }}</span>
+                </div>
                 <p class="result-copy">{{ report.quick_blurb }}</p>
+                <p class="soft-copy">{{ report.confidence_reason }}</p>
 
                 <div class="meta-grid">
                     <div class="meta-item">
                         <span class="meta-label">Chemistry Family</span>
                         <strong>{{ report.chemistry_family }}</strong>
-                    </div>
-                    <div class="meta-item">
-                        <span class="meta-label">Confidence</span>
-                        <strong>{{ report.confidence }}</strong>
                     </div>
                     <div class="meta-item">
                         <span class="meta-label">Source Profile</span>
@@ -84,7 +169,29 @@
                         <span class="meta-label">Processing</span>
                         <strong>{{ report.processing_level }}</strong>
                     </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Confidence</span>
+                        <strong>{{ report.confidence }}</strong>
+                    </div>
                 </div>
+            </article>
+
+            <article class="result-card">
+                <p class="eyebrow">What It Does</p>
+                <h3>Common role in products</h3>
+                <p class="soft-copy">{{ report.what_it_does }}</p>
+            </article>
+
+            <article class="result-card">
+                <p class="eyebrow">Why It’s Flagged</p>
+                <h3>Policy reasoning</h3>
+                <p class="soft-copy">{{ report.why_flagged }}</p>
+            </article>
+
+            <article class="result-card">
+                <p class="eyebrow">Cleaner-Label Takeaway</p>
+                <h3>What to do with this</h3>
+                <p class="soft-copy">{{ report.cleaner_label_takeaway }}</p>
             </article>
 
             <article class="result-card">
@@ -108,60 +215,48 @@
             </article>
 
             <article class="result-card">
-                <p class="eyebrow">Caution Notes</p>
-                <h3>Things a shopper may want to double-check</h3>
-                {% if report.cautions %}
-                <ul class="detail-list">
-                    {% for item in report.cautions %}
-                    <li>{{ item }}</li>
+                <p class="eyebrow">Policy Basis</p>
+                <h3>Traits behind the classification</h3>
+                {% if report.policy_traits %}
+                <div class="pill-row">
+                    {% for trait in report.policy_traits %}
+                    <span class="info-pill">{{ trait }}</span>
                     {% endfor %}
-                </ul>
+                </div>
                 {% else %}
-                <p class="soft-copy">No obvious caution markers were triggered from the ingredient name alone.</p>
+                <p class="soft-copy">This result is using fallback rules rather than a curated policy record.</p>
                 {% endif %}
-            </article>
-
-            <article class="result-card wide">
-                <p class="eyebrow">Reference Layer</p>
-                <h3>Fetched summary</h3>
-                {% if report.fetched_summary %}
-                <p class="result-copy">{{ report.fetched_summary }}</p>
+                {% if report.policy_sources %}
                 <div class="source-row">
-                    {% for source in report.fetched_sources %}
+                    {% for source in report.policy_sources %}
                     {% if source.url %}
                     <a href="{{ source.url }}" target="_blank" rel="noreferrer">{{ source.label }}</a>
                     {% endif %}
                     {% endfor %}
                 </div>
-                {% else %}
-                <p class="soft-copy">
-                    No live reference summary was available right now, so this result is based on the app’s built-in ingredient heuristics.
-                </p>
                 {% endif %}
             </article>
         </section>
         {% endif %}
 
-        <section class="roadmap-grid">
-            <article class="roadmap-card">
-                <p class="eyebrow">Phase 1</p>
-                <h3>Single ingredient lookup</h3>
-                <p>Fast answer for one ingredient with a shopper-friendly signal and supporting context.</p>
-            </article>
-            <article class="roadmap-card">
-                <p class="eyebrow">Phase 2</p>
-                <h3>Photo ingredient scanner</h3>
-                <p>Upload a label photo, extract the ingredient line, and analyze each ingredient in one pass.</p>
-            </article>
-            <article class="roadmap-card">
-                <p class="eyebrow">Premium</p>
-                <h3>Saved preferences</h3>
-                <p>Create personal avoid / prefer lists so the app highlights exactly what matters to each shopper.</p>
-            </article>
+        <section class="result-card catalog-card">
+            <p class="eyebrow">Ingredient Catalog</p>
+            <h3>Browse policy-backed ingredient pages</h3>
+            <div class="catalog-grid">
+                {% for item in featured_ingredients %}
+                <a class="catalog-link {{ item.signal|replace(' ', '-') }}" href="{{ url_for('ingredient_detail', slug=ingredient_slug(item.canonical_name)) }}">
+                    <span class="catalog-name">{{ item.canonical_name }}</span>
+                    <span class="catalog-signal">{{ item.signal }}</span>
+                </a>
+                {% endfor %}
+            </div>
+            <div class="detail-nav-row">
+                <a class="sample-chip link-chip" href="{{ url_for('ingredient_index') }}">View full ingredient index</a>
+            </div>
         </section>
 
         <footer class="footer-note">
-            Educational guidance only. “Organic” here can refer to chemistry classification, not certified-organic farming status.
+            This app reflects a stricter cleaner-label and ingredient-conscious viewpoint. It is educational guidance, not medical advice, diagnosis, or a formal safety determination.
         </footer>
     </div>
 

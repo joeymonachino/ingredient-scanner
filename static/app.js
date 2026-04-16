@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const input = document.getElementById("ingredient");
-    const sampleButtons = document.querySelectorAll("[data-sample]");
+    const queryInput = document.getElementById("query-text");
+    const sampleQueryButtons = document.querySelectorAll("[data-sample-query]");
 
-    sampleButtons.forEach((button) => {
+    sampleQueryButtons.forEach((button) => {
         button.addEventListener("click", () => {
-            if (!input) return;
-            input.value = button.dataset.sample || "";
-            input.focus();
+            if (!queryInput) return;
+            queryInput.value = button.dataset.sampleQuery || "";
+            queryInput.focus();
         });
     });
 });

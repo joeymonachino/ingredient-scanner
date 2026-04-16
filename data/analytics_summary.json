@@ -1,0 +1,40 @@
+{
+  "totals": {
+    "searches": 4,
+    "ingredient_pages": 9,
+    "index_pages": 2
+  },
+  "ingredient_queries": {
+    "carrageenan": 1,
+    "ploster": 2
+  },
+  "product_queries": {
+    "ingredients: potatoes, sunflower oil, sea salt": 1
+  },
+  "pageviews": {
+    "carrageenan": 1,
+    "dextrose": 1,
+    "natural-flavor": 1,
+    "red-40": 1,
+    "sea-salt": 2,
+    "sunflower-oil": 3
+  },
+  "recent_events": [
+    {
+      "kind": "search:ingredient",
+      "value": "ploster"
+    },
+    {
+      "kind": "search:ingredient",
+      "value": "ploster"
+    },
+    {
+      "kind": "search:product",
+      "value": "ingredients: potatoes, sunflower oil, sea salt"
+    },
+    {
+      "kind": "search:ingredient",
+      "value": "carrageenan"
+    }
+  ]
+}

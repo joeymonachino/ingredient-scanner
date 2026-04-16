@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ page_title }}</title>
+    <meta name="description" content="{{ page_description }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="page-shell">
+        <section class="hero-card ingredient-hero-card">
+            <div class="hero-copy">
+                <p class="eyebrow">Ingredient Guide</p>
+                <h1>{{ report.ingredient }}</h1>
+                <div class="sample-row inline-status-row">
+                    <span class="signal-pill">{{ report.shopper_signal }}</span>
+                    <span class="confidence-pill {{ report.confidence_label|replace(' ', '-') }}">{{ report.confidence_label }}</span>
+                </div>
+                <p class="hero-text">{{ report.quick_blurb }}</p>
+                <div class="sample-row detail-nav-row">
+                    <a class="sample-chip link-chip" href="{{ url_for('index') }}">Back to Scanner</a>
+                    <a class="sample-chip link-chip" href="{{ url_for('ingredient_index') }}">Browse Ingredient Index</a>
+                </div>
+            </div>
+            <div class="hero-panel">
+                <div class="metric">
+                    <span class="metric-label">Processing</span>
+                    <strong>{{ report.processing_level }}</strong>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Source Profile</span>
+                    <strong>{{ report.source_profile }}</strong>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Confidence</span>
+                    <strong>{{ report.confidence_label }}</strong>
+                </div>
+            </div>
+        </section>
+
+        <section class="results-grid product-results-grid">
+            <article class="result-card spotlight {{ report.signal_class }} wide">
+                <p class="eyebrow">Policy Read</p>
+                <h2>{{ policy.canonical_name }}</h2>
+                <p class="result-copy">{{ report.cleaner_label_takeaway }}</p>
+                <div class="meta-grid product-summary-grid">
+                    <div class="meta-item">
+                        <span class="meta-label">Whole-Food Alignment</span>
+                        <strong>{{ policy.whole_food_alignment }}</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Organic Alignment</span>
+                        <strong>{{ policy.organic_alignment }}</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Controversy</span>
+                        <strong>{{ policy.controversy_level }}</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Roles</span>
+                        <strong>{{ policy.functional_roles|join(', ') }}</strong>
+                    </div>
+                </div>
+            </article>
+
+            <article class="result-card">
+                <p class="eyebrow">What It Does</p>
+                <h3>Role in products</h3>
+                <p class="soft-copy">{{ report.what_it_does }}</p>
+            </article>
+
+            <article class="result-card">
+                <p class="eyebrow">Why It’s Flagged</p>
+                <h3>Why the app lands here</h3>
+                <p class="soft-copy">{{ report.why_flagged }}</p>
+            </article>
+
+            <article class="result-card">
+                <p class="eyebrow">Cleaner-Label Takeaway</p>
+                <h3>How to read it</h3>
+                <p class="soft-copy">{{ report.cleaner_label_takeaway }}</p>
+            </article>
+
+            <article class="result-card">
+                <p class="eyebrow">Highlights</p>
+                <h3>Supporting context</h3>
+                <ul class="detail-list">
+                    {% for item in report.highlights %}
+                    <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            </article>
+
+            <article class="result-card">
+                <p class="eyebrow">Policy Traits</p>
+                <h3>Signals the app is using</h3>
+                <div class="pill-row">
+                    {% for trait in report.policy_traits %}
+                    <span class="info-pill">{{ trait }}</span>
+                    {% endfor %}
+                </div>
+            </article>
+
+            <article class="result-card wide">
+                <p class="eyebrow">Sources</p>
+                <h3>References behind this page</h3>
+                {% if report.policy_sources %}
+                <div class="source-row">
+                    {% for source in report.policy_sources %}
+                    {% if source.url %}
+                    <a href="{{ source.url }}" target="_blank" rel="noreferrer">{{ source.label }}</a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="soft-copy">This ingredient policy entry does not have external source links attached yet.</p>
+                {% endif %}
+            </article>
+        </section>
+
+        <section class="result-card catalog-card">
+            <p class="eyebrow">More Ingredients</p>
+            <h3>Browse other ingredient pages</h3>
+            <div class="catalog-grid">
+                {% for item in related %}
+                <a class="catalog-link {{ item.signal|replace(' ', '-') }}" href="{{ url_for('ingredient_detail', slug=item.slug) }}">
+                    <span class="catalog-name">{{ item.name }}</span>
+                    <span class="catalog-signal">{{ item.signal }}</span>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+
+        <footer class="footer-note">
+            This guide reflects a cleaner-label and ingredient-conscious viewpoint. It is educational guidance, not medical advice or a formal safety determination.
+        </footer>
+    </div>
+</body>
+</html>
