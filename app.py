@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import re
 from typing import Any
 
 import requests
@@ -21,9 +22,15 @@ HIGH_SCRUTINY_MARKERS = {
     "yellow 5": "Artificial dye that many shoppers intentionally avoid.",
     "yellow 6": "Artificial dye that many shoppers intentionally avoid.",
     "blue 1": "Artificial dye that many shoppers intentionally avoid.",
+    "blue 2": "Artificial dye that many shoppers intentionally avoid.",
+    "green 3": "Artificial dye that many shoppers intentionally avoid.",
     "aspartame": "Artificial sweetener that some people prefer to avoid.",
     "sucralose": "Artificial sweetener that some people prefer to avoid.",
     "acesulfame potassium": "Artificial sweetener frequently grouped into a caution bucket.",
+    "high fructose corn syrup": "Often treated as a major red flag in ingredient-conscious shopping.",
+    "corn syrup": "Often treated as a major red flag in ingredient-conscious shopping.",
+    "artificial color": "Artificial coloring is commonly treated as a hard avoid.",
+    "fd&c": "Synthetic food coloring is commonly treated as a hard avoid.",
 }
 
 CAUTION_MARKERS = {
@@ -36,6 +43,16 @@ CAUTION_MARKERS = {
     "msg": "Flavor enhancer that some people choose to limit.",
     "sodium benzoate": "Preservative ingredient that may trigger a caution review.",
     "potassium sorbate": "Preservative ingredient that may trigger a caution review.",
+    "sunflower oil": "Seed oils are often flagged by shoppers trying to stay closer to minimally processed foods.",
+    "soybean oil": "Seed oils are often flagged by shoppers trying to stay closer to minimally processed foods.",
+    "canola oil": "Seed oils are often flagged by shoppers trying to stay closer to minimally processed foods.",
+    "safflower oil": "Seed oils are often flagged by shoppers trying to stay closer to minimally processed foods.",
+    "corn oil": "Seed oils are often flagged by shoppers trying to stay closer to minimally processed foods.",
+    "cottonseed oil": "Seed oils are often flagged by shoppers trying to stay closer to minimally processed foods.",
+    "grapeseed oil": "Seed oils are often flagged by shoppers trying to stay closer to minimally processed foods.",
+    "rice bran oil": "Seed oils are often flagged by shoppers trying to stay closer to minimally processed foods.",
+    "vegetable oil": "Generic blended oils are usually treated cautiously because sourcing and processing are unclear.",
+    "palm oil": "Often reviewed carefully due to processing and sourcing concerns.",
 }
 
 WHOLE_FOOD_MARKERS = {
@@ -58,6 +75,10 @@ WHOLE_FOOD_MARKERS = {
     "honey",
     "cinnamon",
     "cocoa",
+    "grass-fed",
+    "pasture-raised",
+    "raw honey",
+    "sprouted",
 }
 
 PLANT_MARKERS = {
@@ -133,6 +154,40 @@ USE_MAP = {
     "oil or fat": ["oil", "butter"],
 }
 
+PREFERRED_MARKERS = {
+    "avocado oil",
+    "olive oil",
+    "coconut oil",
+    "grass-fed",
+    "pasture-raised",
+    "organic",
+    "sprouted",
+    "raw honey",
+}
+
+SEED_OIL_MARKERS = {
+    "sunflower oil",
+    "soybean oil",
+    "canola oil",
+    "safflower oil",
+    "corn oil",
+    "cottonseed oil",
+    "grapeseed oil",
+    "rice bran oil",
+    "vegetable oil",
+}
+
+COLOR_MARKERS = {
+    "red 40",
+    "yellow 5",
+    "yellow 6",
+    "blue 1",
+    "blue 2",
+    "green 3",
+    "artificial color",
+    "fd&c",
+}
+
 
 @dataclass
 class IngredientReport:
@@ -169,7 +224,11 @@ class IngredientReport:
 
 
 def contains_any(text: str, phrases: set[str]) -> bool:
-    return any(phrase in text for phrase in phrases)
+    return any(matches_phrase(text, phrase) for phrase in phrases)
+
+
+def matches_phrase(text: str, phrase: str) -> bool:
+    return bool(re.search(rf"(?<![a-z0-9]){re.escape(phrase)}(?![a-z0-9])", text))
 
 
 def detect_chemistry_family(name: str) -> tuple[str, str]:
@@ -198,7 +257,7 @@ def detect_source_profile(name: str) -> str:
 
 def detect_processing_level(name: str) -> str:
     lowered = name.lower()
-    if contains_any(lowered, WHOLE_FOOD_MARKERS):
+    if contains_any(lowered, WHOLE_FOOD_MARKERS | PREFERRED_MARKERS):
         return "minimally processed"
     if "extract" in lowered or "protein" in lowered or "concentrate" in lowered:
         return "moderately processed"
@@ -223,10 +282,10 @@ def build_cautions(name: str) -> list[str]:
     lowered = name.lower()
     cautions: list[str] = []
     for marker, note in HIGH_SCRUTINY_MARKERS.items():
-        if marker in lowered:
+        if matches_phrase(lowered, marker):
             cautions.append(note)
     for marker, note in CAUTION_MARKERS.items():
-        if marker in lowered:
+        if matches_phrase(lowered, marker):
             cautions.append(note)
     if "organic" in lowered:
         cautions.append("The word 'organic' here may describe chemistry, not USDA-certified organic farming.")
@@ -246,18 +305,24 @@ def build_highlights(name: str, source_profile: str, chemistry_family: str, proc
         highlights.append("May function more like a mineral salt or fortification ingredient than a whole-food component.")
     if contains_any(lowered, SYNTHETIC_MARKERS):
         highlights.append("Signals a more formulation-driven ingredient rather than a kitchen pantry staple.")
+    if contains_any(lowered, SEED_OIL_MARKERS):
+        highlights.append("This matches a seed-oil pattern that ingredient-conscious shoppers often flag.")
+    if contains_any(lowered, COLOR_MARKERS):
+        highlights.append("This matches an added-color pattern that many shoppers prefer to avoid entirely.")
+    if contains_any(lowered, PREFERRED_MARKERS):
+        highlights.append("Contains terms that usually read cleaner to shoppers looking for simpler ingredient panels.")
     return highlights
 
 
 def decide_shopper_signal(name: str, cautions: list[str], processing_level: str) -> str:
     lowered = name.lower()
-    if any(marker in lowered for marker in HIGH_SCRUTINY_MARKERS):
-        return "high scrutiny"
+    if any(matches_phrase(lowered, marker) for marker in HIGH_SCRUTINY_MARKERS):
+        return "avoid"
     if cautions or processing_level == "highly processed":
-        return "use caution"
-    if contains_any(lowered, WHOLE_FOOD_MARKERS | PLANT_MARKERS | MINERAL_MARKERS):
-        return "generally okay"
-    return "neutral / needs context"
+        return "caution"
+    if contains_any(lowered, WHOLE_FOOD_MARKERS | PLANT_MARKERS | MINERAL_MARKERS | PREFERRED_MARKERS):
+        return "okay"
+    return "needs context"
 
 
 def build_quick_blurb(name: str, source_profile: str, shopper_signal: str, common_uses: list[str]) -> str:
@@ -265,7 +330,7 @@ def build_quick_blurb(name: str, source_profile: str, shopper_signal: str, commo
     return (
         f"{name} appears to be {source_profile}. In a product label, it is often acting as "
         f"{use_text}. For ingredient-conscious shoppers, it currently lands in the "
-        f"'{shopper_signal}' bucket based on name-level heuristics and any fetched reference data."
+        f"'{shopper_signal}' bucket based on a more ingredient-conscious ruleset and any fetched reference data."
     )
 
 

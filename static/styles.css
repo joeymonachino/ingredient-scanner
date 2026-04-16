@@ -247,15 +247,15 @@ button {
     background: radial-gradient(circle, rgba(255, 255, 255, 0.42), transparent 65%);
 }
 
-.spotlight.generally-okay {
+.spotlight.okay {
     background: linear-gradient(135deg, rgba(223, 241, 219, 0.96), rgba(255, 252, 245, 0.92));
 }
 
-.spotlight.use-caution {
+.spotlight.caution {
     background: linear-gradient(135deg, rgba(246, 230, 193, 0.96), rgba(255, 252, 245, 0.92));
 }
 
-.spotlight.high-scrutiny {
+.spotlight.avoid {
     background: linear-gradient(135deg, rgba(244, 216, 206, 0.96), rgba(255, 252, 245, 0.92));
 }
 
