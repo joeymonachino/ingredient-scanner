@@ -1,12 +1,13 @@
 {
   "totals": {
-    "searches": 5,
-    "ingredient_pages": 20,
+    "searches": 6,
+    "ingredient_pages": 21,
     "index_pages": 3
   },
   "ingredient_queries": {
     "carrageenan": 1,
-    "ploster": 2
+    "ploster": 2,
+    "turmeric": 1
   },
   "product_queries": {
     "ingredients: potatoes, sunflower oil, sea salt": 1,
@@ -24,9 +25,14 @@
     "almond-flour": 1,
     "sodium-metabisulfite": 1,
     "pectin": 1,
-    "acesulfame-potassium": 4
+    "acesulfame-potassium": 4,
+    "turmeric": 1
   },
   "recent_events": [
+    {
+      "kind": "search:ingredient",
+      "value": "turmeric"
+    },
     {
       "kind": "search:product",
       "value": "water, almondmilk, carrageenan, sea salt"
