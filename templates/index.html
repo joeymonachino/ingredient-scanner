@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ingredient Scanner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="page-shell">
+        <section class="hero-card">
+            <div class="hero-copy">
+                <p class="eyebrow">MVP Ingredient Intelligence</p>
+                <h1>Scan the label mentally before you buy it.</h1>
+                <p class="hero-text">
+                    Start with one ingredient. The app gives a quick category breakdown, a cautious shopper signal,
+                    and a plain-English blurb so people can decide whether something fits their standards.
+                </p>
+                <form class="search-form" method="post" action="/analyze">
+                    <label class="search-label" for="ingredient">Ingredient name</label>
+                    <div class="search-row">
+                        <input
+                            id="ingredient"
+                            name="ingredient"
+                            type="text"
+                            placeholder="Try sodium benzoate, turmeric, citric acid..."
+                            value="{{ ingredient or '' }}"
+                            required
+                        >
+                        <button type="submit">Analyze</button>
+                    </div>
+                </form>
+                <div class="sample-row">
+                    {% for term in sample_terms %}
+                    <button class="sample-chip" type="button" data-sample="{{ term }}">{{ term }}</button>
+                    {% endfor %}
+                </div>
+                <p class="micro-note">
+                    Photo scanning is a future step. This first version focuses on single-ingredient lookups.
+                </p>
+            </div>
+
+            <div class="hero-panel">
+                <div class="metric">
+                    <span class="metric-label">Today’s Promise</span>
+                    <strong>Fast ingredient context</strong>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Output</span>
+                    <strong>Organic vs inorganic, source, risk signal, blurb</strong>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Later Upgrade</span>
+                    <strong>Saved avoid / prefer presets</strong>
+                </div>
+            </div>
+        </section>
+
+        {% if report %}
+        <section class="results-grid">
+            <article class="result-card spotlight {{ report.signal_class }}">
+                <p class="eyebrow">Primary Read</p>
+                <h2>{{ report.ingredient }}</h2>
+                <div class="signal-pill">{{ report.shopper_signal }}</div>
+                <p class="result-copy">{{ report.quick_blurb }}</p>
+
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <span class="meta-label">Chemistry Family</span>
+                        <strong>{{ report.chemistry_family }}</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Confidence</span>
+                        <strong>{{ report.confidence }}</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Source Profile</span>
+                        <strong>{{ report.source_profile }}</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Processing</span>
+                        <strong>{{ report.processing_level }}</strong>
+                    </div>
+                </div>
+            </article>
+
+            <article class="result-card">
+                <p class="eyebrow">Highlights</p>
+                <h3>Why it landed there</h3>
+                <ul class="detail-list">
+                    {% for item in report.highlights %}
+                    <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            </article>
+
+            <article class="result-card">
+                <p class="eyebrow">Typical Use</p>
+                <h3>What it may be doing in the formula</h3>
+                <div class="pill-row">
+                    {% for use in report.common_uses %}
+                    <span class="info-pill">{{ use }}</span>
+                    {% endfor %}
+                </div>
+            </article>
+
+            <article class="result-card">
+                <p class="eyebrow">Caution Notes</p>
+                <h3>Things a shopper may want to double-check</h3>
+                {% if report.cautions %}
+                <ul class="detail-list">
+                    {% for item in report.cautions %}
+                    <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="soft-copy">No obvious caution markers were triggered from the ingredient name alone.</p>
+                {% endif %}
+            </article>
+
+            <article class="result-card wide">
+                <p class="eyebrow">Reference Layer</p>
+                <h3>Fetched summary</h3>
+                {% if report.fetched_summary %}
+                <p class="result-copy">{{ report.fetched_summary }}</p>
+                <div class="source-row">
+                    {% for source in report.fetched_sources %}
+                    {% if source.url %}
+                    <a href="{{ source.url }}" target="_blank" rel="noreferrer">{{ source.label }}</a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="soft-copy">
+                    No live reference summary was available right now, so this result is based on the app’s built-in ingredient heuristics.
+                </p>
+                {% endif %}
+            </article>
+        </section>
+        {% endif %}
+
+        <section class="roadmap-grid">
+            <article class="roadmap-card">
+                <p class="eyebrow">Phase 1</p>
+                <h3>Single ingredient lookup</h3>
+                <p>Fast answer for one ingredient with a shopper-friendly signal and supporting context.</p>
+            </article>
+            <article class="roadmap-card">
+                <p class="eyebrow">Phase 2</p>
+                <h3>Photo ingredient scanner</h3>
+                <p>Upload a label photo, extract the ingredient line, and analyze each ingredient in one pass.</p>
+            </article>
+            <article class="roadmap-card">
+                <p class="eyebrow">Premium</p>
+                <h3>Saved preferences</h3>
+                <p>Create personal avoid / prefer lists so the app highlights exactly what matters to each shopper.</p>
+            </article>
+        </section>
+
+        <footer class="footer-note">
+            Educational guidance only. “Organic” here can refer to chemistry classification, not certified-organic farming status.
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</body>
+</html>
