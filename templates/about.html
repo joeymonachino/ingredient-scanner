@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ page_title }}</title>
+    <meta name="description" content="{{ page_description }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+    <div class="page-shell">
+        <section class="hero-card ingredient-hero-card">
+            <div class="hero-copy">
+                <p class="eyebrow">About Ingredient Scanner</p>
+                <h1>A cleaner-label ingredient tool for fast shopping decisions.</h1>
+                <p class="hero-text">
+                    Ingredient Scanner is designed for ingredient-conscious shoppers who want a stricter read on whether an ingredient panel feels simple, minimally processed, and aligned with a cleaner-label standard.
+                </p>
+                <div class="detail-nav-row">
+                    <a class="sample-chip link-chip" href="{{ url_for('index') }}">Back to Scanner</a>
+                    <a class="sample-chip link-chip" href="{{ url_for('methodology_page') }}">View Methodology</a>
+                </div>
+            </div>
+            <div class="hero-panel">
+                <div class="metric">
+                    <span class="metric-label">Audience</span>
+                    <strong>Ingredient-conscious and cleaner-label shoppers</strong>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Goal</span>
+                    <strong>Help people spot more processed, vague, or policy-flagged ingredients fast</strong>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Not</span>
+                    <strong>Medical advice, diagnosis, or an official safety ruling</strong>
+                </div>
+            </div>
+        </section>
+
+        <section class="results-grid product-results-grid">
+            <article class="result-card wide">
+                <p class="eyebrow">What The App Does</p>
+                <h2>Turns ingredient questions into readable signals.</h2>
+                <p class="soft-copy">
+                    The app can take one ingredient or a full label, compare it against a growing policy catalog, and return a signal such as <code>okay</code>, <code>caution</code>, <code>avoid</code>, or <code>unknown</code>.
+                </p>
+                <ul class="detail-list">
+                    <li><strong>Policy-backed</strong> means the ingredient matched a curated record in the app's catalog.</li>
+                    <li><strong>Heuristic-only</strong> means the ingredient looks real, but does not yet have a curated policy record.</li>
+                    <li><strong>Unknown</strong> means the app could not confidently identify the ingredient and should not pretend otherwise.</li>
+                </ul>
+            </article>
+
+            <article class="result-card">
+                <p class="eyebrow">Why It Exists</p>
+                <h3>Fast shopping help</h3>
+                <p class="soft-copy">
+                    Grocery labels are full of additives, vague flavor terms, engineered emulsifiers, and industrial oils that many people want to understand quickly. The goal is not to replace all nuance, but to make first-pass decisions easier.
+                </p>
+            </article>
+
+            <article class="result-card">
+                <p class="eyebrow">How To Use It</p>
+                <h3>Two main workflows</h3>
+                <ul class="detail-list">
+                    <li>Paste one ingredient to get a focused ingredient guide.</li>
+                    <li>Paste a full ingredient list to get a product-level verdict.</li>
+                    <li>Photo scanning can become the second input method later.</li>
+                </ul>
+            </article>
+
+            <article class="result-card wide">
+                <p class="eyebrow">Important Disclaimer</p>
+                <h3>Positioning and limits</h3>
+                <p class="soft-copy">
+                    Ingredient Scanner reflects a stricter cleaner-label and ingredient-conscious viewpoint. It is educational guidance only. It is not medical advice, not nutrition counseling, not a diagnosis tool, and not an official regulatory or legal determination of safety.
+                </p>
+            </article>
+        </section>
+
+        <footer class="footer-note">
+            Ingredient Scanner is best used as a decision-support tool for people who already care about cleaner labels and want a faster first pass.
+        </footer>
+    </div>
+</body>
+</html>

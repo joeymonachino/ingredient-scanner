@@ -1,46 +1,191 @@
 [
   {
-    "canonical_name": "carrageenan",
+    "canonical_name": "acesulfame potassium",
     "aliases": [
-      "carrageenan"
+      "acesulfame potassium",
+      "ace-k",
+      "acesulfame k"
     ],
     "processing_level": "highly processed",
     "whole_food_alignment": "low",
     "functional_roles": [
-      "stabilizer",
-      "thickener",
-      "emulsifier"
+      "sweetener"
     ],
-    "organic_alignment": "contested",
+    "organic_alignment": "poor",
     "controversy_level": "high",
     "traits": [
-      "non-essential texture additive",
-      "organic standards controversy",
-      "digestive controversy"
+      "artificial sweetener",
+      "highly processed"
     ],
     "signal": "avoid",
-    "note": "Processed texturizing additive with ongoing controversy and a poor fit for a cleaner-label standard.",
+    "note": "Artificial sweetener that strongly conflicts with a cleaner-label standard.",
+    "sources": []
+  },
+  {
+    "canonical_name": "allulose",
+    "aliases": [
+      "allulose"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "sweetener"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "moderate",
+    "traits": [
+      "novel sweetener",
+      "engineered low-calorie sweetener"
+    ],
+    "signal": "avoid",
+    "note": "A novel processed sweetener that fits a formulation-heavy product style more than a whole-food one.",
     "sources": [
       {
-        "label": "FDA 21 CFR 172.620",
-        "url": "https://www.law.cornell.edu/cfr/text/21/172.620"
-      },
-      {
-        "label": "WHO JECFA Carrageenan",
-        "url": "https://apps.who.int/food-additives-contaminants-jecfa-database/Home/Chemical/377"
-      },
-      {
-        "label": "EFSA Re-evaluation 2018",
-        "url": "https://www.efsa.europa.eu/en/efsajournal/pub/5238"
+        "label": "FDA Allulose Guidance",
+        "url": "https://www.fda.gov/food/cfsan-constituent-updates/fda-announces-allulose-guidance-industry"
       }
     ]
   },
   {
-    "canonical_name": "red 40",
+    "canonical_name": "almond flour",
     "aliases": [
-      "red 40",
-      "fd&c red no. 40",
-      "allura red"
+      "almond flour",
+      "almond meal"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "flour"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "single-ingredient pantry item",
+      "nut-based flour"
+    ],
+    "signal": "okay",
+    "note": "A straightforward pantry ingredient that stays close to the whole food it came from.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Almonds",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "almond milk",
+    "aliases": [
+      "almond milk",
+      "almondmilk"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "beverage base"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "processed beverage"
+    ],
+    "signal": "caution",
+    "note": "Usually more processed than simple almonds or milk and often paired with additives.",
+    "sources": []
+  },
+  {
+    "canonical_name": "almonds",
+    "aliases": [
+      "almonds",
+      "almond"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "whole food"
+    ],
+    "organic_alignment": "good",
+    "controversy_level": "low",
+    "traits": [
+      "whole food",
+      "pantry-simple"
+    ],
+    "signal": "okay",
+    "note": "Whole-food ingredient that fits a cleaner ingredient panel.",
+    "sources": []
+  },
+  {
+    "canonical_name": "annatto",
+    "aliases": [
+      "annatto",
+      "annatto extract"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "natural color"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "natural color source",
+      "less concerning than synthetic dyes"
+    ],
+    "signal": "caution",
+    "note": "A more natural color source than synthetic dyes, but still mainly used as a processed appearance additive.",
+    "sources": [
+      {
+        "label": "PubChem Annatto",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Annatto"
+      }
+    ]
+  },
+  {
+    "canonical_name": "apple cider vinegar",
+    "aliases": [
+      "apple cider vinegar"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "acidulant",
+      "seasoning"
+    ],
+    "organic_alignment": "good",
+    "controversy_level": "low",
+    "traits": [
+      "pantry-simple"
+    ],
+    "signal": "okay",
+    "note": "Simple pantry ingredient that generally fits a cleaner-label standard.",
+    "sources": []
+  },
+  {
+    "canonical_name": "arrowroot powder",
+    "aliases": [
+      "arrowroot powder",
+      "arrowroot"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "thickener"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "powdered starch",
+      "processed"
+    ],
+    "signal": "caution",
+    "note": "Cleaner than many additives, but still more processed than a simple whole-food ingredient.",
+    "sources": []
+  },
+  {
+    "canonical_name": "artificial color",
+    "aliases": [
+      "artificial color",
+      "artificial colors",
+      "fd&c"
     ],
     "processing_level": "highly processed",
     "whole_food_alignment": "low",
@@ -63,267 +208,84 @@
     ]
   },
   {
-    "canonical_name": "sunflower oil",
+    "canonical_name": "artificial flavor",
     "aliases": [
-      "sunflower oil"
+      "artificial flavor",
+      "artificial flavors"
     ],
     "processing_level": "highly processed",
-    "whole_food_alignment": "medium",
-    "functional_roles": [
-      "oil",
-      "fat"
-    ],
-    "organic_alignment": "mixed",
-    "controversy_level": "high",
-    "traits": [
-      "highly processed",
-      "not pantry-simple",
-      "refined oil",
-      "seed oil"
-    ],
-    "signal": "avoid",
-    "note": "Industrial seed oil that strongly conflicts with a cleaner-label standard focused on minimally processed ingredients.",
-    "sources": []
-  },
-  {
-    "canonical_name": "soybean oil",
-    "aliases": [
-      "soybean oil"
-    ],
-    "processing_level": "highly processed",
-    "whole_food_alignment": "medium",
-    "functional_roles": [
-      "oil",
-      "fat"
-    ],
-    "organic_alignment": "mixed",
-    "controversy_level": "high",
-    "traits": [
-      "highly processed",
-      "not pantry-simple",
-      "refined oil",
-      "seed oil"
-    ],
-    "signal": "avoid",
-    "note": "Industrial seed oil that strongly conflicts with a cleaner-label standard focused on minimally processed ingredients.",
-    "sources": []
-  },
-  {
-    "canonical_name": "canola oil",
-    "aliases": [
-      "canola oil"
-    ],
-    "processing_level": "highly processed",
-    "whole_food_alignment": "medium",
-    "functional_roles": [
-      "oil",
-      "fat"
-    ],
-    "organic_alignment": "mixed",
-    "controversy_level": "high",
-    "traits": [
-      "highly processed",
-      "not pantry-simple",
-      "refined oil",
-      "seed oil"
-    ],
-    "signal": "avoid",
-    "note": "Industrial seed oil that strongly conflicts with a cleaner-label standard focused on minimally processed ingredients.",
-    "sources": []
-  },
-  {
-    "canonical_name": "natural flavor",
-    "aliases": [
-      "natural flavor",
-      "natural flavors"
-    ],
-    "processing_level": "moderately processed",
     "whole_food_alignment": "low",
     "functional_roles": [
       "flavoring"
     ],
-    "organic_alignment": "mixed",
-    "controversy_level": "medium",
+    "organic_alignment": "poor",
+    "controversy_level": "high",
     "traits": [
       "vague label",
-      "formulation additive"
+      "synthetic flavoring"
     ],
-    "signal": "caution",
-    "note": "Vague flavoring term that does not read as transparent or pantry-simple.",
-    "sources": [
-      {
-        "label": "FDA Natural Flavor Definition",
-        "url": "https://www.ecfr.gov/current/title-21/chapter-I/subchapter-B/part-101/subpart-A/section-101.22"
-      }
-    ]
+    "signal": "avoid",
+    "note": "Artificial flavoring is far from a transparent, minimally processed ingredient standard.",
+    "sources": []
   },
   {
-    "canonical_name": "citric acid",
+    "canonical_name": "ascorbic acid",
     "aliases": [
-      "citric acid"
+      "ascorbic acid"
     ],
     "processing_level": "moderately processed",
     "whole_food_alignment": "low",
     "functional_roles": [
+      "antioxidant",
       "acidity regulator"
     ],
     "organic_alignment": "mixed",
     "controversy_level": "low",
     "traits": [
-      "refined additive",
-      "formulation ingredient"
+      "refined additive"
     ],
     "signal": "caution",
-    "note": "Common additive, but still more refined than a simple whole-food ingredient.",
-    "sources": [
-      {
-        "label": "PubChem Citric Acid",
-        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Citric-acid"
-      }
-    ]
+    "note": "Common additive and less concerning than many preservatives, but still more processed than pantry-simple ingredients.",
+    "sources": []
   },
   {
-    "canonical_name": "cane sugar",
+    "canonical_name": "aspartame",
     "aliases": [
-      "cane sugar",
-      "sugar"
+      "aspartame"
     ],
-    "processing_level": "moderately processed",
+    "processing_level": "highly processed",
     "whole_food_alignment": "low",
     "functional_roles": [
       "sweetener"
     ],
-    "organic_alignment": "mixed",
-    "controversy_level": "low",
+    "organic_alignment": "poor",
+    "controversy_level": "high",
     "traits": [
-      "refined sweetener"
+      "artificial sweetener",
+      "highly processed"
     ],
-    "signal": "caution",
-    "note": "Refined sweetener rather than a whole-food ingredient.",
+    "signal": "avoid",
+    "note": "Artificial sweetener that strongly conflicts with a cleaner-label standard.",
     "sources": []
   },
   {
-    "canonical_name": "potatoes",
+    "canonical_name": "autolyzed yeast extract",
     "aliases": [
-      "potatoes",
-      "potato"
+      "autolyzed yeast extract"
     ],
-    "processing_level": "minimally processed",
-    "whole_food_alignment": "high",
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
     "functional_roles": [
-      "whole food"
+      "flavor enhancer"
     ],
-    "organic_alignment": "good",
-    "controversy_level": "low",
+    "organic_alignment": "poor",
+    "controversy_level": "medium",
     "traits": [
-      "whole food",
-      "pantry-simple"
+      "processed flavoring",
+      "formulation additive"
     ],
-    "signal": "okay",
-    "note": "Whole-food ingredient that fits a cleaner ingredient panel.",
-    "sources": []
-  },
-  {
-    "canonical_name": "sea salt",
-    "aliases": [
-      "sea salt",
-      "salt"
-    ],
-    "processing_level": "minimally processed",
-    "whole_food_alignment": "high",
-    "functional_roles": [
-      "seasoning"
-    ],
-    "organic_alignment": "good",
-    "controversy_level": "low",
-    "traits": [
-      "pantry-simple"
-    ],
-    "signal": "okay",
-    "note": "Basic seasoning ingredient and not a processing red flag by itself.",
-    "sources": []
-  },
-  {
-    "canonical_name": "filtered water",
-    "aliases": [
-      "filtered water",
-      "water"
-    ],
-    "processing_level": "minimally processed",
-    "whole_food_alignment": "high",
-    "functional_roles": [
-      "base ingredient"
-    ],
-    "organic_alignment": "good",
-    "controversy_level": "low",
-    "traits": [
-      "pantry-simple"
-    ],
-    "signal": "okay",
-    "note": "Neutral base ingredient rather than a warning sign.",
-    "sources": []
-  },
-  {
-    "canonical_name": "organic oats",
-    "aliases": [
-      "organic oats",
-      "oats"
-    ],
-    "processing_level": "minimally processed",
-    "whole_food_alignment": "high",
-    "functional_roles": [
-      "whole food"
-    ],
-    "organic_alignment": "good",
-    "controversy_level": "low",
-    "traits": [
-      "whole food",
-      "pantry-simple",
-      "organic-friendly"
-    ],
-    "signal": "okay",
-    "note": "Simple grain ingredient that reads strongly aligned with a cleaner-label standard.",
-    "sources": []
-  },
-  {
-    "canonical_name": "cinnamon",
-    "aliases": [
-      "cinnamon"
-    ],
-    "processing_level": "minimally processed",
-    "whole_food_alignment": "high",
-    "functional_roles": [
-      "spice"
-    ],
-    "organic_alignment": "good",
-    "controversy_level": "low",
-    "traits": [
-      "pantry-simple",
-      "spice"
-    ],
-    "signal": "okay",
-    "note": "Pantry-style spice ingredient rather than a formulation additive.",
-    "sources": []
-  },
-  {
-    "canonical_name": "olive oil",
-    "aliases": [
-      "olive oil"
-    ],
-    "processing_level": "minimally processed",
-    "whole_food_alignment": "high",
-    "functional_roles": [
-      "oil",
-      "fat"
-    ],
-    "organic_alignment": "good",
-    "controversy_level": "low",
-    "traits": [
-      "preferred oil",
-      "pantry-simple"
-    ],
-    "signal": "okay",
-    "note": "Preferred oil choice compared with industrial seed oils.",
+    "signal": "avoid",
+    "note": "Highly processed flavor-enhancing ingredient that conflicts with a cleaner-label standard.",
     "sources": []
   },
   {
@@ -348,136 +310,75 @@
     "sources": []
   },
   {
-    "canonical_name": "coconut oil",
+    "canonical_name": "baking powder",
     "aliases": [
-      "coconut oil"
+      "baking powder"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "leavening agent"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "baking additive"
+    ],
+    "signal": "caution",
+    "note": "Common in baking, but still a more processed mixture than pantry-single ingredients.",
+    "sources": []
+  },
+  {
+    "canonical_name": "baking soda",
+    "aliases": [
+      "baking soda",
+      "sodium bicarbonate"
     ],
     "processing_level": "minimally processed",
     "whole_food_alignment": "high",
     "functional_roles": [
-      "oil",
-      "fat"
+      "leavening agent"
     ],
     "organic_alignment": "good",
     "controversy_level": "low",
     "traits": [
-      "preferred oil",
-      "pantry-simple"
+      "pantry-simple",
+      "common baking ingredient"
     ],
     "signal": "okay",
-    "note": "Preferred oil choice compared with industrial seed oils.",
+    "note": "Common pantry ingredient and not a cleaner-label concern by itself.",
     "sources": []
   },
   {
-    "canonical_name": "xanthan gum",
+    "canonical_name": "beet juice color",
     "aliases": [
-      "xanthan gum"
-    ],
-    "processing_level": "highly processed",
-    "whole_food_alignment": "low",
-    "functional_roles": [
-      "stabilizer",
-      "thickener"
-    ],
-    "organic_alignment": "mixed",
-    "controversy_level": "medium",
-    "traits": [
-      "non-essential texture additive",
-      "processed gum"
-    ],
-    "signal": "avoid",
-    "note": "Texture-focused gum additive that does not fit a pantry-simple standard.",
-    "sources": []
-  },
-  {
-    "canonical_name": "guar gum",
-    "aliases": [
-      "guar gum"
-    ],
-    "processing_level": "highly processed",
-    "whole_food_alignment": "low",
-    "functional_roles": [
-      "stabilizer",
-      "thickener"
-    ],
-    "organic_alignment": "mixed",
-    "controversy_level": "medium",
-    "traits": [
-      "non-essential texture additive",
-      "processed gum"
-    ],
-    "signal": "avoid",
-    "note": "Texture-focused gum additive that does not fit a pantry-simple standard.",
-    "sources": []
-  },
-  {
-    "canonical_name": "lecithin",
-    "aliases": [
-      "lecithin",
-      "soy lecithin",
-      "sunflower lecithin"
+      "beet juice color",
+      "beet juice concentrate"
     ],
     "processing_level": "moderately processed",
-    "whole_food_alignment": "low",
+    "whole_food_alignment": "medium",
     "functional_roles": [
-      "emulsifier"
+      "natural color"
     ],
     "organic_alignment": "mixed",
-    "controversy_level": "medium",
+    "controversy_level": "low",
     "traits": [
-      "emulsifier",
-      "formulation additive"
+      "vegetable-derived color",
+      "cleaner than synthetic dye"
     ],
     "signal": "caution",
-    "note": "Emulsifier additive that signals a more engineered product, even when sourced from sunflower or soy.",
-    "sources": []
+    "note": "Vegetable-based coloring is a better fit than synthetic dyes, but it is still a processing aid rather than a whole-food ingredient.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Beets",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
   },
   {
-    "canonical_name": "maltodextrin",
+    "canonical_name": "bha",
     "aliases": [
-      "maltodextrin"
-    ],
-    "processing_level": "highly processed",
-    "whole_food_alignment": "low",
-    "functional_roles": [
-      "bulking agent",
-      "carbohydrate additive"
-    ],
-    "organic_alignment": "poor",
-    "controversy_level": "medium",
-    "traits": [
-      "refined carbohydrate additive",
-      "highly processed"
-    ],
-    "signal": "avoid",
-    "note": "Highly processed carbohydrate additive that reads far from a whole-food ingredient panel.",
-    "sources": []
-  },
-  {
-    "canonical_name": "polysorbate 80",
-    "aliases": [
-      "polysorbate 80",
-      "polysorbate"
-    ],
-    "processing_level": "highly processed",
-    "whole_food_alignment": "low",
-    "functional_roles": [
-      "emulsifier"
-    ],
-    "organic_alignment": "poor",
-    "controversy_level": "high",
-    "traits": [
-      "synthetic emulsifier",
-      "highly processed additive"
-    ],
-    "signal": "avoid",
-    "note": "Synthetic emulsifier that strongly conflicts with a cleaner-label approach.",
-    "sources": []
-  },
-  {
-    "canonical_name": "sodium benzoate",
-    "aliases": [
-      "sodium benzoate"
+      "bha"
     ],
     "processing_level": "highly processed",
     "whole_food_alignment": "low",
@@ -485,19 +386,18 @@
       "preservative"
     ],
     "organic_alignment": "poor",
-    "controversy_level": "medium",
+    "controversy_level": "high",
     "traits": [
-      "preservative",
-      "synthetic additive"
+      "synthetic preservative"
     ],
     "signal": "avoid",
-    "note": "Preservative additive that strongly departs from a minimally processed ingredient standard.",
+    "note": "Synthetic preservative that strongly conflicts with a cleaner-label approach.",
     "sources": []
   },
   {
-    "canonical_name": "potassium sorbate",
+    "canonical_name": "bht",
     "aliases": [
-      "potassium sorbate"
+      "bht"
     ],
     "processing_level": "highly processed",
     "whole_food_alignment": "low",
@@ -505,148 +405,54 @@
       "preservative"
     ],
     "organic_alignment": "poor",
+    "controversy_level": "high",
+    "traits": [
+      "synthetic preservative"
+    ],
+    "signal": "avoid",
+    "note": "Synthetic preservative that strongly conflicts with a cleaner-label approach.",
+    "sources": []
+  },
+  {
+    "canonical_name": "black pepper",
+    "aliases": [
+      "black pepper",
+      "pepper"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "spice"
+    ],
+    "organic_alignment": "good",
+    "controversy_level": "low",
+    "traits": [
+      "pantry-simple",
+      "spice"
+    ],
+    "signal": "okay",
+    "note": "Simple spice ingredient that aligns well with a cleaner-label standard.",
+    "sources": []
+  },
+  {
+    "canonical_name": "bleached flour",
+    "aliases": [
+      "bleached flour"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "refined grain"
+    ],
+    "organic_alignment": "poor",
     "controversy_level": "medium",
     "traits": [
-      "preservative",
-      "synthetic additive"
-    ],
-    "signal": "avoid",
-    "note": "Preservative additive that strongly departs from a minimally processed ingredient standard.",
-    "sources": []
-  },
-  {
-    "canonical_name": "titanium dioxide",
-    "aliases": [
-      "titanium dioxide"
-    ],
-    "processing_level": "highly processed",
-    "whole_food_alignment": "low",
-    "functional_roles": [
-      "color additive"
-    ],
-    "organic_alignment": "poor",
-    "controversy_level": "high",
-    "traits": [
-      "appearance additive",
+      "refined flour",
       "highly processed"
     ],
     "signal": "avoid",
-    "note": "Appearance-focused additive with significant controversy and no whole-food value.",
+    "note": "Highly refined flour ingredient that conflicts with a stricter cleaner-label standard.",
     "sources": []
-  },
-  {
-    "canonical_name": "sucralose",
-    "aliases": [
-      "sucralose"
-    ],
-    "processing_level": "highly processed",
-    "whole_food_alignment": "low",
-    "functional_roles": [
-      "sweetener"
-    ],
-    "organic_alignment": "poor",
-    "controversy_level": "high",
-    "traits": [
-      "artificial sweetener",
-      "highly processed"
-    ],
-    "signal": "avoid",
-    "note": "Artificial sweetener that strongly conflicts with a cleaner-label standard.",
-    "sources": []
-  },
-  {
-    "canonical_name": "aspartame",
-    "aliases": [
-      "aspartame"
-    ],
-    "processing_level": "highly processed",
-    "whole_food_alignment": "low",
-    "functional_roles": [
-      "sweetener"
-    ],
-    "organic_alignment": "poor",
-    "controversy_level": "high",
-    "traits": [
-      "artificial sweetener",
-      "highly processed"
-    ],
-    "signal": "avoid",
-    "note": "Artificial sweetener that strongly conflicts with a cleaner-label standard.",
-    "sources": []
-  },
-  {
-    "canonical_name": "artificial flavor",
-    "aliases": [
-      "artificial flavor",
-      "artificial flavors"
-    ],
-    "processing_level": "highly processed",
-    "whole_food_alignment": "low",
-    "functional_roles": [
-      "flavoring"
-    ],
-    "organic_alignment": "poor",
-    "controversy_level": "high",
-    "traits": [
-      "vague label",
-      "synthetic flavoring"
-    ],
-    "signal": "avoid",
-    "note": "Artificial flavoring is far from a transparent, minimally processed ingredient standard.",
-    "sources": []
-  },
-  {
-    "canonical_name": "yellow 5",
-    "aliases": [
-      "yellow 5",
-      "fd&c yellow no. 5",
-      "tartrazine"
-    ],
-    "processing_level": "highly processed",
-    "whole_food_alignment": "low",
-    "functional_roles": [
-      "artificial color"
-    ],
-    "organic_alignment": "poor",
-    "controversy_level": "high",
-    "traits": [
-      "artificial color",
-      "non-essential appearance additive"
-    ],
-    "signal": "avoid",
-    "note": "Artificial coloring is strongly out of step with a cleaner-label approach.",
-    "sources": [
-      {
-        "label": "FDA Color Additives Questions and Answers",
-        "url": "https://www.fda.gov/food/color-additives-information-consumers/color-additives-questions-and-answers-consumers"
-      }
-    ]
-  },
-  {
-    "canonical_name": "yellow 6",
-    "aliases": [
-      "yellow 6",
-      "fd&c yellow no. 6"
-    ],
-    "processing_level": "highly processed",
-    "whole_food_alignment": "low",
-    "functional_roles": [
-      "artificial color"
-    ],
-    "organic_alignment": "poor",
-    "controversy_level": "high",
-    "traits": [
-      "artificial color",
-      "non-essential appearance additive"
-    ],
-    "signal": "avoid",
-    "note": "Artificial coloring is strongly out of step with a cleaner-label approach.",
-    "sources": [
-      {
-        "label": "FDA Color Additives Questions and Answers",
-        "url": "https://www.fda.gov/food/color-additives-information-consumers/color-additives-questions-and-answers-consumers"
-      }
-    ]
   },
   {
     "canonical_name": "blue 1",
@@ -703,207 +509,115 @@
     ]
   },
   {
-    "canonical_name": "green 3",
+    "canonical_name": "broccoli",
     "aliases": [
-      "green 3",
-      "fd&c green no. 3"
+      "broccoli"
     ],
-    "processing_level": "highly processed",
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "whole food"
+    ],
+    "organic_alignment": "good",
+    "controversy_level": "low",
+    "traits": [
+      "whole food",
+      "pantry-simple"
+    ],
+    "signal": "okay",
+    "note": "Whole-food ingredient that fits a cleaner ingredient panel.",
+    "sources": []
+  },
+  {
+    "canonical_name": "brown rice syrup",
+    "aliases": [
+      "brown rice syrup"
+    ],
+    "processing_level": "moderately processed",
     "whole_food_alignment": "low",
     "functional_roles": [
-      "artificial color"
+      "sweetener"
     ],
-    "organic_alignment": "poor",
-    "controversy_level": "high",
+    "organic_alignment": "mixed",
+    "controversy_level": "medium",
     "traits": [
-      "artificial color",
-      "non-essential appearance additive"
+      "syrup sweetener",
+      "processed"
     ],
-    "signal": "avoid",
-    "note": "Artificial coloring is strongly out of step with a cleaner-label approach.",
+    "signal": "caution",
+    "note": "Less aligned with a minimally processed standard than whole-food sweeteners.",
+    "sources": []
+  },
+  {
+    "canonical_name": "brown sugar",
+    "aliases": [
+      "brown sugar"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "sweetener"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "refined sweetener",
+      "better thought of as occasional ingredient"
+    ],
+    "signal": "caution",
+    "note": "Still a refined sweetener, even if it feels more traditional than highly engineered alternatives.",
     "sources": [
       {
-        "label": "FDA Color Additives Questions and Answers",
-        "url": "https://www.fda.gov/food/color-additives-information-consumers/color-additives-questions-and-answers-consumers"
+        "label": "USDA FoodData Central Brown Sugar",
+        "url": "https://fdc.nal.usda.gov/"
       }
     ]
   },
   {
-    "canonical_name": "artificial color",
+    "canonical_name": "butter",
     "aliases": [
-      "artificial color",
-      "artificial colors",
-      "fd&c"
+      "butter"
     ],
-    "processing_level": "highly processed",
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "fat"
+    ],
+    "organic_alignment": "good",
+    "controversy_level": "low",
+    "traits": [
+      "pantry-simple",
+      "animal-derived"
+    ],
+    "signal": "okay",
+    "note": "Simple fat ingredient that fits a cleaner-label standard better than industrial oils.",
+    "sources": []
+  },
+  {
+    "canonical_name": "calcium carbonate",
+    "aliases": [
+      "calcium carbonate"
+    ],
+    "processing_level": "moderately processed",
     "whole_food_alignment": "low",
     "functional_roles": [
-      "artificial color"
+      "fortifier",
+      "buffer"
     ],
     "organic_alignment": "poor",
-    "controversy_level": "high",
+    "controversy_level": "low",
     "traits": [
-      "artificial color",
-      "non-essential appearance additive"
+      "fortification additive",
+      "mineral ingredient"
     ],
-    "signal": "avoid",
-    "note": "Artificial coloring is strongly out of step with a cleaner-label approach.",
+    "signal": "caution",
+    "note": "Usually appears as a fortification or formulation additive rather than a whole-food ingredient.",
     "sources": [
       {
-        "label": "FDA Color Additives Questions and Answers",
-        "url": "https://www.fda.gov/food/color-additives-information-consumers/color-additives-questions-and-answers-consumers"
+        "label": "PubChem Calcium Carbonate",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Calcium-carbonate"
       }
     ]
-  },
-  {
-    "canonical_name": "gellan gum",
-    "aliases": [
-      "gellan gum"
-    ],
-    "processing_level": "highly processed",
-    "whole_food_alignment": "low",
-    "functional_roles": [
-      "stabilizer",
-      "thickener"
-    ],
-    "organic_alignment": "mixed",
-    "controversy_level": "medium",
-    "traits": [
-      "non-essential texture additive",
-      "processed gum"
-    ],
-    "signal": "avoid",
-    "note": "Texture-focused gum additive that does not fit a pantry-simple standard.",
-    "sources": []
-  },
-  {
-    "canonical_name": "cellulose gum",
-    "aliases": [
-      "cellulose gum",
-      "carboxymethylcellulose",
-      "carmellose"
-    ],
-    "processing_level": "highly processed",
-    "whole_food_alignment": "low",
-    "functional_roles": [
-      "stabilizer",
-      "thickener"
-    ],
-    "organic_alignment": "mixed",
-    "controversy_level": "medium",
-    "traits": [
-      "non-essential texture additive",
-      "processed gum"
-    ],
-    "signal": "avoid",
-    "note": "Processed gum additive used for texture rather than nourishment.",
-    "sources": []
-  },
-  {
-    "canonical_name": "gum arabic",
-    "aliases": [
-      "gum arabic",
-      "acacia gum"
-    ],
-    "processing_level": "moderately processed",
-    "whole_food_alignment": "low",
-    "functional_roles": [
-      "stabilizer",
-      "thickener"
-    ],
-    "organic_alignment": "mixed",
-    "controversy_level": "medium",
-    "traits": [
-      "gum additive",
-      "texture additive"
-    ],
-    "signal": "caution",
-    "note": "Still a formulation additive even if it is often viewed as milder than other gums.",
-    "sources": []
-  },
-  {
-    "canonical_name": "locust bean gum",
-    "aliases": [
-      "locust bean gum"
-    ],
-    "processing_level": "highly processed",
-    "whole_food_alignment": "low",
-    "functional_roles": [
-      "stabilizer",
-      "thickener"
-    ],
-    "organic_alignment": "mixed",
-    "controversy_level": "medium",
-    "traits": [
-      "non-essential texture additive",
-      "processed gum"
-    ],
-    "signal": "avoid",
-    "note": "Texture-focused gum additive that does not fit a pantry-simple standard.",
-    "sources": []
-  },
-  {
-    "canonical_name": "mono and diglycerides",
-    "aliases": [
-      "mono and diglycerides",
-      "mono- and diglycerides",
-      "monoglycerides",
-      "diglycerides"
-    ],
-    "processing_level": "highly processed",
-    "whole_food_alignment": "low",
-    "functional_roles": [
-      "emulsifier"
-    ],
-    "organic_alignment": "poor",
-    "controversy_level": "high",
-    "traits": [
-      "emulsifier",
-      "processed fat additive"
-    ],
-    "signal": "avoid",
-    "note": "Engineered emulsifier that strongly signals a more industrial ingredient panel.",
-    "sources": []
-  },
-  {
-    "canonical_name": "soy lecithin",
-    "aliases": [
-      "soy lecithin"
-    ],
-    "processing_level": "moderately processed",
-    "whole_food_alignment": "low",
-    "functional_roles": [
-      "emulsifier"
-    ],
-    "organic_alignment": "mixed",
-    "controversy_level": "medium",
-    "traits": [
-      "emulsifier",
-      "formulation additive"
-    ],
-    "signal": "caution",
-    "note": "Emulsifier additive that signals a more engineered product.",
-    "sources": []
-  },
-  {
-    "canonical_name": "sunflower lecithin",
-    "aliases": [
-      "sunflower lecithin"
-    ],
-    "processing_level": "moderately processed",
-    "whole_food_alignment": "low",
-    "functional_roles": [
-      "emulsifier"
-    ],
-    "organic_alignment": "mixed",
-    "controversy_level": "medium",
-    "traits": [
-      "emulsifier",
-      "formulation additive"
-    ],
-    "signal": "caution",
-    "note": "Emulsifier additive that signals a more engineered product.",
-    "sources": []
   },
   {
     "canonical_name": "calcium disodium EDTA",
@@ -929,86 +643,6 @@
     "sources": []
   },
   {
-    "canonical_name": "propylene glycol",
-    "aliases": [
-      "propylene glycol"
-    ],
-    "processing_level": "highly processed",
-    "whole_food_alignment": "low",
-    "functional_roles": [
-      "humectant",
-      "carrier"
-    ],
-    "organic_alignment": "poor",
-    "controversy_level": "high",
-    "traits": [
-      "synthetic additive",
-      "highly processed"
-    ],
-    "signal": "avoid",
-    "note": "Synthetic formulation ingredient that strongly conflicts with a cleaner-label approach.",
-    "sources": []
-  },
-  {
-    "canonical_name": "sodium nitrite",
-    "aliases": [
-      "sodium nitrite",
-      "nitrites"
-    ],
-    "processing_level": "highly processed",
-    "whole_food_alignment": "low",
-    "functional_roles": [
-      "preservative"
-    ],
-    "organic_alignment": "poor",
-    "controversy_level": "high",
-    "traits": [
-      "cured meat preservative",
-      "highly processed additive"
-    ],
-    "signal": "avoid",
-    "note": "Processed preservative strongly at odds with a cleaner-label standard.",
-    "sources": []
-  },
-  {
-    "canonical_name": "bht",
-    "aliases": [
-      "bht"
-    ],
-    "processing_level": "highly processed",
-    "whole_food_alignment": "low",
-    "functional_roles": [
-      "preservative"
-    ],
-    "organic_alignment": "poor",
-    "controversy_level": "high",
-    "traits": [
-      "synthetic preservative"
-    ],
-    "signal": "avoid",
-    "note": "Synthetic preservative that strongly conflicts with a cleaner-label approach.",
-    "sources": []
-  },
-  {
-    "canonical_name": "bha",
-    "aliases": [
-      "bha"
-    ],
-    "processing_level": "highly processed",
-    "whole_food_alignment": "low",
-    "functional_roles": [
-      "preservative"
-    ],
-    "organic_alignment": "poor",
-    "controversy_level": "high",
-    "traits": [
-      "synthetic preservative"
-    ],
-    "signal": "avoid",
-    "note": "Synthetic preservative that strongly conflicts with a cleaner-label approach.",
-    "sources": []
-  },
-  {
     "canonical_name": "calcium propionate",
     "aliases": [
       "calcium propionate"
@@ -1029,72 +663,35 @@
     "sources": []
   },
   {
-    "canonical_name": "acesulfame potassium",
+    "canonical_name": "calcium sulfate",
     "aliases": [
-      "acesulfame potassium",
-      "ace-k",
-      "acesulfame k"
+      "calcium sulfate"
     ],
-    "processing_level": "highly processed",
+    "processing_level": "moderately processed",
     "whole_food_alignment": "low",
     "functional_roles": [
-      "sweetener"
+      "firming agent"
     ],
     "organic_alignment": "poor",
-    "controversy_level": "high",
+    "controversy_level": "low",
     "traits": [
-      "artificial sweetener",
-      "highly processed"
+      "processing aid",
+      "firming or coagulating agent"
     ],
-    "signal": "avoid",
-    "note": "Artificial sweetener that strongly conflicts with a cleaner-label standard.",
-    "sources": []
+    "signal": "caution",
+    "note": "A formulation ingredient used for texture or fortification rather than a kitchen staple.",
+    "sources": [
+      {
+        "label": "PubChem Calcium Sulfate",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Calcium-sulfate"
+      }
+    ]
   },
   {
-    "canonical_name": "high fructose corn syrup",
+    "canonical_name": "cane sugar",
     "aliases": [
-      "high fructose corn syrup",
-      "hfcs"
-    ],
-    "processing_level": "highly processed",
-    "whole_food_alignment": "low",
-    "functional_roles": [
-      "sweetener"
-    ],
-    "organic_alignment": "poor",
-    "controversy_level": "high",
-    "traits": [
-      "refined sweetener",
-      "highly processed"
-    ],
-    "signal": "avoid",
-    "note": "Highly processed sweetener that strongly conflicts with a cleaner-label standard.",
-    "sources": []
-  },
-  {
-    "canonical_name": "corn syrup",
-    "aliases": [
-      "corn syrup"
-    ],
-    "processing_level": "highly processed",
-    "whole_food_alignment": "low",
-    "functional_roles": [
-      "sweetener"
-    ],
-    "organic_alignment": "poor",
-    "controversy_level": "high",
-    "traits": [
-      "refined sweetener",
-      "highly processed"
-    ],
-    "signal": "avoid",
-    "note": "Highly processed sweetener that strongly conflicts with a cleaner-label standard.",
-    "sources": []
-  },
-  {
-    "canonical_name": "dextrose",
-    "aliases": [
-      "dextrose"
+      "cane sugar",
+      "sugar"
     ],
     "processing_level": "moderately processed",
     "whole_food_alignment": "low",
@@ -1102,12 +699,297 @@
       "sweetener"
     ],
     "organic_alignment": "mixed",
-    "controversy_level": "medium",
+    "controversy_level": "low",
     "traits": [
       "refined sweetener"
     ],
     "signal": "caution",
     "note": "Refined sweetener rather than a whole-food ingredient.",
+    "sources": []
+  },
+  {
+    "canonical_name": "canola oil",
+    "aliases": [
+      "canola oil"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "oil",
+      "fat"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "high",
+    "traits": [
+      "highly processed",
+      "not pantry-simple",
+      "refined oil",
+      "seed oil"
+    ],
+    "signal": "avoid",
+    "note": "Industrial seed oil that strongly conflicts with a cleaner-label standard focused on minimally processed ingredients.",
+    "sources": []
+  },
+  {
+    "canonical_name": "caramel color",
+    "aliases": [
+      "caramel color",
+      "caramel colouring"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "color additive"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "moderate",
+    "traits": [
+      "artificial-looking color additive",
+      "ultra-processed appearance enhancer"
+    ],
+    "signal": "avoid",
+    "note": "Highly processed coloring used to standardize appearance rather than improve nourishment.",
+    "sources": [
+      {
+        "label": "FDA Color Additives Questions and Answers",
+        "url": "https://www.fda.gov/food/color-additives-information-consumers/color-additives-questions-and-answers-consumers"
+      }
+    ]
+  },
+  {
+    "canonical_name": "carrageenan",
+    "aliases": [
+      "carrageenan"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "stabilizer",
+      "thickener",
+      "emulsifier"
+    ],
+    "organic_alignment": "contested",
+    "controversy_level": "high",
+    "traits": [
+      "non-essential texture additive",
+      "organic standards controversy",
+      "digestive controversy"
+    ],
+    "signal": "avoid",
+    "note": "Processed texturizing additive with ongoing controversy and a poor fit for a cleaner-label standard.",
+    "sources": [
+      {
+        "label": "FDA 21 CFR 172.620",
+        "url": "https://www.law.cornell.edu/cfr/text/21/172.620"
+      },
+      {
+        "label": "WHO JECFA Carrageenan",
+        "url": "https://apps.who.int/food-additives-contaminants-jecfa-database/Home/Chemical/377"
+      },
+      {
+        "label": "EFSA Re-evaluation 2018",
+        "url": "https://www.efsa.europa.eu/en/efsajournal/pub/5238"
+      }
+    ]
+  },
+  {
+    "canonical_name": "casein",
+    "aliases": [
+      "casein"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "protein additive"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "medium",
+    "traits": [
+      "processed dairy protein"
+    ],
+    "signal": "caution",
+    "note": "More processed and isolated than a simple dairy ingredient.",
+    "sources": []
+  },
+  {
+    "canonical_name": "cassava flour",
+    "aliases": [
+      "cassava flour"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "flour"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "single-ingredient pantry item",
+      "root-based flour"
+    ],
+    "signal": "okay",
+    "note": "A simple flour made from cassava root, which fits well with a cleaner pantry standard.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Cassava",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "cellulose gel",
+    "aliases": [
+      "cellulose gel"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "stabilizer",
+      "bulking agent"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "moderate",
+    "traits": [
+      "cellulose additive",
+      "non-essential texture ingredient"
+    ],
+    "signal": "avoid",
+    "note": "Processed cellulose ingredient used to modify body and texture in packaged foods.",
+    "sources": [
+      {
+        "label": "PubChem Cellulose",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Cellulose"
+      }
+    ]
+  },
+  {
+    "canonical_name": "cellulose gum",
+    "aliases": [
+      "cellulose gum",
+      "carboxymethylcellulose",
+      "carmellose"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "stabilizer",
+      "thickener"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "medium",
+    "traits": [
+      "non-essential texture additive",
+      "processed gum"
+    ],
+    "signal": "avoid",
+    "note": "Processed gum additive used for texture rather than nourishment.",
+    "sources": []
+  },
+  {
+    "canonical_name": "cinnamon",
+    "aliases": [
+      "cinnamon"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "spice"
+    ],
+    "organic_alignment": "good",
+    "controversy_level": "low",
+    "traits": [
+      "pantry-simple",
+      "spice"
+    ],
+    "signal": "okay",
+    "note": "Pantry-style spice ingredient rather than a formulation additive.",
+    "sources": []
+  },
+  {
+    "canonical_name": "citric acid",
+    "aliases": [
+      "citric acid"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "acidity regulator"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "refined additive",
+      "formulation ingredient"
+    ],
+    "signal": "caution",
+    "note": "Common additive, but still more refined than a simple whole-food ingredient.",
+    "sources": [
+      {
+        "label": "PubChem Citric Acid",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Citric-acid"
+      }
+    ]
+  },
+  {
+    "canonical_name": "coconut milk",
+    "aliases": [
+      "coconut milk"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "beverage base",
+      "fat"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "processed beverage"
+    ],
+    "signal": "caution",
+    "note": "Can be relatively simple, but is still a more processed form than whole coconut.",
+    "sources": []
+  },
+  {
+    "canonical_name": "coconut oil",
+    "aliases": [
+      "coconut oil"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "oil",
+      "fat"
+    ],
+    "organic_alignment": "good",
+    "controversy_level": "low",
+    "traits": [
+      "preferred oil",
+      "pantry-simple"
+    ],
+    "signal": "okay",
+    "note": "Preferred oil choice compared with industrial seed oils.",
+    "sources": []
+  },
+  {
+    "canonical_name": "condensed milk",
+    "aliases": [
+      "condensed milk",
+      "sweetened condensed milk"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "sweetened dairy base"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "medium",
+    "traits": [
+      "sweetened dairy",
+      "highly processed"
+    ],
+    "signal": "avoid",
+    "note": "Highly processed sweetened dairy ingredient that does not fit a stricter cleaner-label approach.",
     "sources": []
   },
   {
@@ -1134,6 +1016,48 @@
     "sources": []
   },
   {
+    "canonical_name": "corn starch",
+    "aliases": [
+      "corn starch",
+      "cornstarch"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "thickener",
+      "starch"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "medium",
+    "traits": [
+      "refined starch",
+      "processed"
+    ],
+    "signal": "caution",
+    "note": "Refined starch ingredient that is more processed than a simple whole-food ingredient.",
+    "sources": []
+  },
+  {
+    "canonical_name": "corn syrup",
+    "aliases": [
+      "corn syrup"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "sweetener"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "high",
+    "traits": [
+      "refined sweetener",
+      "highly processed"
+    ],
+    "signal": "avoid",
+    "note": "Highly processed sweetener that strongly conflicts with a cleaner-label standard.",
+    "sources": []
+  },
+  {
     "canonical_name": "cottonseed oil",
     "aliases": [
       "cottonseed oil"
@@ -1154,6 +1078,361 @@
     ],
     "signal": "avoid",
     "note": "Industrial seed oil that strongly conflicts with a cleaner-label standard focused on minimally processed ingredients.",
+    "sources": []
+  },
+  {
+    "canonical_name": "cream",
+    "aliases": [
+      "cream"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "dairy fat"
+    ],
+    "organic_alignment": "good",
+    "controversy_level": "low",
+    "traits": [
+      "pantry-simple",
+      "animal-derived"
+    ],
+    "signal": "okay",
+    "note": "Simple dairy ingredient that can fit a cleaner-label standard.",
+    "sources": []
+  },
+  {
+    "canonical_name": "date syrup",
+    "aliases": [
+      "date syrup"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "sweetener"
+    ],
+    "organic_alignment": "good",
+    "controversy_level": "low",
+    "traits": [
+      "less processed sweetener"
+    ],
+    "signal": "caution",
+    "note": "Still a syrup, but often reads cleaner than highly refined sweeteners.",
+    "sources": []
+  },
+  {
+    "canonical_name": "dates",
+    "aliases": [
+      "dates",
+      "date"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "whole food",
+      "sweetener"
+    ],
+    "organic_alignment": "good",
+    "controversy_level": "low",
+    "traits": [
+      "whole food",
+      "pantry-simple"
+    ],
+    "signal": "okay",
+    "note": "Whole-food sweetening ingredient that fits a cleaner-label standard better than refined sugars.",
+    "sources": []
+  },
+  {
+    "canonical_name": "dextrose",
+    "aliases": [
+      "dextrose"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "sweetener"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "medium",
+    "traits": [
+      "refined sweetener"
+    ],
+    "signal": "caution",
+    "note": "Refined sweetener rather than a whole-food ingredient.",
+    "sources": []
+  },
+  {
+    "canonical_name": "disodium guanylate",
+    "aliases": [
+      "disodium guanylate"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "flavor enhancer"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "moderate",
+    "traits": [
+      "flavor booster",
+      "ultra-processed savory additive"
+    ],
+    "signal": "avoid",
+    "note": "Flavor enhancer that signals industrial formulation more than a simple ingredient list.",
+    "sources": [
+      {
+        "label": "PubChem Disodium Guanylate",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Disodium-guanylate"
+      }
+    ]
+  },
+  {
+    "canonical_name": "disodium inosinate",
+    "aliases": [
+      "disodium inosinate"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "flavor enhancer"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "moderate",
+    "traits": [
+      "flavor booster",
+      "ultra-processed savory additive"
+    ],
+    "signal": "avoid",
+    "note": "Flavor enhancer typically paired with other processed taste-boosting ingredients.",
+    "sources": [
+      {
+        "label": "PubChem Disodium Inosinate",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Disodium-inosinate"
+      }
+    ]
+  },
+  {
+    "canonical_name": "enriched wheat flour",
+    "aliases": [
+      "enriched wheat flour",
+      "wheat flour"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "refined grain"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "medium",
+    "traits": [
+      "refined flour",
+      "processed grain"
+    ],
+    "signal": "caution",
+    "note": "More refined than whole-grain flour and less aligned with a stricter cleaner-label approach.",
+    "sources": []
+  },
+  {
+    "canonical_name": "erythritol",
+    "aliases": [
+      "erythritol"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "sweetener"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "high",
+    "traits": [
+      "sugar alcohol",
+      "highly processed"
+    ],
+    "signal": "avoid",
+    "note": "Highly processed sweetener that does not fit a cleaner-label standard.",
+    "sources": []
+  },
+  {
+    "canonical_name": "evaporated cane juice",
+    "aliases": [
+      "evaporated cane juice"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "sweetener"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "medium",
+    "traits": [
+      "refined sweetener"
+    ],
+    "signal": "caution",
+    "note": "Still a processed sugar ingredient rather than a whole-food sweetener.",
+    "sources": []
+  },
+  {
+    "canonical_name": "evaporated milk",
+    "aliases": [
+      "evaporated milk"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "dairy base"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "processed dairy"
+    ],
+    "signal": "caution",
+    "note": "More processed than simple milk.",
+    "sources": []
+  },
+  {
+    "canonical_name": "filtered water",
+    "aliases": [
+      "filtered water",
+      "water"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "base ingredient"
+    ],
+    "organic_alignment": "good",
+    "controversy_level": "low",
+    "traits": [
+      "pantry-simple"
+    ],
+    "signal": "okay",
+    "note": "Neutral base ingredient rather than a warning sign.",
+    "sources": []
+  },
+  {
+    "canonical_name": "fructose",
+    "aliases": [
+      "fructose"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "sweetener"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "medium",
+    "traits": [
+      "refined sweetener"
+    ],
+    "signal": "caution",
+    "note": "Refined sweetener rather than a whole-food ingredient.",
+    "sources": []
+  },
+  {
+    "canonical_name": "garlic",
+    "aliases": [
+      "garlic"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "spice",
+      "whole food"
+    ],
+    "organic_alignment": "good",
+    "controversy_level": "low",
+    "traits": [
+      "whole food",
+      "pantry-simple"
+    ],
+    "signal": "okay",
+    "note": "Simple pantry ingredient that aligns well with a cleaner-label standard.",
+    "sources": []
+  },
+  {
+    "canonical_name": "gelatin",
+    "aliases": [
+      "gelatin"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "gelling agent"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "animal-derived gelling ingredient",
+      "traditional but processed"
+    ],
+    "signal": "caution",
+    "note": "A more traditional gelling ingredient than many gums, but still a processed functional additive.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Gelatin",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "gellan gum",
+    "aliases": [
+      "gellan gum"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "stabilizer",
+      "thickener"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "medium",
+    "traits": [
+      "non-essential texture additive",
+      "processed gum"
+    ],
+    "signal": "avoid",
+    "note": "Texture-focused gum additive that does not fit a pantry-simple standard.",
+    "sources": []
+  },
+  {
+    "canonical_name": "ghee",
+    "aliases": [
+      "ghee"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "fat"
+    ],
+    "organic_alignment": "good",
+    "controversy_level": "low",
+    "traits": [
+      "pantry-simple",
+      "animal-derived"
+    ],
+    "signal": "okay",
+    "note": "Simple fat ingredient that fits a cleaner-label standard better than industrial oils.",
+    "sources": []
+  },
+  {
+    "canonical_name": "glucose syrup",
+    "aliases": [
+      "glucose syrup"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "sweetener"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "high",
+    "traits": [
+      "refined sweetener",
+      "highly processed"
+    ],
+    "signal": "avoid",
+    "note": "Highly processed sweetener that conflicts with a cleaner-label standard.",
     "sources": []
   },
   {
@@ -1180,94 +1459,366 @@
     "sources": []
   },
   {
-    "canonical_name": "safflower oil",
+    "canonical_name": "green 3",
     "aliases": [
-      "safflower oil"
-    ],
-    "processing_level": "highly processed",
-    "whole_food_alignment": "medium",
-    "functional_roles": [
-      "oil",
-      "fat"
-    ],
-    "organic_alignment": "mixed",
-    "controversy_level": "high",
-    "traits": [
-      "highly processed",
-      "not pantry-simple",
-      "refined oil",
-      "seed oil"
-    ],
-    "signal": "avoid",
-    "note": "Industrial seed oil that strongly conflicts with a cleaner-label standard focused on minimally processed ingredients.",
-    "sources": []
-  },
-  {
-    "canonical_name": "rice bran oil",
-    "aliases": [
-      "rice bran oil"
-    ],
-    "processing_level": "highly processed",
-    "whole_food_alignment": "medium",
-    "functional_roles": [
-      "oil",
-      "fat"
-    ],
-    "organic_alignment": "mixed",
-    "controversy_level": "high",
-    "traits": [
-      "highly processed",
-      "not pantry-simple",
-      "refined oil",
-      "seed oil"
-    ],
-    "signal": "avoid",
-    "note": "Industrial seed oil that strongly conflicts with a cleaner-label standard focused on minimally processed ingredients.",
-    "sources": []
-  },
-  {
-    "canonical_name": "palm oil",
-    "aliases": [
-      "palm oil"
-    ],
-    "processing_level": "highly processed",
-    "whole_food_alignment": "medium",
-    "functional_roles": [
-      "oil",
-      "fat"
-    ],
-    "organic_alignment": "mixed",
-    "controversy_level": "high",
-    "traits": [
-      "highly processed",
-      "not pantry-simple",
-      "refined oil",
-      "seed oil",
-      "sourcing concerns"
-    ],
-    "signal": "avoid",
-    "note": "Industrial seed oil that strongly conflicts with a cleaner-label standard focused on minimally processed ingredients.",
-    "sources": []
-  },
-  {
-    "canonical_name": "monosodium glutamate",
-    "aliases": [
-      "monosodium glutamate",
-      "msg"
+      "green 3",
+      "fd&c green no. 3"
     ],
     "processing_level": "highly processed",
     "whole_food_alignment": "low",
     "functional_roles": [
-      "flavor enhancer"
+      "artificial color"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "high",
+    "traits": [
+      "artificial color",
+      "non-essential appearance additive"
+    ],
+    "signal": "avoid",
+    "note": "Artificial coloring is strongly out of step with a cleaner-label approach.",
+    "sources": [
+      {
+        "label": "FDA Color Additives Questions and Answers",
+        "url": "https://www.fda.gov/food/color-additives-information-consumers/color-additives-questions-and-answers-consumers"
+      }
+    ]
+  },
+  {
+    "canonical_name": "guar fiber",
+    "aliases": [
+      "guar fiber",
+      "partially hydrolyzed guar gum"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "fiber additive"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "moderate",
+    "traits": [
+      "engineered fiber ingredient",
+      "gum-derived additive"
+    ],
+    "signal": "avoid",
+    "note": "A heavily processed gum-derived fiber additive that does not read as a simple pantry ingredient.",
+    "sources": [
+      {
+        "label": "PubChem Guar Gum",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Guar-gum"
+      }
+    ]
+  },
+  {
+    "canonical_name": "guar gum",
+    "aliases": [
+      "guar gum"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "stabilizer",
+      "thickener"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "medium",
+    "traits": [
+      "non-essential texture additive",
+      "processed gum"
+    ],
+    "signal": "avoid",
+    "note": "Texture-focused gum additive that does not fit a pantry-simple standard.",
+    "sources": []
+  },
+  {
+    "canonical_name": "gum arabic",
+    "aliases": [
+      "gum arabic",
+      "acacia gum"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "stabilizer",
+      "thickener"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "medium",
+    "traits": [
+      "gum additive",
+      "texture additive"
+    ],
+    "signal": "caution",
+    "note": "Still a formulation additive even if it is often viewed as milder than other gums.",
+    "sources": []
+  },
+  {
+    "canonical_name": "high fructose corn syrup",
+    "aliases": [
+      "high fructose corn syrup",
+      "hfcs"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "sweetener"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "high",
+    "traits": [
+      "refined sweetener",
+      "highly processed"
+    ],
+    "signal": "avoid",
+    "note": "Highly processed sweetener that strongly conflicts with a cleaner-label standard.",
+    "sources": []
+  },
+  {
+    "canonical_name": "inulin",
+    "aliases": [
+      "inulin",
+      "chicory root fiber"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "fiber additive"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "isolated fiber",
+      "common in bars and keto products"
+    ],
+    "signal": "caution",
+    "note": "Marketed as fiber, but still an extracted ingredient often used to formulate processed products.",
+    "sources": [
+      {
+        "label": "PubChem Inulin",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Inulin"
+      }
+    ]
+  },
+  {
+    "canonical_name": "invert sugar",
+    "aliases": [
+      "invert sugar"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "sweetener"
     ],
     "organic_alignment": "poor",
     "controversy_level": "medium",
     "traits": [
-      "flavor enhancer",
-      "processed additive"
+      "refined sweetener",
+      "highly processed"
     ],
     "signal": "avoid",
-    "note": "Flavor-enhancing additive that does not fit a cleaner-label standard.",
+    "note": "Refined sweetener that reads more industrial than pantry-simple.",
+    "sources": []
+  },
+  {
+    "canonical_name": "lactic acid",
+    "aliases": [
+      "lactic acid"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "acidity regulator"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "refined additive"
+    ],
+    "signal": "caution",
+    "note": "Refined additive that is more formulation-oriented than a simple whole-food ingredient.",
+    "sources": []
+  },
+  {
+    "canonical_name": "lecithin",
+    "aliases": [
+      "lecithin",
+      "soy lecithin",
+      "sunflower lecithin"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "emulsifier"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "medium",
+    "traits": [
+      "emulsifier",
+      "formulation additive"
+    ],
+    "signal": "caution",
+    "note": "Emulsifier additive that signals a more engineered product, even when sourced from sunflower or soy.",
+    "sources": []
+  },
+  {
+    "canonical_name": "locust bean gum",
+    "aliases": [
+      "locust bean gum"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "stabilizer",
+      "thickener"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "medium",
+    "traits": [
+      "non-essential texture additive",
+      "processed gum"
+    ],
+    "signal": "avoid",
+    "note": "Texture-focused gum additive that does not fit a pantry-simple standard.",
+    "sources": []
+  },
+  {
+    "canonical_name": "malic acid",
+    "aliases": [
+      "malic acid"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "acidity regulator"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "refined additive"
+    ],
+    "signal": "caution",
+    "note": "Refined additive that is more formulation-oriented than a simple whole-food ingredient.",
+    "sources": []
+  },
+  {
+    "canonical_name": "malt extract",
+    "aliases": [
+      "malt extract",
+      "barley malt extract"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "sweetener",
+      "flavoring"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "processed extract",
+      "sweetening and flavor ingredient"
+    ],
+    "signal": "caution",
+    "note": "More traditional than artificial sweeteners, but still an extract-based processed ingredient.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Malt Extract",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "maltodextrin",
+    "aliases": [
+      "maltodextrin"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "bulking agent",
+      "carbohydrate additive"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "medium",
+    "traits": [
+      "refined carbohydrate additive",
+      "highly processed"
+    ],
+    "signal": "avoid",
+    "note": "Highly processed carbohydrate additive that reads far from a whole-food ingredient panel.",
+    "sources": []
+  },
+  {
+    "canonical_name": "methylcellulose",
+    "aliases": [
+      "methylcellulose"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "thickener",
+      "binder"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "moderate",
+    "traits": [
+      "cellulose-derived additive",
+      "common in ultra-processed texture systems"
+    ],
+    "signal": "avoid",
+    "note": "A highly processed binder and thickener with poor alignment to simple ingredient lists.",
+    "sources": [
+      {
+        "label": "PubChem Methylcellulose",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Methyl-cellulose"
+      }
+    ]
+  },
+  {
+    "canonical_name": "microcrystalline cellulose",
+    "aliases": [
+      "microcrystalline cellulose"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "bulking agent",
+      "stabilizer"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "moderate",
+    "traits": [
+      "wood-pulp-derived additive",
+      "texture aid"
+    ],
+    "signal": "avoid",
+    "note": "A heavily processed cellulose additive used for texture and bulking rather than nourishment.",
+    "sources": [
+      {
+        "label": "PubChem Microcrystalline Cellulose",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Cellulose"
+      }
+    ]
+  },
+  {
+    "canonical_name": "milk",
+    "aliases": [
+      "milk"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "whole food"
+    ],
+    "organic_alignment": "good",
+    "controversy_level": "low",
+    "traits": [
+      "pantry-simple",
+      "animal-derived"
+    ],
+    "signal": "okay",
+    "note": "Simple dairy ingredient that can fit a cleaner-label standard.",
     "sources": []
   },
   {
@@ -1294,29 +1845,104 @@
     "sources": []
   },
   {
-    "canonical_name": "yeast extract",
+    "canonical_name": "molasses",
     "aliases": [
-      "yeast extract"
+      "molasses"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "sweetener"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "less refined sweetener",
+      "traditional pantry ingredient"
+    ],
+    "signal": "caution",
+    "note": "Less refined than white sugar, but still best treated as a sweetener rather than a health food.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Molasses",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "monk fruit extract",
+    "aliases": [
+      "monk fruit extract",
+      "monk fruit"
     ],
     "processing_level": "moderately processed",
     "whole_food_alignment": "low",
     "functional_roles": [
-      "flavor enhancer"
+      "sweetener"
     ],
     "organic_alignment": "mixed",
     "controversy_level": "medium",
     "traits": [
-      "processed flavoring",
-      "formulation additive"
+      "extract sweetener",
+      "processed"
     ],
     "signal": "caution",
-    "note": "More processed and formulation-oriented than a truly simple ingredient panel.",
+    "note": "Extract-based sweetener that is more processed than a whole-food ingredient.",
     "sources": []
   },
   {
-    "canonical_name": "autolyzed yeast extract",
+    "canonical_name": "mono and diglycerides",
     "aliases": [
-      "autolyzed yeast extract"
+      "mono and diglycerides",
+      "mono- and diglycerides",
+      "monoglycerides",
+      "diglycerides"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "emulsifier"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "high",
+    "traits": [
+      "emulsifier",
+      "processed fat additive"
+    ],
+    "signal": "avoid",
+    "note": "Engineered emulsifier that strongly signals a more industrial ingredient panel.",
+    "sources": []
+  },
+  {
+    "canonical_name": "monocalcium phosphate",
+    "aliases": [
+      "monocalcium phosphate"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "leavening agent"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "low",
+    "traits": [
+      "industrial leavening salt",
+      "formulation ingredient"
+    ],
+    "signal": "avoid",
+    "note": "A functional baking additive that fits industrial formulation more than a traditional pantry.",
+    "sources": [
+      {
+        "label": "PubChem Monocalcium Phosphate",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Monocalcium-phosphate"
+      }
+    ]
+  },
+  {
+    "canonical_name": "monosodium glutamate",
+    "aliases": [
+      "monosodium glutamate",
+      "msg"
     ],
     "processing_level": "highly processed",
     "whole_food_alignment": "low",
@@ -1326,11 +1952,130 @@
     "organic_alignment": "poor",
     "controversy_level": "medium",
     "traits": [
-      "processed flavoring",
-      "formulation additive"
+      "flavor enhancer",
+      "processed additive"
     ],
     "signal": "avoid",
-    "note": "Highly processed flavor-enhancing ingredient that conflicts with a cleaner-label standard.",
+    "note": "Flavor-enhancing additive that does not fit a cleaner-label standard.",
+    "sources": []
+  },
+  {
+    "canonical_name": "natural flavor",
+    "aliases": [
+      "natural flavor",
+      "natural flavors"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "flavoring"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "medium",
+    "traits": [
+      "vague label",
+      "formulation additive"
+    ],
+    "signal": "caution",
+    "note": "Vague flavoring term that does not read as transparent or pantry-simple.",
+    "sources": [
+      {
+        "label": "FDA Natural Flavor Definition",
+        "url": "https://www.ecfr.gov/current/title-21/chapter-I/subchapter-B/part-101/subpart-A/section-101.22"
+      }
+    ]
+  },
+  {
+    "canonical_name": "nonfat dry milk",
+    "aliases": [
+      "nonfat dry milk",
+      "dry milk"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "dairy solid"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "powdered dairy",
+      "processed"
+    ],
+    "signal": "caution",
+    "note": "More processed than simple milk or cream.",
+    "sources": []
+  },
+  {
+    "canonical_name": "oat flour",
+    "aliases": [
+      "oat flour"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "flour"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "single-ingredient pantry item",
+      "whole-grain flour"
+    ],
+    "signal": "okay",
+    "note": "A simple flour that remains close to the original grain and fits a whole-food pantry style.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Oats",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "oat milk",
+    "aliases": [
+      "oat milk",
+      "oatmilk"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "plant-based milk"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "processed plant beverage",
+      "often paired with gums or oils"
+    ],
+    "signal": "caution",
+    "note": "Usually more processed than a pantry staple and often bundled with oils, gums, or fortifiers.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Oat Beverage",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "olive oil",
+    "aliases": [
+      "olive oil"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "oil",
+      "fat"
+    ],
+    "organic_alignment": "good",
+    "controversy_level": "low",
+    "traits": [
+      "preferred oil",
+      "pantry-simple"
+    ],
+    "signal": "okay",
+    "note": "Preferred oil choice compared with industrial seed oils.",
     "sources": []
   },
   {
@@ -1357,30 +2102,121 @@
     "sources": []
   },
   {
-    "canonical_name": "garlic",
+    "canonical_name": "organic cane sugar",
     "aliases": [
-      "garlic"
+      "organic cane sugar"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "sweetener"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "refined sweetener",
+      "organic-friendly"
+    ],
+    "signal": "caution",
+    "note": "Organic is a plus, but it is still a refined sweetener rather than a whole-food ingredient.",
+    "sources": []
+  },
+  {
+    "canonical_name": "organic coconut sugar",
+    "aliases": [
+      "organic coconut sugar",
+      "coconut sugar"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "sweetener"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "processed sweetener",
+      "organic-friendly"
+    ],
+    "signal": "caution",
+    "note": "Still a processed sweetener even if cleaner-leaning than many refined syrups.",
+    "sources": []
+  },
+  {
+    "canonical_name": "organic oats",
+    "aliases": [
+      "organic oats",
+      "oats"
     ],
     "processing_level": "minimally processed",
     "whole_food_alignment": "high",
     "functional_roles": [
-      "spice",
       "whole food"
     ],
     "organic_alignment": "good",
     "controversy_level": "low",
     "traits": [
       "whole food",
-      "pantry-simple"
+      "pantry-simple",
+      "organic-friendly"
     ],
     "signal": "okay",
-    "note": "Simple pantry ingredient that aligns well with a cleaner-label standard.",
+    "note": "Simple grain ingredient that reads strongly aligned with a cleaner-label standard.",
     "sources": []
   },
   {
-    "canonical_name": "turmeric",
+    "canonical_name": "organic tapioca starch",
     "aliases": [
-      "turmeric"
+      "organic tapioca starch"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "starch"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "organic pantry starch",
+      "cleaner than many additives"
+    ],
+    "signal": "caution",
+    "note": "Still a refined starch, but it fits much better than synthetic additives or industrial emulsifiers.",
+    "sources": [
+      {
+        "label": "USDA Organic",
+        "url": "https://www.usda.gov/topics/organic"
+      }
+    ]
+  },
+  {
+    "canonical_name": "palm oil",
+    "aliases": [
+      "palm oil"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "oil",
+      "fat"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "high",
+    "traits": [
+      "highly processed",
+      "not pantry-simple",
+      "refined oil",
+      "seed oil",
+      "sourcing concerns"
+    ],
+    "signal": "avoid",
+    "note": "Industrial seed oil that strongly conflicts with a cleaner-label standard focused on minimally processed ingredients.",
+    "sources": []
+  },
+  {
+    "canonical_name": "paprika",
+    "aliases": [
+      "paprika"
     ],
     "processing_level": "minimally processed",
     "whole_food_alignment": "high",
@@ -1398,9 +2234,219 @@
     "sources": []
   },
   {
-    "canonical_name": "broccoli",
+    "canonical_name": "pea protein",
     "aliases": [
-      "broccoli"
+      "pea protein"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "protein concentrate"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "processed plant protein",
+      "less refined than isolates but still extracted"
+    ],
+    "signal": "caution",
+    "note": "Still a processed protein ingredient, even if it is less concerning than a more refined isolate.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Peas",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "pea protein isolate",
+    "aliases": [
+      "pea protein isolate",
+      "pea protein"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "protein concentrate"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "medium",
+    "traits": [
+      "isolated protein",
+      "highly processed"
+    ],
+    "signal": "avoid",
+    "note": "Highly processed isolated protein rather than a simple food ingredient.",
+    "sources": []
+  },
+  {
+    "canonical_name": "pectin",
+    "aliases": [
+      "pectin"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "gelling agent"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "fruit-derived gelling ingredient",
+      "cleaner than synthetic stabilizers"
+    ],
+    "signal": "caution",
+    "note": "More aligned than synthetic thickeners, but still usually shows up as a functional processed additive.",
+    "sources": [
+      {
+        "label": "PubChem Pectin",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Pectin"
+      }
+    ]
+  },
+  {
+    "canonical_name": "phosphoric acid",
+    "aliases": [
+      "phosphoric acid"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "acidifier"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "moderate",
+    "traits": [
+      "industrial acidulant",
+      "common in soda and shelf-stable foods"
+    ],
+    "signal": "avoid",
+    "note": "Industrial acidifier that fits poorly with a whole-food, minimally processed standard.",
+    "sources": [
+      {
+        "label": "PubChem Phosphoric Acid",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Phosphoric-acid"
+      }
+    ]
+  },
+  {
+    "canonical_name": "polydextrose",
+    "aliases": [
+      "polydextrose"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "bulking agent",
+      "fiber additive"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "moderate",
+    "traits": [
+      "engineered fiber additive",
+      "ultra-processed filler"
+    ],
+    "signal": "avoid",
+    "note": "Engineered bulking and fiber additive that does not fit a minimally processed standard.",
+    "sources": [
+      {
+        "label": "PubChem Polydextrose",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Polydextrose"
+      }
+    ]
+  },
+  {
+    "canonical_name": "polysorbate 80",
+    "aliases": [
+      "polysorbate 80",
+      "polysorbate"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "emulsifier"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "high",
+    "traits": [
+      "synthetic emulsifier",
+      "highly processed additive"
+    ],
+    "signal": "avoid",
+    "note": "Synthetic emulsifier that strongly conflicts with a cleaner-label approach.",
+    "sources": []
+  },
+  {
+    "canonical_name": "potassium chloride",
+    "aliases": [
+      "potassium chloride"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "salt substitute"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "low",
+    "traits": [
+      "mineral salt substitute",
+      "used in reduced-sodium processed foods"
+    ],
+    "signal": "caution",
+    "note": "More of a formulation ingredient than a pantry staple, so it lands as caution in a cleaner-label framework.",
+    "sources": [
+      {
+        "label": "PubChem Potassium Chloride",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Potassium-chloride"
+      }
+    ]
+  },
+  {
+    "canonical_name": "potassium sorbate",
+    "aliases": [
+      "potassium sorbate"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "preservative"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "medium",
+    "traits": [
+      "preservative",
+      "synthetic additive"
+    ],
+    "signal": "avoid",
+    "note": "Preservative additive that strongly departs from a minimally processed ingredient standard.",
+    "sources": []
+  },
+  {
+    "canonical_name": "potato starch",
+    "aliases": [
+      "potato starch"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "thickener",
+      "starch"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "medium",
+    "traits": [
+      "refined starch",
+      "processed"
+    ],
+    "signal": "caution",
+    "note": "Processed starch ingredient rather than a whole-food form of potato.",
+    "sources": []
+  },
+  {
+    "canonical_name": "potatoes",
+    "aliases": [
+      "potatoes",
+      "potato"
     ],
     "processing_level": "minimally processed",
     "whole_food_alignment": "high",
@@ -1415,54 +2461,33 @@
     ],
     "signal": "okay",
     "note": "Whole-food ingredient that fits a cleaner ingredient panel.",
+    "sources": []
+  },
+  {
+    "canonical_name": "propylene glycol",
+    "aliases": [
+      "propylene glycol"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "humectant",
+      "carrier"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "high",
+    "traits": [
+      "synthetic additive",
+      "highly processed"
+    ],
+    "signal": "avoid",
+    "note": "Synthetic formulation ingredient that strongly conflicts with a cleaner-label approach.",
     "sources": []
   },
   {
     "canonical_name": "quinoa",
     "aliases": [
       "quinoa"
-    ],
-    "processing_level": "minimally processed",
-    "whole_food_alignment": "high",
-    "functional_roles": [
-      "whole food"
-    ],
-    "organic_alignment": "good",
-    "controversy_level": "low",
-    "traits": [
-      "whole food",
-      "pantry-simple"
-    ],
-    "signal": "okay",
-    "note": "Whole-food ingredient that fits a cleaner ingredient panel.",
-    "sources": []
-  },
-  {
-    "canonical_name": "almonds",
-    "aliases": [
-      "almonds",
-      "almond"
-    ],
-    "processing_level": "minimally processed",
-    "whole_food_alignment": "high",
-    "functional_roles": [
-      "whole food"
-    ],
-    "organic_alignment": "good",
-    "controversy_level": "low",
-    "traits": [
-      "whole food",
-      "pantry-simple"
-    ],
-    "signal": "okay",
-    "note": "Whole-food ingredient that fits a cleaner ingredient panel.",
-    "sources": []
-  },
-  {
-    "canonical_name": "walnuts",
-    "aliases": [
-      "walnuts",
-      "walnut"
     ],
     "processing_level": "minimally processed",
     "whole_food_alignment": "high",
@@ -1502,6 +2527,403 @@
     "sources": []
   },
   {
+    "canonical_name": "red 40",
+    "aliases": [
+      "red 40",
+      "fd&c red no. 40",
+      "allura red"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "artificial color"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "high",
+    "traits": [
+      "artificial color",
+      "non-essential appearance additive"
+    ],
+    "signal": "avoid",
+    "note": "Artificial coloring is strongly out of step with a cleaner-label approach.",
+    "sources": [
+      {
+        "label": "FDA Color Additives Questions and Answers",
+        "url": "https://www.fda.gov/food/color-additives-information-consumers/color-additives-questions-and-answers-consumers"
+      }
+    ]
+  },
+  {
+    "canonical_name": "rice bran oil",
+    "aliases": [
+      "rice bran oil"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "oil",
+      "fat"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "high",
+    "traits": [
+      "highly processed",
+      "not pantry-simple",
+      "refined oil",
+      "seed oil"
+    ],
+    "signal": "avoid",
+    "note": "Industrial seed oil that strongly conflicts with a cleaner-label standard focused on minimally processed ingredients.",
+    "sources": []
+  },
+  {
+    "canonical_name": "rosemary extract",
+    "aliases": [
+      "rosemary extract"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "extract",
+      "preservative support"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "extract additive"
+    ],
+    "signal": "caution",
+    "note": "Cleaner than many additives, but still extract-based and more processed than pantry-simple herbs.",
+    "sources": []
+  },
+  {
+    "canonical_name": "safflower oil",
+    "aliases": [
+      "safflower oil"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "oil",
+      "fat"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "high",
+    "traits": [
+      "highly processed",
+      "not pantry-simple",
+      "refined oil",
+      "seed oil"
+    ],
+    "signal": "avoid",
+    "note": "Industrial seed oil that strongly conflicts with a cleaner-label standard focused on minimally processed ingredients.",
+    "sources": []
+  },
+  {
+    "canonical_name": "sea salt",
+    "aliases": [
+      "sea salt",
+      "salt"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "seasoning"
+    ],
+    "organic_alignment": "good",
+    "controversy_level": "low",
+    "traits": [
+      "pantry-simple"
+    ],
+    "signal": "okay",
+    "note": "Basic seasoning ingredient and not a processing red flag by itself.",
+    "sources": []
+  },
+  {
+    "canonical_name": "silicon dioxide",
+    "aliases": [
+      "silicon dioxide"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "anti-caking agent"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "low",
+    "traits": [
+      "anti-caking additive",
+      "flow aid"
+    ],
+    "signal": "avoid",
+    "note": "Used as an anti-caking additive in packaged foods and supplements, not as a nourishing ingredient.",
+    "sources": [
+      {
+        "label": "PubChem Silicon Dioxide",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Silicon-dioxide"
+      }
+    ]
+  },
+  {
+    "canonical_name": "sodium acid pyrophosphate",
+    "aliases": [
+      "sodium acid pyrophosphate",
+      "sapp"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "leavening agent",
+      "buffer"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "moderate",
+    "traits": [
+      "industrial leavening salt",
+      "highly processed additive"
+    ],
+    "signal": "avoid",
+    "note": "Highly processed additive used to control texture and leavening in packaged foods.",
+    "sources": [
+      {
+        "label": "PubChem Sodium Acid Pyrophosphate",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Sodium-acid-pyrophosphate"
+      }
+    ]
+  },
+  {
+    "canonical_name": "sodium benzoate",
+    "aliases": [
+      "sodium benzoate"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "preservative"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "medium",
+    "traits": [
+      "preservative",
+      "synthetic additive"
+    ],
+    "signal": "avoid",
+    "note": "Preservative additive that strongly departs from a minimally processed ingredient standard.",
+    "sources": []
+  },
+  {
+    "canonical_name": "sodium erythorbate",
+    "aliases": [
+      "sodium erythorbate"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "preservative",
+      "antioxidant"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "moderate",
+    "traits": [
+      "cured-meat additive",
+      "shelf-life extender"
+    ],
+    "signal": "avoid",
+    "note": "Preservative-style additive used to support shelf life and cured color stability.",
+    "sources": [
+      {
+        "label": "PubChem Sodium Erythorbate",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Sodium-erythorbate"
+      }
+    ]
+  },
+  {
+    "canonical_name": "sodium metabisulfite",
+    "aliases": [
+      "sodium metabisulfite"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "preservative"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "high",
+    "traits": [
+      "sulfite preservative",
+      "sensitivity concern"
+    ],
+    "signal": "avoid",
+    "note": "Sulfite-based preservative with sensitivity concerns and poor alignment with minimally processed food.",
+    "sources": [
+      {
+        "label": "FDA Sulfiting Agents",
+        "url": "https://www.fda.gov/food/food-additives-petitions/sulfiting-agents"
+      }
+    ]
+  },
+  {
+    "canonical_name": "sodium nitrite",
+    "aliases": [
+      "sodium nitrite",
+      "nitrites"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "preservative"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "high",
+    "traits": [
+      "cured meat preservative",
+      "highly processed additive"
+    ],
+    "signal": "avoid",
+    "note": "Processed preservative strongly at odds with a cleaner-label standard.",
+    "sources": []
+  },
+  {
+    "canonical_name": "sodium phosphate",
+    "aliases": [
+      "sodium phosphate",
+      "phosphate"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "stabilizer",
+      "buffer"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "moderate",
+    "traits": [
+      "processed mineral salt",
+      "texture and shelf-life aid"
+    ],
+    "signal": "avoid",
+    "note": "Used to manage texture and shelf stability, not as a whole-food ingredient.",
+    "sources": [
+      {
+        "label": "PubChem Sodium Phosphate",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Trisodium-phosphate"
+      }
+    ]
+  },
+  {
+    "canonical_name": "soy lecithin",
+    "aliases": [
+      "soy lecithin"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "emulsifier"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "medium",
+    "traits": [
+      "emulsifier",
+      "formulation additive"
+    ],
+    "signal": "caution",
+    "note": "Emulsifier additive that signals a more engineered product.",
+    "sources": []
+  },
+  {
+    "canonical_name": "soy protein concentrate",
+    "aliases": [
+      "soy protein concentrate"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "protein concentrate"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "moderate",
+    "traits": [
+      "isolated plant protein",
+      "industrial refinement"
+    ],
+    "signal": "avoid",
+    "note": "A highly refined plant-protein ingredient rather than a whole-food soy preparation.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Soy",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "soy protein isolate",
+    "aliases": [
+      "soy protein isolate"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "protein concentrate"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "medium",
+    "traits": [
+      "isolated protein",
+      "highly processed"
+    ],
+    "signal": "avoid",
+    "note": "Highly processed isolated protein rather than a simple food ingredient.",
+    "sources": []
+  },
+  {
+    "canonical_name": "soy protein nuggets",
+    "aliases": [
+      "soy protein nuggets"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "textured protein"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "moderate",
+    "traits": [
+      "extruded protein ingredient",
+      "ultra-processed soy"
+    ],
+    "signal": "avoid",
+    "note": "A highly processed soy texturizer that does not fit a whole-food standard.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Soy",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "soybean oil",
+    "aliases": [
+      "soybean oil"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "oil",
+      "fat"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "high",
+    "traits": [
+      "highly processed",
+      "not pantry-simple",
+      "refined oil",
+      "seed oil"
+    ],
+    "signal": "avoid",
+    "note": "Industrial seed oil that strongly conflicts with a cleaner-label standard focused on minimally processed ingredients.",
+    "sources": []
+  },
+  {
     "canonical_name": "sprouted grains",
     "aliases": [
       "sprouted grains",
@@ -1523,5 +2945,469 @@
     "signal": "okay",
     "note": "Simple ingredient pattern that aligns well with a cleaner-label standard.",
     "sources": []
+  },
+  {
+    "canonical_name": "stevia extract",
+    "aliases": [
+      "stevia extract",
+      "stevia"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "sweetener"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "medium",
+    "traits": [
+      "extract sweetener",
+      "processed"
+    ],
+    "signal": "caution",
+    "note": "More processed and extract-based than a pantry-simple sweetener.",
+    "sources": []
+  },
+  {
+    "canonical_name": "sucralose",
+    "aliases": [
+      "sucralose"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "sweetener"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "high",
+    "traits": [
+      "artificial sweetener",
+      "highly processed"
+    ],
+    "signal": "avoid",
+    "note": "Artificial sweetener that strongly conflicts with a cleaner-label standard.",
+    "sources": []
+  },
+  {
+    "canonical_name": "sulfites",
+    "aliases": [
+      "sulfites",
+      "sulfiting agents"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "preservative"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "high",
+    "traits": [
+      "preservative class",
+      "sensitivity concern"
+    ],
+    "signal": "avoid",
+    "note": "A preservative class that often triggers caution for cleaner-label shoppers and people sensitive to sulfites.",
+    "sources": [
+      {
+        "label": "FDA Sulfiting Agents",
+        "url": "https://www.fda.gov/food/food-additives-petitions/sulfiting-agents"
+      }
+    ]
+  },
+  {
+    "canonical_name": "sunflower lecithin",
+    "aliases": [
+      "sunflower lecithin"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "emulsifier"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "medium",
+    "traits": [
+      "emulsifier",
+      "formulation additive"
+    ],
+    "signal": "caution",
+    "note": "Emulsifier additive that signals a more engineered product.",
+    "sources": []
+  },
+  {
+    "canonical_name": "sunflower oil",
+    "aliases": [
+      "sunflower oil"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "oil",
+      "fat"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "high",
+    "traits": [
+      "highly processed",
+      "not pantry-simple",
+      "refined oil",
+      "seed oil"
+    ],
+    "signal": "avoid",
+    "note": "Industrial seed oil that strongly conflicts with a cleaner-label standard focused on minimally processed ingredients.",
+    "sources": []
+  },
+  {
+    "canonical_name": "tapioca starch",
+    "aliases": [
+      "tapioca starch"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "thickener",
+      "starch"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "medium",
+    "traits": [
+      "refined starch",
+      "processed"
+    ],
+    "signal": "caution",
+    "note": "Processed starch ingredient rather than a whole-food ingredient.",
+    "sources": []
+  },
+  {
+    "canonical_name": "tapioca syrup",
+    "aliases": [
+      "tapioca syrup"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "sweetener"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "processed syrup sweetener",
+      "glucose-style sweetener"
+    ],
+    "signal": "caution",
+    "note": "A processed syrup sweetener that may be marketed as cleaner, but is still a concentrated sweetener.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Tapioca",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "textured vegetable protein",
+    "aliases": [
+      "textured vegetable protein",
+      "tvp"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "textured protein"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "moderate",
+    "traits": [
+      "extruded protein ingredient",
+      "ultra-processed plant protein"
+    ],
+    "signal": "avoid",
+    "note": "A highly processed protein ingredient built for texture and formulation rather than simplicity.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central TVP",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "titanium dioxide",
+    "aliases": [
+      "titanium dioxide"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "color additive"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "high",
+    "traits": [
+      "appearance additive",
+      "highly processed"
+    ],
+    "signal": "avoid",
+    "note": "Appearance-focused additive with significant controversy and no whole-food value.",
+    "sources": []
+  },
+  {
+    "canonical_name": "tocopherols",
+    "aliases": [
+      "tocopherols",
+      "mixed tocopherols"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "preservative support",
+      "antioxidant"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "additive",
+      "shelf-life support"
+    ],
+    "signal": "caution",
+    "note": "Often milder than synthetic preservatives, but still an additive used for formulation support.",
+    "sources": []
+  },
+  {
+    "canonical_name": "turmeric",
+    "aliases": [
+      "turmeric"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "spice"
+    ],
+    "organic_alignment": "good",
+    "controversy_level": "low",
+    "traits": [
+      "pantry-simple",
+      "spice"
+    ],
+    "signal": "okay",
+    "note": "Simple spice ingredient that aligns well with a cleaner-label standard.",
+    "sources": []
+  },
+  {
+    "canonical_name": "vinegar",
+    "aliases": [
+      "vinegar"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "acidulant",
+      "seasoning"
+    ],
+    "organic_alignment": "good",
+    "controversy_level": "low",
+    "traits": [
+      "pantry-simple"
+    ],
+    "signal": "okay",
+    "note": "Simple pantry ingredient that generally fits a cleaner-label standard.",
+    "sources": []
+  },
+  {
+    "canonical_name": "walnuts",
+    "aliases": [
+      "walnuts",
+      "walnut"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "whole food"
+    ],
+    "organic_alignment": "good",
+    "controversy_level": "low",
+    "traits": [
+      "whole food",
+      "pantry-simple"
+    ],
+    "signal": "okay",
+    "note": "Whole-food ingredient that fits a cleaner ingredient panel.",
+    "sources": []
+  },
+  {
+    "canonical_name": "whey protein concentrate",
+    "aliases": [
+      "whey protein concentrate"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "protein concentrate"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "refined dairy protein",
+      "formulation ingredient"
+    ],
+    "signal": "caution",
+    "note": "Less processed than an isolate, but still a refined protein ingredient rather than a simple whole food.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Whey",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "whey protein isolate",
+    "aliases": [
+      "whey protein isolate"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "protein concentrate"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "medium",
+    "traits": [
+      "isolated protein",
+      "highly processed"
+    ],
+    "signal": "avoid",
+    "note": "Highly processed isolated protein rather than a simple food ingredient.",
+    "sources": []
+  },
+  {
+    "canonical_name": "white rice flour",
+    "aliases": [
+      "white rice flour",
+      "rice flour"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "refined grain"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "processed flour"
+    ],
+    "signal": "caution",
+    "note": "More processed than intact grains and less aligned with a stricter cleaner-label standard.",
+    "sources": []
+  },
+  {
+    "canonical_name": "whole wheat flour",
+    "aliases": [
+      "whole wheat flour"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "whole food"
+    ],
+    "organic_alignment": "good",
+    "controversy_level": "low",
+    "traits": [
+      "pantry-simple",
+      "whole grain"
+    ],
+    "signal": "okay",
+    "note": "Simple whole-grain flour ingredient that fits a cleaner-label standard.",
+    "sources": []
+  },
+  {
+    "canonical_name": "xanthan gum",
+    "aliases": [
+      "xanthan gum"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "stabilizer",
+      "thickener"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "medium",
+    "traits": [
+      "non-essential texture additive",
+      "processed gum"
+    ],
+    "signal": "avoid",
+    "note": "Texture-focused gum additive that does not fit a pantry-simple standard.",
+    "sources": []
+  },
+  {
+    "canonical_name": "yeast extract",
+    "aliases": [
+      "yeast extract"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "flavor enhancer"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "medium",
+    "traits": [
+      "processed flavoring",
+      "formulation additive"
+    ],
+    "signal": "caution",
+    "note": "More processed and formulation-oriented than a truly simple ingredient panel.",
+    "sources": []
+  },
+  {
+    "canonical_name": "yellow 5",
+    "aliases": [
+      "yellow 5",
+      "fd&c yellow no. 5",
+      "tartrazine"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "artificial color"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "high",
+    "traits": [
+      "artificial color",
+      "non-essential appearance additive"
+    ],
+    "signal": "avoid",
+    "note": "Artificial coloring is strongly out of step with a cleaner-label approach.",
+    "sources": [
+      {
+        "label": "FDA Color Additives Questions and Answers",
+        "url": "https://www.fda.gov/food/color-additives-information-consumers/color-additives-questions-and-answers-consumers"
+      }
+    ]
+  },
+  {
+    "canonical_name": "yellow 6",
+    "aliases": [
+      "yellow 6",
+      "fd&c yellow no. 6"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "artificial color"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "high",
+    "traits": [
+      "artificial color",
+      "non-essential appearance additive"
+    ],
+    "signal": "avoid",
+    "note": "Artificial coloring is strongly out of step with a cleaner-label approach.",
+    "sources": [
+      {
+        "label": "FDA Color Additives Questions and Answers",
+        "url": "https://www.fda.gov/food/color-additives-information-consumers/color-additives-questions-and-answers-consumers"
+      }
+    ]
   }
 ]

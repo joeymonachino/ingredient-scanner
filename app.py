@@ -619,6 +619,27 @@ def ingredient_detail(slug: str) -> str:
     )
 
 
+
+
+@app.get("/about")
+def about_page() -> str:
+    return render_template(
+        "about.html",
+        page_title="About | Ingredient Scanner",
+        page_description="Learn what Ingredient Scanner is, who it is for, and how it approaches cleaner-label ingredient checks.",
+        canonical_url=request.url,
+    )
+
+
+@app.get("/methodology")
+def methodology_page() -> str:
+    return render_template(
+        "methodology.html",
+        page_title="Methodology | Ingredient Scanner",
+        page_description="See how Ingredient Scanner classifies ingredients using policy-backed records, fallback heuristics, and confidence labels.",
+        canonical_url=request.url,
+    )
+
 @app.post("/api/analyze")
 def analyze_api():
     payload = request.get_json(silent=True) or {}

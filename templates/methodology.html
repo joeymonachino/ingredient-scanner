@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ page_title }}</title>
+    <meta name="description" content="{{ page_description }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+    <div class="page-shell">
+        <section class="hero-card ingredient-hero-card">
+            <div class="hero-copy">
+                <p class="eyebrow">Methodology</p>
+                <h1>How Ingredient Scanner decides what to flag.</h1>
+                <p class="hero-text">
+                    The app uses a layered method: curated ingredient policy records when available, heuristic fallback when an ingredient looks real but is not yet in the catalog, and an explicit unknown state when confidence is too low.
+                </p>
+                <div class="detail-nav-row">
+                    <a class="sample-chip link-chip" href="{{ url_for('index') }}">Back to Scanner</a>
+                    <a class="sample-chip link-chip" href="{{ url_for('ingredient_index') }}">Browse Ingredients</a>
+                </div>
+            </div>
+            <div class="hero-panel">
+                <div class="metric">
+                    <span class="metric-label">Layer 1</span>
+                    <strong>Policy-backed ingredient catalog</strong>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Layer 2</span>
+                    <strong>Heuristic fallback for plausible ingredient names</strong>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Layer 3</span>
+                    <strong>Unknown state when confidence is too low</strong>
+                </div>
+            </div>
+        </section>
+
+        <section class="results-grid product-results-grid">
+            <article class="result-card wide">
+                <p class="eyebrow">1. Policy Catalog</p>
+                <h2>The strongest classification path</h2>
+                <p class="soft-copy">
+                    When an ingredient matches a curated policy record, the app can use fields like processing level, functional role, whole-food alignment, organic alignment, controversy level, traits, note text, and source links.
+                </p>
+            </article>
+
+            <article class="result-card">
+                <p class="eyebrow">2. Heuristic Fallback</p>
+                <h3>Used carefully</h3>
+                <p class="soft-copy">
+                    If an ingredient is not yet in the catalog but clearly looks like a real additive or ingredient name, the app can still estimate a result. Those cases are explicitly labeled <code>heuristic-only</code> so users know the result is weaker.
+                </p>
+            </article>
+
+            <article class="result-card">
+                <p class="eyebrow">3. Unknown Input</p>
+                <h3>No fake certainty</h3>
+                <p class="soft-copy">
+                    If the text does not match a policy record and does not look like a plausible ingredient, the app returns <code>unknown</code> and tells the user it could not confidently identify the input.
+                </p>
+            </article>
+
+            <article class="result-card wide">
+                <p class="eyebrow">Product Verdict Logic</p>
+                <h3>How label-level results are built</h3>
+                <ul class="detail-list">
+                    <li>If any ingredient is <code>avoid</code>, the overall product currently lands in <code>avoid</code>.</li>
+                    <li>If there are no avoids but one or more <code>caution</code> ingredients, the product lands in <code>caution</code>.</li>
+                    <li>If the ingredients are mostly minimally processed and policy-aligned, the product can land in <code>okay</code>.</li>
+                    <li>If the label cannot be interpreted confidently, it can fall into <code>needs context</code>.</li>
+                </ul>
+            </article>
+
+            <article class="result-card wide">
+                <p class="eyebrow">Limitations</p>
+                <h3>What the app does not claim</h3>
+                <p class="soft-copy">
+                    Ingredient Scanner does not claim to settle every safety debate, medical question, or nutrition question. It is a cleaner-label policy tool built around a stricter ingredient-conscious standard, not a substitute for personal research or medical guidance.
+                </p>
+            </article>
+        </section>
+
+        <footer class="footer-note">
+            The methodology will keep improving as the ingredient catalog expands and more policy records are supported with better sourcing.
+        </footer>
+    </div>
+</body>
+</html>
