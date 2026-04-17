@@ -14,6 +14,7 @@
       window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
     </script>
     <script defer src="/_vercel/insights/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 </head>
 <body>
     <div class="page-shell">
@@ -47,7 +48,7 @@
                 </div>
 
                 <p class="micro-note">
-                    Text input is live today, and photo upload is now the first step toward full label scanning.
+                    Text input is live today, and label scanning now runs with free browser OCR after you upload a photo.
                 </p>
 
                 <form class="photo-upload-form" method="post" action="/analyze-photo" enctype="multipart/form-data">
@@ -56,7 +57,7 @@
                         <input id="label-photo" name="label_photo" type="file" accept="image/png,image/jpeg,image/webp" required>
                         <button type="submit">Upload Photo</button>
                     </div>
-                    <p class="micro-note" id="photo-upload-status">Use a clear photo of the ingredient panel. OCR comes next.</p>
+                    <p class="micro-note" id="photo-upload-status">Use a clear photo of the ingredient panel. OCR now runs in your browser after upload.</p>
 
                     <div class="crop-tool" id="crop-tool">
                         <div class="crop-preview-shell">
@@ -109,44 +110,48 @@
 
         {% if photo_upload %}
         <section class="results-grid photo-results-grid">
-            <article class="result-card spotlight needs-context wide">
+            <article class="result-card spotlight needs-context wide" id="browser-ocr-card">
                 <p class="eyebrow">Photo Upload</p>
                 <h2>{{ photo_upload.filename }}</h2>
                 <div class="sample-row inline-status-row">
-                    <span class="signal-pill">{{ photo_upload.status }}</span>
-                    <span class="confidence-pill heuristic-only">{{ photo_upload.ocr_status|replace('-', ' ') }}</span>
-                    <span class="confidence-pill {{ photo_upload.ocr_reconstruction_confidence }}">reconstruction {{ photo_upload.ocr_reconstruction_confidence }}</span>
+                    <span class="signal-pill" id="photo-upload-status-pill">{{ photo_upload.status }}</span>
+                    <span class="confidence-pill heuristic-only" id="photo-upload-ocr-status-pill">{{ photo_upload.ocr_status|replace('-', ' ') }}</span>
+                    <span class="confidence-pill {{ photo_upload.ocr_reconstruction_confidence }}" id="photo-upload-reconstruction-pill">reconstruction {{ photo_upload.ocr_reconstruction_confidence }}</span>
                 </div>
-                <p class="result-copy">{{ photo_upload.next_step }}</p>
-                <p class="soft-copy">{{ photo_upload.helper_text }}</p>
+                <p class="result-copy" id="photo-upload-next-step">{{ photo_upload.next_step }}</p>
+                <p class="soft-copy" id="photo-upload-helper-text">{{ photo_upload.helper_text }}</p>
                 {% if photo_upload.ocr_reconstruction_note %}
-                <p class="soft-copy">{{ photo_upload.ocr_reconstruction_note }}</p>
+                <p class="soft-copy" id="photo-upload-reconstruction-note">{{ photo_upload.ocr_reconstruction_note }}</p>
                 {% endif %}
 
                 <div class="meta-grid">
                     <div class="meta-item">
                         <span class="meta-label">File Type</span>
-                        <strong>{{ photo_upload.mime_type }}</strong>
+                        <strong id="photo-upload-mime-type">{{ photo_upload.mime_type }}</strong>
                     </div>
                     <div class="meta-item">
                         <span class="meta-label">Approx Size</span>
-                        <strong>{{ photo_upload.size_kb }} KB</strong>
+                        <strong id="photo-upload-size-kb">{{ photo_upload.size_kb }} KB</strong>
                     </div>
                     <div class="meta-item">
                         <span class="meta-label">OCR Lines</span>
-                        <strong>{{ photo_upload.ocr_line_count }}</strong>
+                        <strong id="photo-upload-ocr-lines">{{ photo_upload.ocr_line_count }}</strong>
                     </div>
                     <div class="meta-item">
                         <span class="meta-label">OCR Confidence</span>
-                        <strong>{{ photo_upload.ocr_confidence if photo_upload.ocr_confidence is not none else 'n/a' }}</strong>
+                        <strong id="photo-upload-ocr-confidence">{{ photo_upload.ocr_confidence if photo_upload.ocr_confidence is not none else 'n/a' }}</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">OCR Provider</span>
+                        <strong id="photo-upload-ocr-provider">{{ photo_upload.ocr_provider }}</strong>
                     </div>
                     <div class="meta-item">
                         <span class="meta-label">Manual Crop</span>
-                        <strong>{{ 'yes' if photo_upload.crop_applied else 'no' }}</strong>
+                        <strong id="photo-upload-manual-crop">{{ 'yes' if photo_upload.crop_applied else 'no' }}</strong>
                     </div>
                     <div class="meta-item">
                         <span class="meta-label">Repair Ratio</span>
-                        <strong>{{ photo_upload.ocr_repair_ratio }}</strong>
+                        <strong id="photo-upload-repair-ratio">{{ photo_upload.ocr_repair_ratio }}</strong>
                     </div>
                 </div>
             </article>
@@ -154,7 +159,7 @@
             <article class="result-card wide">
                 <p class="eyebrow">Preview</p>
                 <h3>Uploaded label image</h3>
-                <img class="upload-preview" src="{{ photo_upload.preview_url }}" alt="Uploaded ingredient label preview">
+                <img class="upload-preview" id="uploaded-label-preview" src="{{ photo_upload.preview_url }}" alt="Uploaded ingredient label preview">
             </article>
 
             <article class="result-card wide">
@@ -173,37 +178,29 @@
                     </div>
                 </form>
 
-                {% if photo_upload.ocr_has_suggested_changes %}
-                <div class="ocr-suggestion-card">
+                <div class="ocr-suggestion-card" id="ocr-suggestion-card" {% if not photo_upload.ocr_has_suggested_changes and not photo_upload.ocr_suggested_merged_text %}hidden{% endif %}>
                     <p class="eyebrow">Suggested Repairs</p>
                     <h3>Likely fixes for OCR misses</h3>
                     <pre class="ocr-raw-text" id="ocr-suggested-text">{{ photo_upload.ocr_suggested_text }}</pre>
                     <div class="sample-row">
                         <button class="sample-chip link-chip" type="button" id="use-ocr-suggestion">Use Suggested Repairs</button>
-                        {% if photo_upload.ocr_suggested_merged_text %}
-                        <button class="sample-chip link-chip" type="button" id="use-ocr-merged-suggestion">Use Merged Label Suggestion</button>
-                        {% endif %}
+                        <button class="sample-chip link-chip" type="button" id="use-ocr-merged-suggestion" {% if not photo_upload.ocr_suggested_merged_text %}hidden{% endif %}>Use Merged Label Suggestion</button>
                     </div>
-                    {% if photo_upload.ocr_suggested_merged_text %}
-                    <details class="ocr-raw-details">
+                    <details class="ocr-raw-details" id="ocr-merged-details" {% if not photo_upload.ocr_suggested_merged_text %}hidden{% endif %}>
                         <summary>Show merged label suggestion</summary>
                         <pre class="ocr-raw-text" id="ocr-merged-suggested-text">{{ photo_upload.ocr_suggested_merged_text }}</pre>
                     </details>
-                    {% endif %}
-                    <div class="ocr-change-list">
+                    <div class="ocr-change-list" id="ocr-change-list">
                         {% for change in photo_upload.ocr_suggested_changes %}
                         <p class="soft-copy"><strong>{{ change.from }}</strong> -> <strong>{{ change.to }}</strong></p>
                         {% endfor %}
                     </div>
                 </div>
-                {% endif %}
 
-                {% if photo_upload.ocr_raw_text and photo_upload.ocr_raw_text != photo_upload.ocr_text %}
-                <details class="ocr-raw-details">
+                <details class="ocr-raw-details" id="ocr-raw-details" {% if not photo_upload.ocr_raw_text or photo_upload.ocr_raw_text == photo_upload.ocr_text %}hidden{% endif %}>
                     <summary>Show raw OCR text</summary>
-                    <pre class="ocr-raw-text">{{ photo_upload.ocr_raw_text }}</pre>
+                    <pre class="ocr-raw-text" id="ocr-raw-text">{{ photo_upload.ocr_raw_text }}</pre>
                 </details>
-                {% endif %}
             </article>
         </section>
         {% endif %}

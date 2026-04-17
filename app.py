@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 import base64
 import difflib
+import os
 import io
 import json
 from pathlib import Path
@@ -26,11 +27,29 @@ app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = 8 * 1024 * 1024
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = BASE_DIR / "data"
+SECRETS_DIR = BASE_DIR / "secrets"
 POLICY_PATH = DATA_DIR / "ingredient_policies.json"
 ANALYTICS_PATH = DATA_DIR / "analytics_summary.json"
 ALLOWED_IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp"}
 ALLOWED_IMAGE_MIME_TYPES = {"image/png", "image/jpeg", "image/webp"}
 OCR_ENGINE = None
+
+
+def load_local_secret(*filenames: str) -> str | None:
+    for filename in filenames:
+        secret_path = SECRETS_DIR / filename
+        if secret_path.exists():
+            value = secret_path.read_text(encoding="utf-8").strip()
+            if value:
+                return value
+    return None
+
+
+GOOGLE_VISION_API_KEY = (
+    os.getenv("GOOGLE_CLOUD_VISION_API_KEY")
+    or os.getenv("GOOGLE_VISION_API_KEY")
+    or load_local_secret("google_cloud_vision_api_key.txt", "google_vision_api_key.txt")
+)
 
 WHOLE_FOOD_MARKERS = {
     "apple", "oat", "olive oil", "avocado oil", "coconut oil", "ginger", "turmeric",
@@ -128,6 +147,58 @@ def load_policy_records() -> list[dict[str, Any]]:
 POLICY_RECORDS = load_policy_records()
 
 
+def read_analytics_summary() -> dict[str, Any]:
+    if not ANALYTICS_PATH.exists():
+        return {
+            "ingredient_searches": {},
+            "product_searches": {},
+            "ingredient_pageviews": {},
+            "site_pageviews": {},
+        }
+    try:
+        payload = json.loads(ANALYTICS_PATH.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        payload = {}
+    payload.setdefault("ingredient_searches", {})
+    payload.setdefault("product_searches", {})
+    payload.setdefault("ingredient_pageviews", {})
+    payload.setdefault("site_pageviews", {})
+    return payload
+
+
+def write_analytics_summary(payload: dict[str, Any]) -> None:
+    try:
+        ANALYTICS_PATH.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    except OSError:
+        return
+
+
+def bump_analytics_bucket(bucket: str, key: str) -> None:
+    payload = read_analytics_summary()
+    store = payload.setdefault(bucket, {})
+    store[key] = int(store.get(key, 0)) + 1
+    write_analytics_summary(payload)
+
+
+def log_search(query: str, kind: str) -> None:
+    normalized = " ".join(query.strip().lower().split())[:160]
+    if not normalized:
+        return
+    bucket = "ingredient_searches" if kind == "ingredient" else "product_searches"
+    bump_analytics_bucket(bucket, normalized)
+
+
+def log_pageview(slug: str) -> None:
+    normalized = slug.strip().lower()[:160]
+    if not normalized:
+        return
+    bump_analytics_bucket("ingredient_pageviews", normalized)
+
+
+def log_index_pageview() -> None:
+    bump_analytics_bucket("site_pageviews", "ingredients-index")
+
+
 def ingredient_slug(name: str) -> str:
     slug = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
     return slug or "ingredient"
@@ -135,6 +206,9 @@ def ingredient_slug(name: str) -> str:
 
 def policy_slug_map() -> dict[str, dict[str, Any]]:
     return {ingredient_slug(record["canonical_name"]): record for record in POLICY_RECORDS}
+
+
+app.jinja_env.globals["ingredient_slug"] = ingredient_slug
 
 
 def find_policy_by_slug(slug: str) -> dict[str, Any] | None:
@@ -197,6 +271,78 @@ def get_ocr_engine() -> Any | None:
     if OCR_ENGINE is None:
         OCR_ENGINE = RapidOCR()
     return OCR_ENGINE
+
+
+def external_ocr_via_google_vision(payload: bytes) -> dict[str, Any] | None:
+    if not GOOGLE_VISION_API_KEY:
+        return None
+    try:
+        response = requests.post(
+            f"https://vision.googleapis.com/v1/images:annotate?key={GOOGLE_VISION_API_KEY}",
+            json={
+                "requests": [
+                    {
+                        "image": {"content": base64.b64encode(payload).decode("ascii")},
+                        "features": [{"type": "DOCUMENT_TEXT_DETECTION"}],
+                    }
+                ]
+            },
+            timeout=25,
+        )
+        response.raise_for_status()
+        payload_json = response.json()
+        result = (payload_json.get("responses") or [{}])[0]
+        raw_text = (result.get("fullTextAnnotation") or {}).get("text")
+        if not raw_text:
+            annotations = result.get("textAnnotations") or []
+            raw_text = annotations[0].get("description") if annotations else ""
+        if not raw_text:
+            return {
+                "status": "empty",
+                "message": "Google Vision did not detect readable text in this image.",
+                "raw_text": "",
+                "candidate_text": "",
+                "line_count": 0,
+                "confidence": None,
+                "provider": "google-cloud-vision",
+            }
+        normalized = normalize_ocr_text(raw_text)
+        lines = [line for line in normalized.split("\n") if line.strip()]
+        return {
+            "status": "ready",
+            "message": "Google Vision OCR found likely ingredient text. Review and edit it before running the ingredient analysis.",
+            "raw_text": normalized,
+            "candidate_text": extract_candidate_label_text(normalized),
+            "line_count": len(lines),
+            "confidence": None,
+            "provider": "google-cloud-vision",
+        }
+    except requests.RequestException:
+        return None
+
+
+def finalize_ocr_result(base_result: dict[str, Any]) -> dict[str, Any]:
+    candidate_text = str(base_result.get("candidate_text", "") or "")
+    suggestions = build_ocr_suggestions(candidate_text) if candidate_text else {
+        "text": "",
+        "changes": [],
+        "merged_text": "",
+        "has_changes": False,
+        "repair_ratio": 0,
+        "reconstruction_confidence": "high",
+        "reconstruction_note": "",
+    }
+    payload = dict(base_result)
+    payload.update({
+        "suggested_text": suggestions["text"],
+        "suggested_changes": suggestions["changes"],
+        "suggested_merged_text": suggestions.get("merged_text", ""),
+        "has_suggested_changes": suggestions["has_changes"],
+        "repair_ratio": suggestions.get("repair_ratio", 0),
+        "reconstruction_confidence": suggestions.get("reconstruction_confidence", "high"),
+        "reconstruction_note": suggestions.get("reconstruction_note", ""),
+    })
+    return payload
 
 
 def normalize_ocr_text(text: str) -> str:
@@ -524,24 +670,44 @@ def score_ocr_candidate(candidate_text: str, raw_text: str) -> int:
 
 
 def extract_text_from_image(payload: bytes, *, allow_auto_crop: bool = True) -> dict[str, Any]:
+    google_result = external_ocr_via_google_vision(payload)
+    if google_result is not None:
+        return finalize_ocr_result(google_result)
+
     if Image is None or np is None:
         return {
             "status": "unavailable",
-            "message": "OCR dependencies are not installed in this environment.",
+            "message": "OCR dependencies are not installed in this environment. Configure GOOGLE_CLOUD_VISION_API_KEY in production to enable hosted OCR.",
             "raw_text": "",
             "candidate_text": "",
             "line_count": 0,
             "confidence": None,
+            "provider": "unavailable",
+            "suggested_text": "",
+            "suggested_changes": [],
+            "suggested_merged_text": "",
+            "has_suggested_changes": False,
+            "repair_ratio": 0,
+            "reconstruction_confidence": "high",
+            "reconstruction_note": "",
         }
     engine = get_ocr_engine()
     if engine is None:
         return {
             "status": "unavailable",
-            "message": "OCR engine could not be created.",
+            "message": "No OCR engine is available. Configure GOOGLE_CLOUD_VISION_API_KEY in production to enable hosted OCR.",
             "raw_text": "",
             "candidate_text": "",
             "line_count": 0,
             "confidence": None,
+            "provider": "unavailable",
+            "suggested_text": "",
+            "suggested_changes": [],
+            "suggested_merged_text": "",
+            "has_suggested_changes": False,
+            "repair_ratio": 0,
+            "reconstruction_confidence": "high",
+            "reconstruction_note": "",
         }
     try:
         image = Image.open(io.BytesIO(payload)).convert("RGB")
@@ -554,6 +720,14 @@ def extract_text_from_image(payload: bytes, *, allow_auto_crop: bool = True) -> 
             "candidate_text": "",
             "line_count": 0,
             "confidence": None,
+            "provider": "rapidocr-onnxruntime",
+            "suggested_text": "",
+            "suggested_changes": [],
+            "suggested_merged_text": "",
+            "has_suggested_changes": False,
+            "repair_ratio": 0,
+            "reconstruction_confidence": "high",
+            "reconstruction_note": "",
         }
     best_result: dict[str, Any] | None = None
     for variant_name, variant_image in variants:
@@ -571,6 +745,7 @@ def extract_text_from_image(payload: bytes, *, allow_auto_crop: bool = True) -> 
             "line_count": len(lines),
             "confidence": confidence,
             "score": score,
+            "provider": "rapidocr-onnxruntime",
         }
         if best_result is None or option["score"] > best_result["score"]:
             best_result = option
@@ -582,394 +757,80 @@ def extract_text_from_image(payload: bytes, *, allow_auto_crop: bool = True) -> 
             "candidate_text": "",
             "line_count": 0,
             "confidence": None,
+            "provider": "rapidocr-onnxruntime",
+            "suggested_text": "",
+            "suggested_changes": [],
+            "suggested_merged_text": "",
+            "has_suggested_changes": False,
+            "repair_ratio": 0,
+            "reconstruction_confidence": "high",
+            "reconstruction_note": "",
         }
     status = "ready" if best_result["candidate_text"] else "empty"
     message = "OCR found likely ingredient text. Review and edit it before running the ingredient analysis." if best_result["candidate_text"] else "The image uploaded, but OCR did not find enough ingredient-style text to use yet."
-    suggestions = build_ocr_suggestions(best_result["candidate_text"]) if best_result["candidate_text"] else {"text": "", "changes": [], "merged_text": "", "has_changes": False, "repair_ratio": 0, "reconstruction_confidence": "high", "reconstruction_note": ""}
-    return {
+    base_result = {
         "status": status,
         "message": message,
         "raw_text": best_result["raw_text"],
         "candidate_text": best_result["candidate_text"],
-        "suggested_text": suggestions["text"],
-        "suggested_changes": suggestions["changes"],
-        "suggested_merged_text": suggestions.get("merged_text", ""),
-        "has_suggested_changes": suggestions["has_changes"],
-        "repair_ratio": suggestions.get("repair_ratio", 0),
-        "reconstruction_confidence": suggestions.get("reconstruction_confidence", "high"),
-        "reconstruction_note": suggestions.get("reconstruction_note", ""),
         "line_count": best_result["line_count"],
         "confidence": best_result["confidence"],
+        "provider": best_result["provider"],
     }
+    return finalize_ocr_result(base_result)
 
 
-def build_photo_upload_payload(filename: str, mime_type: str, payload: bytes, crop_settings: dict[str, float] | None = None) -> dict[str, Any]:
-    crop_settings = crop_settings or {"left": 0.0, "top": 0.0, "right": 100.0, "bottom": 100.0}
-    encoded = base64.b64encode(payload).decode("ascii")
-    size_kb = max(1, round(len(payload) / 1024))
-    ocr_payload = crop_image_payload(payload, crop_settings)
-    manual_crop_applied = crop_settings != {"left": 0.0, "top": 0.0, "right": 100.0, "bottom": 100.0}
-    ocr_result = extract_text_from_image(ocr_payload, allow_auto_crop=not manual_crop_applied)
-    next_step = "OCR text is ready to review below." if ocr_result["status"] == "ready" else "Photo upload is working. OCR still needs a clearer label image or more tuning."
-    helper_text = ocr_result["message"]
+
+
+def build_photo_upload_payload(filename: str, mime_type: str, payload: bytes, *, crop_settings: dict[str, float]) -> dict[str, Any]:
+    defaults = {"left": 0.0, "top": 0.0, "right": 100.0, "bottom": 100.0}
+    crop_applied = any(abs(float(crop_settings.get(key, defaults[key])) - defaults[key]) > 0.01 for key in defaults)
+    processed_payload = crop_image_payload(payload, crop_settings)
+    preview_mime = "image/jpeg" if crop_applied else mime_type
+    preview_url = f"data:{preview_mime};base64,{base64.b64encode(processed_payload).decode('ascii')}"
     return {
         "filename": filename,
-        "mime_type": mime_type,
-        "size_kb": size_kb,
-        "preview_url": f"data:{mime_type};base64,{encoded}",
+        "mime_type": preview_mime,
+        "size_kb": max(1, round(len(processed_payload) / 1024)),
         "status": "uploaded",
-        "next_step": next_step,
-        "helper_text": helper_text,
-        "ocr_status": ocr_result["status"],
-        "ocr_confidence": ocr_result["confidence"],
-        "ocr_line_count": ocr_result["line_count"],
-        "ocr_text": ocr_result["candidate_text"],
-        "ocr_raw_text": ocr_result["raw_text"],
-        "ocr_suggested_text": ocr_result.get("suggested_text", ""),
-        "ocr_suggested_changes": ocr_result.get("suggested_changes", []),
-        "ocr_suggested_merged_text": ocr_result.get("suggested_merged_text", ""),
-        "ocr_has_suggested_changes": ocr_result.get("has_suggested_changes", False),
-        "ocr_repair_ratio": ocr_result.get("repair_ratio", 0),
-        "ocr_reconstruction_confidence": ocr_result.get("reconstruction_confidence", "high"),
-        "ocr_reconstruction_note": ocr_result.get("reconstruction_note", ""),
-        "crop_settings": crop_settings,
-        "crop_applied": manual_crop_applied,
+        "next_step": "Browser OCR is starting on this photo now. Review the extracted text before running the ingredient analysis.",
+        "helper_text": "This scanner now uses browser-side Tesseract so it can stay free and work in production without a paid OCR API.",
+        "preview_url": preview_url,
+        "crop_applied": crop_applied,
+        "ocr_status": "waiting",
+        "ocr_line_count": 0,
+        "ocr_confidence": None,
+        "ocr_provider": "browser tesseract",
+        "ocr_repair_ratio": 0,
+        "ocr_reconstruction_confidence": "high",
+        "ocr_reconstruction_note": "OCR will run in your browser on the uploaded photo. If the text still looks rough, tighten the crop and try again.",
+        "ocr_text": "",
+        "ocr_raw_text": "",
+        "ocr_suggested_text": "",
+        "ocr_suggested_merged_text": "",
+        "ocr_suggested_changes": [],
+        "ocr_has_suggested_changes": False,
     }
 
 
-@app.context_processor
-def inject_template_helpers() -> dict[str, Any]:
-    return {"ingredient_slug": ingredient_slug}
-
-
-def matches_phrase(text: str, phrase: str) -> bool:
-    return bool(re.search(rf"(?<![a-z0-9]){re.escape(phrase.lower())}(?![a-z0-9])", text.lower()))
-
-
-def contains_any(text: str, phrases: set[str]) -> bool:
-    return any(matches_phrase(text, phrase) for phrase in phrases)
-
-
-def normalize_input(text: str) -> str:
-    return re.sub(r"\s+", " ", text.replace("\r", " ").replace("\n", " ")).strip(" ,;.")
-
-
-def clean_ingredient_name(name: str) -> str:
-    cleaned = normalize_input(name)
-    cleaned = re.sub(r"^\s*(ingredients?|contains)\s*:\s*", "", cleaned, flags=re.IGNORECASE)
-    cleaned = re.sub(r"\s*\[[^\]]*\]\s*$", "", cleaned)
-    cleaned = re.sub(r"\s*\([^)]*\)\s*$", "", cleaned)
-    return cleaned.strip(" ,;.")
-
-
-def split_ingredient_list(raw_text: str) -> list[str]:
-    text = normalize_input(raw_text)
-    text = re.sub(r"^\s*ingredients?\s*:\s*", "", text, flags=re.IGNORECASE)
-    if not text:
-        return []
-    items: list[str] = []
-    current: list[str] = []
-    depth = 0
-    for char in text:
-        if char in "([":
-            depth += 1
-        elif char in ")]" and depth > 0:
-            depth -= 1
-        if char in ",;" and depth == 0:
-            piece = clean_ingredient_name("".join(current))
-            if piece:
-                items.append(piece)
-            current = []
-            continue
-        current.append(char)
-    tail = clean_ingredient_name("".join(current))
-    if tail:
-        items.append(tail)
-    return [item for index, item in enumerate(items) if item and item not in items[:index]]
-
-def empty_analytics_payload() -> dict[str, Any]:
-    return {
-        "totals": {"searches": 0, "ingredient_pages": 0, "index_pages": 0},
-        "ingredient_queries": {},
-        "product_queries": {},
-        "pageviews": {},
-        "recent_events": [],
-    }
-
-
-def load_analytics() -> dict[str, Any]:
-    if not ANALYTICS_PATH.exists():
-        return empty_analytics_payload()
-    try:
-        return json.loads(ANALYTICS_PATH.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError):
-        return empty_analytics_payload()
-
-
-def save_analytics(payload: dict[str, Any]) -> None:
-    try:
-        DATA_DIR.mkdir(exist_ok=True)
-        ANALYTICS_PATH.write_text(json.dumps(payload, indent=2), encoding="utf-8")
-    except OSError:
-        # Serverless hosts such as Vercel may expose a read-only filesystem.
-        return
-
-
-def log_search(query_text: str, mode: str) -> None:
-    analytics = load_analytics()
-    analytics["totals"]["searches"] = analytics["totals"].get("searches", 0) + 1
-    bucket = "ingredient_queries" if mode == "ingredient" else "product_queries"
-    normalized = normalize_input(query_text).lower()
-    analytics.setdefault(bucket, {})
-    analytics[bucket][normalized] = analytics[bucket].get(normalized, 0) + 1
-    analytics.setdefault("recent_events", [])
-    analytics["recent_events"].insert(0, {"kind": f"search:{mode}", "value": normalized})
-    analytics["recent_events"] = analytics["recent_events"][:80]
-    save_analytics(analytics)
-
-
-def log_pageview(slug: str) -> None:
-    analytics = load_analytics()
-    analytics["totals"]["ingredient_pages"] = analytics["totals"].get("ingredient_pages", 0) + 1
-    analytics.setdefault("pageviews", {})
-    analytics["pageviews"][slug] = analytics["pageviews"].get(slug, 0) + 1
-    save_analytics(analytics)
-
-
-def log_index_pageview() -> None:
-    analytics = load_analytics()
-    analytics["totals"]["index_pages"] = analytics["totals"].get("index_pages", 0) + 1
-    save_analytics(analytics)
-
-
-def find_policy(name: str) -> dict[str, Any] | None:
-    lowered = name.lower()
-    best_match: dict[str, Any] | None = None
-    best_alias_length = -1
-    for record in POLICY_RECORDS:
-        aliases = [str(alias).lower() for alias in record.get("aliases", [])]
-        for alias in aliases:
-            if matches_phrase(lowered, alias) and len(alias) > best_alias_length:
-                best_match = record
-                best_alias_length = len(alias)
-    return best_match
-
-
-def looks_like_known_ingredient(name: str) -> bool:
-    lowered = name.lower().strip()
-    if not lowered or len(lowered) < 3:
-        return False
-    if contains_any(lowered, WHOLE_FOOD_MARKERS | PLANT_MARKERS | MINERAL_MARKERS | ANIMAL_MARKERS | SYNTHETIC_MARKERS):
-        return True
-    if any(matches_phrase(lowered, term) for term in HEURISTIC_TERMS):
-        return True
-    if re.search(r"\b(acid|oil|gum|extract|starch|syrup|protein|powder|salt|sugar|flavor|flavour|juice|milk|seed|root|leaf)\b", lowered):
-        return True
-    return False
-
-
-def detect_chemistry_family(name: str) -> tuple[str, str]:
-    lowered = name.lower()
-    if contains_any(lowered, MINERAL_MARKERS):
-        return "Likely inorganic or mineral-based", "medium"
-    if contains_any(lowered, WHOLE_FOOD_MARKERS | PLANT_MARKERS | ANIMAL_MARKERS):
-        return "Likely organic compound or food-derived material", "medium"
-    if contains_any(lowered, SYNTHETIC_MARKERS):
-        return "Likely synthetic organic compound", "low"
-    return "Unclear from name alone", "low"
-
-
-def detect_source_profile(name: str) -> str:
-    lowered = name.lower()
-    if contains_any(lowered, ANIMAL_MARKERS):
-        return "animal-derived or may be animal-derived"
-    if contains_any(lowered, MINERAL_MARKERS):
-        return "mineral-derived"
-    if contains_any(lowered, WHOLE_FOOD_MARKERS | PLANT_MARKERS):
-        return "plant-derived or botanical"
-    if contains_any(lowered, SYNTHETIC_MARKERS):
-        return "synthetic or highly modified"
-    return "mixed or unclear origin"
-
-
-def detect_processing_level(name: str, policy: dict[str, Any] | None, confidence_label: str) -> str:
-    if confidence_label == "unknown":
-        return "unknown"
-    if policy and policy.get("processing_level"):
-        return str(policy["processing_level"])
-    lowered = name.lower()
-    if contains_any(lowered, WHOLE_FOOD_MARKERS):
-        return "minimally processed"
-    if contains_any(lowered, SYNTHETIC_MARKERS):
-        return "highly processed"
-    return "moderately processed"
-
-
-def detect_common_uses(name: str, policy: dict[str, Any] | None) -> list[str]:
-    if policy and policy.get("functional_roles"):
-        return [str(role) for role in policy["functional_roles"]]
-    lowered = name.lower()
-    uses = [label for label, markers in USE_MAP.items() if any(marker in lowered for marker in markers)]
-    if not uses and "acid" in lowered:
-        uses.append("acidity regulator")
-    if not uses and "extract" in lowered:
-        uses.append("functional botanical ingredient")
-    return uses or ["general formulation ingredient"]
-
-
-def derive_signal(policy: dict[str, Any] | None, processing_level: str, name: str, confidence_label: str) -> str:
-    if confidence_label == "unknown":
-        return "unknown"
-    if policy and policy.get("signal"):
-        return str(policy["signal"])
-    lowered = name.lower()
-    if contains_any(lowered, SYNTHETIC_MARKERS):
-        return "avoid"
-    if processing_level == "highly processed":
-        return "avoid"
-    if processing_level == "moderately processed":
-        return "caution"
-    if processing_level == "minimally processed":
-        return "okay"
-    return "needs context"
-
-
-def classify_confidence(name: str, policy: dict[str, Any] | None) -> tuple[str, str, str]:
-    if policy:
-        return "high", "policy-backed", "Matched a curated ingredient policy record."
-    if looks_like_known_ingredient(name):
-        return "medium", "heuristic-only", "Looks like a plausible ingredient or additive, but is not yet in the curated policy catalog."
-    return "low", "unknown", "We couldn't confidently identify this ingredient."
-
-def build_cautions(policy: dict[str, Any] | None, signal: str) -> list[str]:
-    if not policy:
-        return []
-    note = str(policy.get("note", "")).strip()
-    if signal in {"avoid", "caution"} and note:
-        return [note]
-    return []
-
-
-def build_highlights(name: str, source_profile: str, chemistry_family: str, processing_level: str, policy: dict[str, Any] | None, confidence_label: str) -> list[str]:
-    highlights = [
-        f"Source profile: {source_profile}.",
-        f"Chemistry family: {chemistry_family}.",
-        f"Processing level: {processing_level}.",
-        f"Confidence mode: {confidence_label}.",
-    ]
-    if policy:
-        if policy.get("whole_food_alignment"):
-            highlights.append(f"Whole-food alignment: {policy['whole_food_alignment']}.")
-        if policy.get("organic_alignment"):
-            highlights.append(f"Organic alignment: {policy['organic_alignment']}.")
-        traits = [str(trait) for trait in policy.get("traits", [])]
-        if traits:
-            highlights.append(f"Policy traits: {', '.join(traits[:3])}.")
-        note = str(policy.get("note", "")).strip()
-        if note:
-            highlights.append(note)
-    elif confidence_label == "unknown":
-        highlights.append("The current app does not have enough evidence to classify this text as a real ingredient with confidence.")
-    return highlights
-
-
-def build_quick_blurb(name: str, source_profile: str, signal: str, common_uses: list[str], processing_level: str, policy: dict[str, Any] | None, confidence_label: str) -> str:
-    if confidence_label == "unknown":
-        return "We couldn't confidently identify this ingredient. Try checking the spelling or pasting the exact wording from the label."
-    use_text = ", ".join(common_uses[:2])
-    if policy:
-        rationale = str(policy.get("note", "")).strip()
-        if rationale:
-            return (
-                f"{name} appears to be {source_profile}. In products it often acts as {use_text}. "
-                f"It lands in '{signal}' because it reads as {processing_level} and matches this policy basis: {rationale}"
-            )
-    return (
-        f"{name} appears to be {source_profile}. In products it often acts as {use_text}. "
-        f"It lands in '{signal}' because it reads as {processing_level} by the current heuristic cleaner-label ruleset."
+def build_browser_ocr_cleanup(raw_text: str, confidence: float | None = None) -> dict[str, Any]:
+    normalized = normalize_ocr_text(raw_text)
+    candidate_text = extract_candidate_label_text(normalized)
+    status = "ready" if candidate_text else "empty"
+    message = (
+        "Browser OCR found likely ingredient text. Review and edit it before running the ingredient analysis."
+        if candidate_text
+        else "Browser OCR ran, but it did not find enough ingredient-style text yet. Tighten the crop or try a clearer photo."
     )
-
-
-def build_what_it_does(common_uses: list[str], policy: dict[str, Any] | None, confidence_label: str) -> str:
-    if confidence_label == "unknown":
-        return "The app could not determine a reliable role for this input."
-    if policy and policy.get("functional_roles"):
-        return f"This ingredient is commonly used as {', '.join(policy['functional_roles'])}."
-    return f"This ingredient most likely functions as {', '.join(common_uses[:2])}."
-
-
-def build_why_flagged(policy: dict[str, Any] | None, signal: str, confidence_label: str) -> str:
-    if confidence_label == "unknown":
-        return "No flag is being assigned with confidence because the ingredient itself is not confidently identified."
-    if policy:
-        traits = ', '.join(policy.get('traits', [])[:3])
-        note = str(policy.get('note', '')).strip()
-        return f"The app marks this as '{signal}' based on the policy record traits: {traits}. {note}".strip()
-    return f"The app marks this as '{signal}' using fallback heuristic rules because it is not yet in the curated catalog."
-
-
-def build_cleaner_takeaway(signal: str, confidence_label: str) -> str:
-    if confidence_label == "unknown":
-        return "Treat this as unclassified until the app has a verified policy record or you confirm the exact ingredient name."
-    if signal == "okay":
-        return "This reads broadly aligned with a simpler, cleaner ingredient standard."
-    if signal == "caution":
-        return "This is more processed or formulation-oriented than ideal for a strict cleaner-label approach."
-    if signal == "avoid":
-        return "This conflicts strongly with the cleaner-label standard this app is built around."
-    return "This needs more context before it can be treated as clearly aligned."
-
-
-def wikipedia_summary(term: str) -> tuple[str | None, list[dict[str, str]]]:
-    try:
-        search_response = requests.get(
-            "https://en.wikipedia.org/w/api.php",
-            params={"action": "query", "list": "search", "srsearch": term, "utf8": 1, "format": "json"},
-            timeout=8,
-        )
-        search_response.raise_for_status()
-        hits = search_response.json().get("query", {}).get("search", [])
-        if not hits:
-            return None, []
-        title = hits[0]["title"]
-        summary_response = requests.get(f"https://en.wikipedia.org/api/rest_v1/page/summary/{title}", timeout=8)
-        summary_response.raise_for_status()
-        payload = summary_response.json()
-        extract = payload.get("extract")
-        if not extract:
-            return None, []
-        source = payload.get("content_urls", {}).get("desktop", {}).get("page", "")
-        return extract, ([{"label": "Wikipedia", "url": source}] if source else [])
-    except requests.RequestException:
-        return None, []
-
-
-def pubchem_summary(term: str) -> tuple[str | None, list[dict[str, str]]]:
-    try:
-        response = requests.get(
-            f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/{term}/property/IUPACName,MolecularFormula/JSON",
-            timeout=8,
-        )
-        response.raise_for_status()
-        properties = response.json().get("PropertyTable", {}).get("Properties", [])
-        if not properties:
-            return None, []
-        first = properties[0]
-        bits = []
-        if first.get("IUPACName"):
-            bits.append(f"IUPAC name: {first['IUPACName']}.")
-        if first.get("MolecularFormula"):
-            bits.append(f"Molecular formula: {first['MolecularFormula']}.")
-        return (" ".join(bits) if bits else None), ([{"label": "PubChem", "url": f"https://pubchem.ncbi.nlm.nih.gov/#query={term}"}] if bits else [])
-    except requests.RequestException:
-        return None, []
-
-
-def enrich_from_web(term: str) -> tuple[str | None, list[dict[str, str]]]:
-    wiki_text, wiki_sources = wikipedia_summary(term)
-    if wiki_text:
-        return wiki_text, wiki_sources
-    return pubchem_summary(term)
+    return finalize_ocr_result({
+        "status": status,
+        "message": message,
+        "raw_text": normalized,
+        "candidate_text": candidate_text,
+        "line_count": len([line for line in normalized.split("\n") if line.strip()]),
+        "confidence": confidence,
+        "provider": "browser tesseract",
+    })
 
 def analyze_ingredient(term: str, *, enrich: bool = True) -> IngredientReport:
     ingredient = " ".join(term.strip().split())
@@ -1151,7 +1012,7 @@ def analyze_photo_page() -> str:
         sample_queries=sample_queries,
         featured_ingredients=top_ingredient_records(),
         page_title="Ingredient Scanner Photo Upload",
-        page_description="Upload an ingredient label photo. OCR and ingredient extraction are the next step.",
+        page_description="Upload an ingredient label photo. Browser OCR runs on the preview so scanning stays free and production-safe.",
         canonical_url=request.base_url,
         photo_upload=photo_upload,
         photo_upload_error=photo_upload_error,
@@ -1230,6 +1091,24 @@ def methodology_page() -> str:
         page_description="See how Ingredient Scanner classifies ingredients using policy-backed records, fallback heuristics, and confidence labels.",
         canonical_url=request.url,
     )
+
+
+
+@app.post("/api/ocr-cleanup")
+def ocr_cleanup_api():
+    payload = request.get_json(silent=True) or {}
+    raw_text = str(payload.get("text", "") or "").strip()
+    confidence_value = payload.get("confidence")
+    confidence: float | None = None
+    if confidence_value is not None:
+        try:
+            confidence = float(confidence_value)
+        except (TypeError, ValueError):
+            confidence = None
+    if not raw_text:
+        return jsonify({"ok": False, "message": "Please provide OCR text to clean up."}), 400
+    result = build_browser_ocr_cleanup(raw_text, confidence=confidence)
+    return jsonify({"ok": True, "ocr": result})
 
 @app.post("/api/analyze")
 def analyze_api():

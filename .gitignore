@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+secrets/*
+!secrets/.gitkeep
+!secrets/README.md
+data/analytics_summary.json
