@@ -47,8 +47,42 @@
                 </div>
 
                 <p class="micro-note">
-                    This text box is the main check flow today. Photo scanning can become the second input method later.
+                    Text input is live today, and photo upload is now the first step toward full label scanning.
                 </p>
+
+                <form class="photo-upload-form" method="post" action="/analyze-photo" enctype="multipart/form-data">
+                    <label class="search-label" for="label-photo">Label photo upload</label>
+                    <div class="photo-upload-row">
+                        <input id="label-photo" name="label_photo" type="file" accept="image/png,image/jpeg,image/webp" required>
+                        <button type="submit">Upload Photo</button>
+                    </div>
+                    <p class="micro-note" id="photo-upload-status">Use a clear photo of the ingredient panel. OCR comes next.</p>
+
+                    <div class="crop-tool" id="crop-tool">
+                        <div class="crop-preview-shell">
+                            <div class="crop-preview-frame" id="crop-preview-frame">
+                                <img id="crop-preview-image" alt="Selected label preview for crop review">
+                                <div class="crop-overlay" id="crop-overlay"></div>
+                            </div>
+                        </div>
+                        <div class="crop-controls">
+                            <p class="micro-note">Tighten the crop box around the ingredient block before OCR runs.</p>
+                            <label class="search-label" for="crop-top">Top</label>
+                            <input id="crop-top" name="crop_top" type="range" min="0" max="95" value="0">
+                            <label class="search-label" for="crop-bottom">Bottom</label>
+                            <input id="crop-bottom" name="crop_bottom" type="range" min="5" max="100" value="100">
+                            <label class="search-label" for="crop-left">Left</label>
+                            <input id="crop-left" name="crop_left" type="range" min="0" max="95" value="0">
+                            <label class="search-label" for="crop-right">Right</label>
+                            <input id="crop-right" name="crop_right" type="range" min="5" max="100" value="100">
+                            <button class="sample-chip crop-reset" type="button" id="crop-reset">Reset Crop</button>
+                        </div>
+                    </div>
+
+                    {% if photo_upload_error %}
+                    <p class="upload-error">{{ photo_upload_error }}</p>
+                    {% endif %}
+                </form>
 
                 <div class="detail-nav-row">
                     <a class="sample-chip link-chip" href="{{ url_for('ingredient_index') }}">Ingredient index</a>
@@ -72,6 +106,107 @@
                 </div>
             </div>
         </section>
+
+        {% if photo_upload %}
+        <section class="results-grid photo-results-grid">
+            <article class="result-card spotlight needs-context wide">
+                <p class="eyebrow">Photo Upload</p>
+                <h2>{{ photo_upload.filename }}</h2>
+                <div class="sample-row inline-status-row">
+                    <span class="signal-pill">{{ photo_upload.status }}</span>
+                    <span class="confidence-pill heuristic-only">{{ photo_upload.ocr_status|replace('-', ' ') }}</span>
+                    <span class="confidence-pill {{ photo_upload.ocr_reconstruction_confidence }}">reconstruction {{ photo_upload.ocr_reconstruction_confidence }}</span>
+                </div>
+                <p class="result-copy">{{ photo_upload.next_step }}</p>
+                <p class="soft-copy">{{ photo_upload.helper_text }}</p>
+                {% if photo_upload.ocr_reconstruction_note %}
+                <p class="soft-copy">{{ photo_upload.ocr_reconstruction_note }}</p>
+                {% endif %}
+
+                <div class="meta-grid">
+                    <div class="meta-item">
+                        <span class="meta-label">File Type</span>
+                        <strong>{{ photo_upload.mime_type }}</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Approx Size</span>
+                        <strong>{{ photo_upload.size_kb }} KB</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">OCR Lines</span>
+                        <strong>{{ photo_upload.ocr_line_count }}</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">OCR Confidence</span>
+                        <strong>{{ photo_upload.ocr_confidence if photo_upload.ocr_confidence is not none else 'n/a' }}</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Manual Crop</span>
+                        <strong>{{ 'yes' if photo_upload.crop_applied else 'no' }}</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Repair Ratio</span>
+                        <strong>{{ photo_upload.ocr_repair_ratio }}</strong>
+                    </div>
+                </div>
+            </article>
+
+            <article class="result-card wide">
+                <p class="eyebrow">Preview</p>
+                <h3>Uploaded label image</h3>
+                <img class="upload-preview" src="{{ photo_upload.preview_url }}" alt="Uploaded ingredient label preview">
+            </article>
+
+            <article class="result-card wide">
+                <p class="eyebrow">Extracted Text</p>
+                <h3>Review this before analysis</h3>
+                <form class="product-form" method="post" action="/analyze">
+                    <label class="search-label" for="ocr-query-text">Editable OCR ingredient text</label>
+                    <textarea
+                        id="ocr-query-text"
+                        name="query_text"
+                        rows="8"
+                        placeholder="OCR text will appear here after a readable label photo upload."
+                    >{{ photo_upload.ocr_text or '' }}</textarea>
+                    <div class="search-row">
+                        <button type="submit">Analyze Extracted Text</button>
+                    </div>
+                </form>
+
+                {% if photo_upload.ocr_has_suggested_changes %}
+                <div class="ocr-suggestion-card">
+                    <p class="eyebrow">Suggested Repairs</p>
+                    <h3>Likely fixes for OCR misses</h3>
+                    <pre class="ocr-raw-text" id="ocr-suggested-text">{{ photo_upload.ocr_suggested_text }}</pre>
+                    <div class="sample-row">
+                        <button class="sample-chip link-chip" type="button" id="use-ocr-suggestion">Use Suggested Repairs</button>
+                        {% if photo_upload.ocr_suggested_merged_text %}
+                        <button class="sample-chip link-chip" type="button" id="use-ocr-merged-suggestion">Use Merged Label Suggestion</button>
+                        {% endif %}
+                    </div>
+                    {% if photo_upload.ocr_suggested_merged_text %}
+                    <details class="ocr-raw-details">
+                        <summary>Show merged label suggestion</summary>
+                        <pre class="ocr-raw-text" id="ocr-merged-suggested-text">{{ photo_upload.ocr_suggested_merged_text }}</pre>
+                    </details>
+                    {% endif %}
+                    <div class="ocr-change-list">
+                        {% for change in photo_upload.ocr_suggested_changes %}
+                        <p class="soft-copy"><strong>{{ change.from }}</strong> -> <strong>{{ change.to }}</strong></p>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if photo_upload.ocr_raw_text and photo_upload.ocr_raw_text != photo_upload.ocr_text %}
+                <details class="ocr-raw-details">
+                    <summary>Show raw OCR text</summary>
+                    <pre class="ocr-raw-text">{{ photo_upload.ocr_raw_text }}</pre>
+                </details>
+                {% endif %}
+            </article>
+        </section>
+        {% endif %}
 
         {% if product_report %}
         <section class="results-grid product-results-grid">

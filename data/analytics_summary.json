@@ -1,8 +1,8 @@
 {
   "totals": {
-    "searches": 7,
+    "searches": 9,
     "ingredient_pages": 45,
-    "index_pages": 4
+    "index_pages": 5
   },
   "ingredient_queries": {
     "carrageenan": 2,
@@ -11,7 +11,9 @@
   },
   "product_queries": {
     "ingredients: potatoes, sunflower oil, sea salt": 1,
-    "water, almondmilk, carrageenan, sea salt": 1
+    "water, almondmilk, carrageenan, sea salt": 1,
+    "ingredients: sunflower oil, sea salt, paprika": 1,
+    "ingredients: mustard seed, vinegar, salt, apple cider vinegar, wheat mustard (water, vinegar, mustard seed, salt, turmeric, spices), molasses, horseradish t,natural flavorings), onion powder, xanthan gum, tor (water, natural": 1
   },
   "pageviews": {
     "carrageenan": 4,
@@ -48,6 +50,14 @@
     "mayonnaise": 1
   },
   "recent_events": [
+    {
+      "kind": "search:product",
+      "value": "ingredients: mustard seed, vinegar, salt, apple cider vinegar, wheat mustard (water, vinegar, mustard seed, salt, turmeric, spices), molasses, horseradish t,natural flavorings), onion powder, xanthan gum, tor (water, natural"
+    },
+    {
+      "kind": "search:product",
+      "value": "ingredients: sunflower oil, sea salt, paprika"
+    },
     {
       "kind": "search:ingredient",
       "value": "carrageenan"
