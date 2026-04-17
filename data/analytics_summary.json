@@ -1,7 +1,7 @@
 {
   "totals": {
     "searches": 7,
-    "ingredient_pages": 22,
+    "ingredient_pages": 45,
     "index_pages": 4
   },
   "ingredient_queries": {
@@ -14,7 +14,7 @@
     "water, almondmilk, carrageenan, sea salt": 1
   },
   "pageviews": {
-    "carrageenan": 3,
+    "carrageenan": 4,
     "dextrose": 1,
     "natural-flavor": 1,
     "red-40": 1,
@@ -26,7 +26,26 @@
     "sodium-metabisulfite": 1,
     "pectin": 1,
     "acesulfame-potassium": 4,
-    "turmeric": 1
+    "turmeric": 1,
+    "sugar": 2,
+    "organic-sugar": 2,
+    "maple-syrup": 1,
+    "vanilla-extract": 1,
+    "whole-milk": 1,
+    "sesame-oil": 1,
+    "apples": 1,
+    "black-beans": 1,
+    "cashews": 1,
+    "basil": 1,
+    "seaweed": 1,
+    "peanut-butter": 2,
+    "peanuts": 1,
+    "chicken": 1,
+    "bacon": 1,
+    "salmon": 1,
+    "sauerkraut": 1,
+    "gluten-free-flour-blend": 1,
+    "mayonnaise": 1
   },
   "recent_events": [
     {

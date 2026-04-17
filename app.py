@@ -226,11 +226,15 @@ def log_index_pageview() -> None:
 
 def find_policy(name: str) -> dict[str, Any] | None:
     lowered = name.lower()
+    best_match: dict[str, Any] | None = None
+    best_alias_length = -1
     for record in POLICY_RECORDS:
-        aliases = record.get("aliases", [])
-        if any(matches_phrase(lowered, alias) for alias in aliases):
-            return record
-    return None
+        aliases = [str(alias).lower() for alias in record.get("aliases", [])]
+        for alias in aliases:
+            if matches_phrase(lowered, alias) and len(alias) > best_alias_length:
+                best_match = record
+                best_alias_length = len(alias)
+    return best_match
 
 
 def looks_like_known_ingredient(name: str) -> bool:
@@ -609,10 +613,24 @@ def ingredient_index() -> str:
 
 
 @app.get("/ingredient/<slug>")
-def ingredient_detail(slug: str) -> str:
+def ingredient_detail(slug: str) -> tuple[str, int] | str:
     policy = find_policy_by_slug(slug)
     if not policy:
-        abort(404)
+        guessed_name = slug.replace("-", " ").strip() or "that ingredient"
+        report = analyze_ingredient(guessed_name, enrich=False)
+        return (
+            render_template(
+                "ingredient_missing.html",
+                slug=slug,
+                guessed_name=guessed_name,
+                report=report,
+                featured_ingredients=top_ingredient_records(),
+                page_title=f"{guessed_name.title()} | Ingredient Not Yet In Catalog",
+                page_description="This ingredient page is not built yet. Browse the catalog or run a direct ingredient check instead.",
+                canonical_url=request.url,
+            ),
+            404,
+        )
     canonical_name = str(policy.get("canonical_name", "")).strip()
     report = analyze_ingredient(canonical_name)
     log_pageview(slug)

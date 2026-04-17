@@ -22,6 +22,31 @@
     "sources": []
   },
   {
+    "canonical_name": "active dry yeast",
+    "aliases": [
+      "active dry yeast"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "leavening agent"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "traditional baking ingredient",
+      "functional pantry ingredient"
+    ],
+    "signal": "caution",
+    "note": "A traditional baking ingredient that is functional rather than whole-food, but far less concerning than industrial additives.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Yeast",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "allulose",
     "aliases": [
       "allulose"
@@ -43,6 +68,31 @@
       {
         "label": "FDA Allulose Guidance",
         "url": "https://www.fda.gov/food/cfsan-constituent-updates/fda-announces-allulose-guidance-industry"
+      }
+    ]
+  },
+  {
+    "canonical_name": "almond butter",
+    "aliases": [
+      "almond butter"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "nut butter"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "ground whole-food ingredient",
+      "cleaner than refined oils"
+    ],
+    "signal": "caution",
+    "note": "Cleaner than industrial oils or flavor systems, but still more processed than the whole nut.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Almond Butter",
+        "url": "https://fdc.nal.usda.gov/"
       }
     ]
   },
@@ -140,6 +190,31 @@
     ]
   },
   {
+    "canonical_name": "apple cider",
+    "aliases": [
+      "apple cider"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "juice beverage"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "traditional beverage ingredient",
+      "simpler than engineered drinks"
+    ],
+    "signal": "okay",
+    "note": "More aligned than ultra-processed beverages, though still more concentrated than the whole fruit itself.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Apple Cider",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "apple cider vinegar",
     "aliases": [
       "apple cider vinegar"
@@ -158,6 +233,58 @@
     "signal": "okay",
     "note": "Simple pantry ingredient that generally fits a cleaner-label standard.",
     "sources": []
+  },
+  {
+    "canonical_name": "apple juice concentrate",
+    "aliases": [
+      "apple juice concentrate"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "sweetener",
+      "juice concentrate"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "moderate",
+    "traits": [
+      "concentrated sweetening ingredient",
+      "more processed than juice or fruit"
+    ],
+    "signal": "avoid",
+    "note": "A concentrated sweetening ingredient that is much more processed than the whole fruit it started from.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Apple Juice",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "apples",
+    "aliases": [
+      "apples",
+      "apple"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "whole fruit"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple produce ingredient"
+    ],
+    "signal": "okay",
+    "note": "A straightforward whole-food ingredient that fits strongly with a cleaner-label standard.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Apples",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
   },
   {
     "canonical_name": "arrowroot powder",
@@ -310,6 +437,58 @@
     "sources": []
   },
   {
+    "canonical_name": "avocados",
+    "aliases": [
+      "avocados",
+      "avocado"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "whole fruit",
+      "fat source"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple produce ingredient"
+    ],
+    "signal": "okay",
+    "note": "A whole-food fat source that fits strongly with a cleaner-label approach.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Avocados",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "bacon",
+    "aliases": [
+      "bacon"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "processed meat"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "high",
+    "traits": [
+      "processed meat",
+      "often paired with preservatives"
+    ],
+    "signal": "avoid",
+    "note": "A processed meat that frequently comes with curing agents and preservative concerns.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Bacon",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "baking powder",
     "aliases": [
       "baking powder"
@@ -350,6 +529,109 @@
     "sources": []
   },
   {
+    "canonical_name": "bananas",
+    "aliases": [
+      "bananas",
+      "banana"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "whole fruit"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple produce ingredient"
+    ],
+    "signal": "okay",
+    "note": "A simple whole-food ingredient with strong alignment to a minimally processed pantry.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Bananas",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "basil",
+    "aliases": [
+      "basil"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "herb",
+      "flavoring"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple herb ingredient"
+    ],
+    "signal": "okay",
+    "note": "A simple herb ingredient that fits naturally within a cleaner-label pantry.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Basil",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "beef",
+    "aliases": [
+      "beef"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "animal protein"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple animal protein"
+    ],
+    "signal": "okay",
+    "note": "A simple recognizable ingredient with strong alignment to a whole-food pantry.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Beef",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "beef broth",
+    "aliases": [
+      "beef broth"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "broth",
+      "flavor base"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "traditional food ingredient",
+      "animal-derived pantry staple"
+    ],
+    "signal": "okay",
+    "note": "A traditional ingredient that fits a cleaner-label pattern when it is not paired with additives.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Beef Broth",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "beet juice color",
     "aliases": [
       "beet juice color",
@@ -371,6 +653,60 @@
     "sources": [
       {
         "label": "USDA FoodData Central Beets",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "beets",
+    "aliases": [
+      "beets",
+      "beet"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "root vegetable"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple produce ingredient"
+    ],
+    "signal": "okay",
+    "note": "A whole-food root vegetable ingredient that fits very well with a simple pantry.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Beets",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "bell peppers",
+    "aliases": [
+      "bell peppers",
+      "bell pepper",
+      "peppers",
+      "pepper"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "produce ingredient"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple produce ingredient"
+    ],
+    "signal": "okay",
+    "note": "A straightforward produce ingredient that fits strongly with a simple ingredient list.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Peppers",
         "url": "https://fdc.nal.usda.gov/"
       }
     ]
@@ -412,6 +748,32 @@
     "signal": "avoid",
     "note": "Synthetic preservative that strongly conflicts with a cleaner-label approach.",
     "sources": []
+  },
+  {
+    "canonical_name": "black beans",
+    "aliases": [
+      "black beans",
+      "black bean"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "legume"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple pantry staple"
+    ],
+    "signal": "okay",
+    "note": "A whole-food legume ingredient that fits very well with a simple pantry standard.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Black Beans",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
   },
   {
     "canonical_name": "black pepper",
@@ -509,6 +871,83 @@
     ]
   },
   {
+    "canonical_name": "blueberries",
+    "aliases": [
+      "blueberries",
+      "blueberry"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "whole fruit"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple produce ingredient"
+    ],
+    "signal": "okay",
+    "note": "A simple produce ingredient that fits a clean pantry approach well.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Blueberries",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "bone broth",
+    "aliases": [
+      "bone broth"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "broth",
+      "flavor base"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "traditional food ingredient",
+      "animal-derived pantry staple"
+    ],
+    "signal": "okay",
+    "note": "A traditional broth ingredient that is generally aligned with a simpler pantry style.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Bone Broth",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "bread flour",
+    "aliases": [
+      "bread flour"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "flour"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "refined baking flour",
+      "more processed than whole-grain flours"
+    ],
+    "signal": "caution",
+    "note": "A more refined baking flour that is less aligned than whole-grain or simpler flour options.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Bread Flour",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "broccoli",
     "aliases": [
       "broccoli"
@@ -527,6 +966,31 @@
     "signal": "okay",
     "note": "Whole-food ingredient that fits a cleaner ingredient panel.",
     "sources": []
+  },
+  {
+    "canonical_name": "brown rice",
+    "aliases": [
+      "brown rice"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "whole grain"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "simple pantry staple",
+      "whole-grain ingredient"
+    ],
+    "signal": "okay",
+    "note": "A simple whole-grain ingredient that fits a cleaner pantry standard well.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Brown Rice",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
   },
   {
     "canonical_name": "brown rice syrup",
@@ -574,6 +1038,31 @@
     ]
   },
   {
+    "canonical_name": "buckwheat",
+    "aliases": [
+      "buckwheat"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "grain alternative"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned staple",
+      "simple pantry ingredient"
+    ],
+    "signal": "okay",
+    "note": "A simple staple ingredient that aligns well with a cleaner-label pantry.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Buckwheat",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "butter",
     "aliases": [
       "butter"
@@ -592,6 +1081,31 @@
     "signal": "okay",
     "note": "Simple fat ingredient that fits a cleaner-label standard better than industrial oils.",
     "sources": []
+  },
+  {
+    "canonical_name": "cacao nibs",
+    "aliases": [
+      "cacao nibs"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "whole-food flavor ingredient"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "single-ingredient pantry item"
+    ],
+    "signal": "okay",
+    "note": "A close-to-whole-food cacao ingredient that fits a simpler ingredient standard well.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Cacao",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
   },
   {
     "canonical_name": "calcium carbonate",
@@ -793,6 +1307,32 @@
     ]
   },
   {
+    "canonical_name": "carrots",
+    "aliases": [
+      "carrots",
+      "carrot"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "root vegetable"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple produce ingredient"
+    ],
+    "signal": "okay",
+    "note": "A straightforward root vegetable ingredient that aligns well with a clean pantry.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Carrots",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "casein",
     "aliases": [
       "casein"
@@ -810,6 +1350,32 @@
     "signal": "caution",
     "note": "More processed and isolated than a simple dairy ingredient.",
     "sources": []
+  },
+  {
+    "canonical_name": "cashews",
+    "aliases": [
+      "cashews",
+      "cashew"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "nut ingredient"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple pantry staple"
+    ],
+    "signal": "okay",
+    "note": "A simple whole-food ingredient that aligns well with a cleaner-label pantry.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Cashews",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
   },
   {
     "canonical_name": "cassava flour",
@@ -832,6 +1398,81 @@
     "sources": [
       {
         "label": "USDA FoodData Central Cassava",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "cassava starch",
+    "aliases": [
+      "cassava starch"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "starch"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "refined starch",
+      "cleaner than industrial emulsifiers"
+    ],
+    "signal": "caution",
+    "note": "Still a refined starch, though generally cleaner than synthetic stabilizers or flavor systems.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Cassava",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "cauliflower",
+    "aliases": [
+      "cauliflower"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "cruciferous vegetable"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple produce ingredient"
+    ],
+    "signal": "okay",
+    "note": "A simple produce ingredient that fits well with a cleaner-label pantry.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Cauliflower",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "celery",
+    "aliases": [
+      "celery"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "produce ingredient"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple produce ingredient"
+    ],
+    "signal": "okay",
+    "note": "A simple produce ingredient with strong cleaner-label alignment.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Celery",
         "url": "https://fdc.nal.usda.gov/"
       }
     ]
@@ -886,6 +1527,162 @@
     "sources": []
   },
   {
+    "canonical_name": "cheddar cheese",
+    "aliases": [
+      "cheddar cheese",
+      "cheddar"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "cheese"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "traditional dairy ingredient",
+      "recognizable food ingredient"
+    ],
+    "signal": "caution",
+    "note": "Still a recognizable traditional food, but not as simple as a minimally processed ingredient.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Cheddar",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "chia seeds",
+    "aliases": [
+      "chia seeds",
+      "chia seed"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "whole-food seed ingredient"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "single-ingredient pantry item"
+    ],
+    "signal": "okay",
+    "note": "A simple whole-food ingredient that fits a cleaner-label pantry well.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Chia",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "chicken",
+    "aliases": [
+      "chicken"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "animal protein"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple animal protein"
+    ],
+    "signal": "okay",
+    "note": "A simple animal protein ingredient that aligns well with a minimally processed standard.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Chicken",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "chicken broth",
+    "aliases": [
+      "chicken broth"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "broth",
+      "flavor base"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "traditional food ingredient",
+      "animal-derived pantry staple"
+    ],
+    "signal": "okay",
+    "note": "A traditional ingredient that fits well when the rest of the label stays simple.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Chicken Broth",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "chickpeas",
+    "aliases": [
+      "chickpeas",
+      "chickpea",
+      "garbanzo beans"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "legume"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple pantry staple"
+    ],
+    "signal": "okay",
+    "note": "A simple legume ingredient with strong whole-food alignment.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Chickpeas",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "chili powder",
+    "aliases": [
+      "chili powder"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "spice blend",
+      "flavoring"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "simple spice ingredient",
+      "whole-food aligned when unsweetened and additive-free"
+    ],
+    "signal": "okay",
+    "note": "Generally aligns well when the ingredient itself is just a simple spice blend.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Chili Powder",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "cinnamon",
     "aliases": [
       "cinnamon"
@@ -931,6 +1728,58 @@
     ]
   },
   {
+    "canonical_name": "cocoa powder",
+    "aliases": [
+      "cocoa powder",
+      "cacao powder"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "flavoring"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "simple pantry ingredient",
+      "plant-derived flavor ingredient"
+    ],
+    "signal": "okay",
+    "note": "A straightforward ingredient that stays fairly close to the source food.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Cocoa Powder",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "coconut cream",
+    "aliases": [
+      "coconut cream"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "fat source",
+      "cream base"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "simple pantry ingredient",
+      "whole-food aligned fat source"
+    ],
+    "signal": "okay",
+    "note": "A fairly simple pantry-style ingredient when it is not bundled with gums or stabilizers.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Coconut Cream",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "coconut milk",
     "aliases": [
       "coconut milk"
@@ -970,6 +1819,56 @@
     "signal": "okay",
     "note": "Preferred oil choice compared with industrial seed oils.",
     "sources": []
+  },
+  {
+    "canonical_name": "coconut sugar",
+    "aliases": [
+      "coconut sugar"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "sweetener"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "less refined sweetener",
+      "marketed as cleaner alternative"
+    ],
+    "signal": "caution",
+    "note": "Often cleaner-leaning than refined white sugar, but still a concentrated sweetener.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Coconut Sugar",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "cod",
+    "aliases": [
+      "cod"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "animal protein"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple seafood ingredient"
+    ],
+    "signal": "okay",
+    "note": "A simple seafood ingredient with strong alignment to a minimally processed standard.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Cod",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
   },
   {
     "canonical_name": "condensed milk",
@@ -1058,6 +1957,31 @@
     "sources": []
   },
   {
+    "canonical_name": "cornmeal",
+    "aliases": [
+      "cornmeal"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "grain ingredient"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "simple pantry staple",
+      "single-ingredient grain product"
+    ],
+    "signal": "okay",
+    "note": "A simple grain ingredient that fits well with a cleaner pantry standard.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Cornmeal",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "cottonseed oil",
     "aliases": [
       "cottonseed oil"
@@ -1099,6 +2023,83 @@
     "signal": "okay",
     "note": "Simple dairy ingredient that can fit a cleaner-label standard.",
     "sources": []
+  },
+  {
+    "canonical_name": "cream of tartar",
+    "aliases": [
+      "cream of tartar"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "leavening aid"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "traditional baking ingredient",
+      "functional pantry additive"
+    ],
+    "signal": "caution",
+    "note": "A traditional baking ingredient that is still more of a functional aid than a whole-food ingredient.",
+    "sources": [
+      {
+        "label": "PubChem Potassium Bitartrate",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Potassium-bitartrate"
+      }
+    ]
+  },
+  {
+    "canonical_name": "cucumbers",
+    "aliases": [
+      "cucumbers",
+      "cucumber"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "produce ingredient"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple produce ingredient"
+    ],
+    "signal": "okay",
+    "note": "A simple produce ingredient that aligns naturally with a minimally processed standard.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Cucumbers",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "cumin",
+    "aliases": [
+      "cumin"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "spice",
+      "flavoring"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple spice ingredient"
+    ],
+    "signal": "okay",
+    "note": "A simple spice ingredient with strong alignment to a whole-food pantry.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Cumin",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
   },
   {
     "canonical_name": "date syrup",
@@ -1211,6 +2212,60 @@
     ]
   },
   {
+    "canonical_name": "egg whites",
+    "aliases": [
+      "egg whites",
+      "egg white"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "protein source",
+      "binding ingredient"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "simple animal ingredient",
+      "whole-food aligned protein"
+    ],
+    "signal": "okay",
+    "note": "A simple recognizable ingredient that fits a cleaner-label pantry well.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Egg Whites",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "eggs",
+    "aliases": [
+      "eggs",
+      "egg"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "protein source",
+      "binding ingredient"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "simple animal ingredient",
+      "whole-food aligned protein"
+    ],
+    "signal": "okay",
+    "note": "A simple whole-food ingredient that aligns well with a minimally processed standard.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Eggs",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "enriched wheat flour",
     "aliases": [
       "enriched wheat flour",
@@ -1308,6 +2363,58 @@
     "signal": "okay",
     "note": "Neutral base ingredient rather than a warning sign.",
     "sources": []
+  },
+  {
+    "canonical_name": "flax seeds",
+    "aliases": [
+      "flax seeds",
+      "flaxseed",
+      "flax seed"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "whole-food seed ingredient"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "single-ingredient pantry item"
+    ],
+    "signal": "okay",
+    "note": "A whole-food ingredient and very different from refined industrial seed oils.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Flaxseed",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "flour",
+    "aliases": [
+      "flour"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "flour"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "generic flour term",
+      "less clear than a specific whole-grain flour"
+    ],
+    "signal": "caution",
+    "note": "Too generic to assume a strong whole-food fit, and often implies a more refined flour unless specified otherwise.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Flour",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
   },
   {
     "canonical_name": "fructose",
@@ -1436,6 +2543,32 @@
     "sources": []
   },
   {
+    "canonical_name": "gluten free flour blend",
+    "aliases": [
+      "gluten free flour blend",
+      "gluten-free flour blend"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "flour blend"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "moderate",
+    "traits": [
+      "formulated flour system",
+      "often includes starches and gums"
+    ],
+    "signal": "avoid",
+    "note": "Often reads as a formulated flour system with added starches and gums rather than a simple pantry ingredient.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Flour Blends",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "grapeseed oil",
     "aliases": [
       "grapeseed oil"
@@ -1457,6 +2590,31 @@
     "signal": "avoid",
     "note": "Industrial seed oil that strongly conflicts with a cleaner-label standard focused on minimally processed ingredients.",
     "sources": []
+  },
+  {
+    "canonical_name": "greek yogurt",
+    "aliases": [
+      "greek yogurt"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "fermented dairy"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "traditional fermented food",
+      "more aligned than many dairy additives"
+    ],
+    "signal": "caution",
+    "note": "A traditional fermented food, though still more processed than a plain whole-food ingredient.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Greek Yogurt",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
   },
   {
     "canonical_name": "green 3",
@@ -1554,6 +2712,31 @@
     "sources": []
   },
   {
+    "canonical_name": "ham",
+    "aliases": [
+      "ham"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "processed meat"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "high",
+    "traits": [
+      "processed meat",
+      "often paired with curing additives"
+    ],
+    "signal": "avoid",
+    "note": "Usually more processed than a simple meat ingredient and commonly associated with curing additives.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Ham",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "high fructose corn syrup",
     "aliases": [
       "high fructose corn syrup",
@@ -1573,6 +2756,56 @@
     "signal": "avoid",
     "note": "Highly processed sweetener that strongly conflicts with a cleaner-label standard.",
     "sources": []
+  },
+  {
+    "canonical_name": "honey",
+    "aliases": [
+      "honey"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "sweetener"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "traditional sweetener",
+      "less industrial than refined sugar"
+    ],
+    "signal": "okay",
+    "note": "Still a sweetener, but it fits a traditional, simpler pantry better than refined or engineered sweeteners.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Honey",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "instant yeast",
+    "aliases": [
+      "instant yeast"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "leavening agent"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "traditional baking ingredient",
+      "functional pantry ingredient"
+    ],
+    "signal": "caution",
+    "note": "A functional baking ingredient that is more processed than a whole food, but still very different from industrial emulsifiers or dyes.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Yeast",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
   },
   {
     "canonical_name": "inulin",
@@ -1621,6 +2854,132 @@
     "sources": []
   },
   {
+    "canonical_name": "kale",
+    "aliases": [
+      "kale"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "leafy green"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple produce ingredient"
+    ],
+    "signal": "okay",
+    "note": "A simple produce ingredient that fits very well with a minimally processed standard.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Kale",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "kefir",
+    "aliases": [
+      "kefir"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "fermented dairy"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "traditional fermented food",
+      "cultured dairy ingredient"
+    ],
+    "signal": "caution",
+    "note": "A traditional fermented ingredient that is still more processed than a simple whole food.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Kefir",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "kidney beans",
+    "aliases": [
+      "kidney beans",
+      "kidney bean"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "legume"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple pantry staple"
+    ],
+    "signal": "okay",
+    "note": "A whole-food pantry staple that fits well with a minimally processed standard.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Kidney Beans",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "kimchi",
+    "aliases": [
+      "kimchi"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "fermented vegetable"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "traditional fermented food",
+      "whole-food aligned"
+    ],
+    "signal": "okay",
+    "note": "A traditional fermented ingredient that fits naturally with a minimally processed pantry.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Kimchi",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "kombucha",
+    "aliases": [
+      "kombucha"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "fermented beverage"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "fermented beverage",
+      "often contains added sugar or flavoring"
+    ],
+    "signal": "caution",
+    "note": "Can be cleaner-leaning, but often comes with added sugars or flavor systems that make it more mixed.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Kombucha",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "lactic acid",
     "aliases": [
       "lactic acid"
@@ -1662,6 +3021,86 @@
     "sources": []
   },
   {
+    "canonical_name": "lemons",
+    "aliases": [
+      "lemons",
+      "lemon"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "whole fruit",
+      "flavoring"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple produce ingredient"
+    ],
+    "signal": "okay",
+    "note": "A simple produce ingredient that fits naturally into a minimally processed pantry.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Lemons",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "lentils",
+    "aliases": [
+      "lentils",
+      "lentil"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "legume"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple pantry staple"
+    ],
+    "signal": "okay",
+    "note": "A simple pantry staple that fits strongly with a minimally processed standard.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Lentils",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "limes",
+    "aliases": [
+      "limes",
+      "lime"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "whole fruit",
+      "flavoring"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple produce ingredient"
+    ],
+    "signal": "okay",
+    "note": "A simple produce ingredient that aligns well with a clean pantry approach.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Limes",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "locust bean gum",
     "aliases": [
       "locust bean gum"
@@ -1681,6 +3120,32 @@
     "signal": "avoid",
     "note": "Texture-focused gum additive that does not fit a pantry-simple standard.",
     "sources": []
+  },
+  {
+    "canonical_name": "macadamia nuts",
+    "aliases": [
+      "macadamia nuts",
+      "macadamia nut"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "nut ingredient"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple pantry staple"
+    ],
+    "signal": "okay",
+    "note": "A simple whole-food nut ingredient that fits strongly with a cleaner-label standard.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Macadamia Nuts",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
   },
   {
     "canonical_name": "malic acid",
@@ -1748,6 +3213,108 @@
     "signal": "avoid",
     "note": "Highly processed carbohydrate additive that reads far from a whole-food ingredient panel.",
     "sources": []
+  },
+  {
+    "canonical_name": "maple sugar",
+    "aliases": [
+      "maple sugar"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "sweetener"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "traditional sweetener",
+      "less refined than white sugar"
+    ],
+    "signal": "okay",
+    "note": "A more traditional sweetener that fits better than conventional refined sugar in a cleaner pantry.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Maple Sugar",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "maple syrup",
+    "aliases": [
+      "maple syrup"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "sweetener"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "traditional sweetener",
+      "less refined than white sugar"
+    ],
+    "signal": "okay",
+    "note": "Still a sweetener, but more aligned than heavily refined or engineered sweetening systems.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Maple Syrup",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "masa harina",
+    "aliases": [
+      "masa harina"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "grain flour"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "traditional pantry staple",
+      "single-ingredient grain product"
+    ],
+    "signal": "okay",
+    "note": "A traditional grain ingredient that fits better than many formulated flour blends.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Corn Flour",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "mayonnaise",
+    "aliases": [
+      "mayonnaise",
+      "mayo"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "condiment",
+      "emulsion"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "high",
+    "traits": [
+      "processed condiment",
+      "often built on seed oils and additives"
+    ],
+    "signal": "avoid",
+    "note": "Often built on seed oils and processed emulsification systems, which conflicts strongly with this app's stricter standard.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Mayonnaise",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
   },
   {
     "canonical_name": "methylcellulose",
@@ -1820,6 +3387,31 @@
     "signal": "okay",
     "note": "Simple dairy ingredient that can fit a cleaner-label standard.",
     "sources": []
+  },
+  {
+    "canonical_name": "millet",
+    "aliases": [
+      "millet"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "whole grain"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-grain pantry staple",
+      "simple ingredient"
+    ],
+    "signal": "okay",
+    "note": "A simple whole grain that fits a minimally processed pantry style well.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Millet",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
   },
   {
     "canonical_name": "modified food starch",
@@ -1960,6 +3552,83 @@
     "sources": []
   },
   {
+    "canonical_name": "mozzarella cheese",
+    "aliases": [
+      "mozzarella cheese",
+      "mozzarella"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "cheese"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "traditional dairy ingredient",
+      "recognizable food ingredient"
+    ],
+    "signal": "caution",
+    "note": "A traditional food ingredient, though still more processed than a simple pantry staple.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Mozzarella",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "mushrooms",
+    "aliases": [
+      "mushrooms",
+      "mushroom"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "produce ingredient"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple produce ingredient"
+    ],
+    "signal": "okay",
+    "note": "A simple food ingredient that aligns well with a minimally processed pantry.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Mushrooms",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "mustard",
+    "aliases": [
+      "mustard"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "condiment"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "traditional condiment",
+      "depends on added ingredients"
+    ],
+    "signal": "caution",
+    "note": "Can be fairly clean, but as a generic condiment term it depends heavily on the full label.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Mustard",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "natural flavor",
     "aliases": [
       "natural flavor",
@@ -1986,6 +3655,32 @@
     ]
   },
   {
+    "canonical_name": "navy beans",
+    "aliases": [
+      "navy beans",
+      "navy bean"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "legume"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple pantry staple"
+    ],
+    "signal": "okay",
+    "note": "A straightforward legume ingredient that fits naturally with a simple pantry.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Navy Beans",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "nonfat dry milk",
     "aliases": [
       "nonfat dry milk",
@@ -2005,6 +3700,56 @@
     "signal": "caution",
     "note": "More processed than simple milk or cream.",
     "sources": []
+  },
+  {
+    "canonical_name": "nori",
+    "aliases": [
+      "nori"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "whole-food ingredient"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple marine ingredient"
+    ],
+    "signal": "okay",
+    "note": "A simple whole-food ingredient that fits a minimally processed pantry.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Seaweed",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "oat fiber",
+    "aliases": [
+      "oat fiber"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "fiber additive"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "isolated fiber",
+      "formulation ingredient"
+    ],
+    "signal": "caution",
+    "note": "Cleaner than many engineered additives, but still an extracted formulation ingredient rather than the whole food.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Oats",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
   },
   {
     "canonical_name": "oat flour",
@@ -2079,6 +3824,84 @@
     "sources": []
   },
   {
+    "canonical_name": "onions",
+    "aliases": [
+      "onions",
+      "onion"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "aromatic vegetable"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple pantry ingredient"
+    ],
+    "signal": "okay",
+    "note": "A simple aromatic vegetable ingredient that fits naturally in a minimally processed pantry.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Onions",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "oranges",
+    "aliases": [
+      "oranges",
+      "orange"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "whole fruit"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple produce ingredient"
+    ],
+    "signal": "okay",
+    "note": "A whole-food fruit ingredient that fits strongly with a simpler ingredient standard.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Oranges",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "oregano",
+    "aliases": [
+      "oregano"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "herb",
+      "flavoring"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple herb ingredient"
+    ],
+    "signal": "okay",
+    "note": "A straightforward herb ingredient with strong whole-food alignment.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Oregano",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "organic apples",
     "aliases": [
       "organic apples",
@@ -2102,6 +3925,31 @@
     "sources": []
   },
   {
+    "canonical_name": "organic avocado oil",
+    "aliases": [
+      "organic avocado oil"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "oil or fat"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned oil",
+      "strong cleaner-label fit"
+    ],
+    "signal": "okay",
+    "note": "A strong fit for a stricter cleaner-label pantry compared with commodity seed oils.",
+    "sources": [
+      {
+        "label": "USDA Organic",
+        "url": "https://www.usda.gov/topics/organic"
+      }
+    ]
+  },
+  {
     "canonical_name": "organic cane sugar",
     "aliases": [
       "organic cane sugar"
@@ -2120,6 +3968,31 @@
     "signal": "caution",
     "note": "Organic is a plus, but it is still a refined sweetener rather than a whole-food ingredient.",
     "sources": []
+  },
+  {
+    "canonical_name": "organic coconut oil",
+    "aliases": [
+      "organic coconut oil"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "oil or fat"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned oil",
+      "strong cleaner-label fit"
+    ],
+    "signal": "okay",
+    "note": "More aligned with a simple organic pantry than commodity seed oils or industrial fats.",
+    "sources": [
+      {
+        "label": "USDA Organic",
+        "url": "https://www.usda.gov/topics/organic"
+      }
+    ]
   },
   {
     "canonical_name": "organic coconut sugar",
@@ -2163,6 +4036,56 @@
     "signal": "okay",
     "note": "Simple grain ingredient that reads strongly aligned with a cleaner-label standard.",
     "sources": []
+  },
+  {
+    "canonical_name": "organic olive oil",
+    "aliases": [
+      "organic olive oil"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "oil or fat"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned oil",
+      "strong cleaner-label fit"
+    ],
+    "signal": "okay",
+    "note": "A strong fit for a simpler, more organic-leaning ingredient standard.",
+    "sources": [
+      {
+        "label": "USDA Organic",
+        "url": "https://www.usda.gov/topics/organic"
+      }
+    ]
+  },
+  {
+    "canonical_name": "organic sugar",
+    "aliases": [
+      "organic sugar"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "sweetener"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "organic refined sweetener",
+      "cleaner than conventional sugar but still refined"
+    ],
+    "signal": "caution",
+    "note": "Organic certification helps, but it is still a refined sweetener rather than a truly whole-food ingredient.",
+    "sources": [
+      {
+        "label": "USDA Organic",
+        "url": "https://www.usda.gov/topics/organic"
+      }
+    ]
   },
   {
     "canonical_name": "organic tapioca starch",
@@ -2234,6 +4157,58 @@
     "sources": []
   },
   {
+    "canonical_name": "parmesan cheese",
+    "aliases": [
+      "parmesan cheese",
+      "parmesan"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "cheese"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "traditional dairy ingredient",
+      "more processed than milk but still recognizable food"
+    ],
+    "signal": "caution",
+    "note": "A recognizable traditional food, though still more processed than a single whole-food ingredient.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Parmesan",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "parsley",
+    "aliases": [
+      "parsley"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "herb",
+      "flavoring"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple herb ingredient"
+    ],
+    "signal": "okay",
+    "note": "A simple herb ingredient that fits very well with a minimally processed pantry.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Parsley",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "pea protein",
     "aliases": [
       "pea protein"
@@ -2280,6 +4255,109 @@
     "sources": []
   },
   {
+    "canonical_name": "peanut butter",
+    "aliases": [
+      "peanut butter"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "nut butter"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "ground whole-food ingredient",
+      "quality depends heavily on added oils and sugar"
+    ],
+    "signal": "caution",
+    "note": "Can fit reasonably well when the label is simple, but the ingredient itself is still more processed than the whole nut.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Peanut Butter",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "peanuts",
+    "aliases": [
+      "peanuts",
+      "peanut"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "legume",
+      "nut ingredient"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple pantry staple"
+    ],
+    "signal": "okay",
+    "note": "A simple whole-food ingredient that fits naturally within a minimally processed pantry.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Peanuts",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "pecan butter",
+    "aliases": [
+      "pecan butter"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "nut butter"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "ground whole-food ingredient",
+      "cleaner than refined oils"
+    ],
+    "signal": "caution",
+    "note": "Less concerning than refined oils, but still a processed product compared with the whole nut itself.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Nuts",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "pecans",
+    "aliases": [
+      "pecans",
+      "pecan"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "nut ingredient"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple pantry staple"
+    ],
+    "signal": "okay",
+    "note": "A straightforward nut ingredient with strong alignment to a simple pantry.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Pecans",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "pectin",
     "aliases": [
       "pectin"
@@ -2305,6 +4383,31 @@
     ]
   },
   {
+    "canonical_name": "pepperoni",
+    "aliases": [
+      "pepperoni"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "processed meat"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "high",
+    "traits": [
+      "processed meat",
+      "cured meat product"
+    ],
+    "signal": "avoid",
+    "note": "A cured processed meat that fits poorly with a simple ingredient standard.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Pepperoni",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "phosphoric acid",
     "aliases": [
       "phosphoric acid"
@@ -2326,6 +4429,58 @@
       {
         "label": "PubChem Phosphoric Acid",
         "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Phosphoric-acid"
+      }
+    ]
+  },
+  {
+    "canonical_name": "pinto beans",
+    "aliases": [
+      "pinto beans",
+      "pinto bean"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "legume"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple pantry staple"
+    ],
+    "signal": "okay",
+    "note": "A whole-food legume ingredient with strong cleaner-label alignment.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Pinto Beans",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "plain yogurt",
+    "aliases": [
+      "plain yogurt",
+      "yogurt"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "fermented dairy"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "traditional fermented food",
+      "recognizable cultured dairy ingredient"
+    ],
+    "signal": "caution",
+    "note": "A more traditional food than flavored yogurt systems, but still somewhat processed.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Yogurt",
+        "url": "https://fdc.nal.usda.gov/"
       }
     ]
   },
@@ -2375,6 +4530,31 @@
     "signal": "avoid",
     "note": "Synthetic emulsifier that strongly conflicts with a cleaner-label approach.",
     "sources": []
+  },
+  {
+    "canonical_name": "pork",
+    "aliases": [
+      "pork"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "animal protein"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple animal protein"
+    ],
+    "signal": "okay",
+    "note": "A simple whole-food protein ingredient that aligns well with a cleaner pantry.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Pork",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
   },
   {
     "canonical_name": "potassium chloride",
@@ -2485,6 +4665,31 @@
     "sources": []
   },
   {
+    "canonical_name": "pumpkin seeds",
+    "aliases": [
+      "pumpkin seeds"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "whole-food seed ingredient"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "single-ingredient pantry item"
+    ],
+    "signal": "okay",
+    "note": "A whole-food ingredient that fits well with a simple pantry style.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Pumpkin Seeds",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "quinoa",
     "aliases": [
       "quinoa"
@@ -2503,6 +4708,32 @@
     "signal": "okay",
     "note": "Whole-food ingredient that fits a cleaner ingredient panel.",
     "sources": []
+  },
+  {
+    "canonical_name": "raspberries",
+    "aliases": [
+      "raspberries",
+      "raspberry"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "whole fruit"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple produce ingredient"
+    ],
+    "signal": "okay",
+    "note": "A simple produce ingredient that fits strongly with a whole-food pantry.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Raspberries",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
   },
   {
     "canonical_name": "raw honey",
@@ -2577,6 +4808,82 @@
     "sources": []
   },
   {
+    "canonical_name": "rice flour",
+    "aliases": [
+      "rice flour"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "flour"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "simple flour",
+      "more refined than whole grain"
+    ],
+    "signal": "caution",
+    "note": "A relatively simple ingredient, though still more refined than a whole-grain flour.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Rice Flour",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "rolled oats",
+    "aliases": [
+      "rolled oats"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "whole grain"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "simple pantry staple",
+      "whole-grain ingredient"
+    ],
+    "signal": "okay",
+    "note": "A straightforward whole-grain pantry ingredient.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Oats",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "rosemary",
+    "aliases": [
+      "rosemary"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "herb",
+      "flavoring"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple herb ingredient"
+    ],
+    "signal": "okay",
+    "note": "A straightforward herb ingredient that fits very well within a simpler ingredient list.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Rosemary",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "rosemary extract",
     "aliases": [
       "rosemary extract"
@@ -2595,6 +4902,31 @@
     "signal": "caution",
     "note": "Cleaner than many additives, but still extract-based and more processed than pantry-simple herbs.",
     "sources": []
+  },
+  {
+    "canonical_name": "rye flour",
+    "aliases": [
+      "rye flour"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "flour"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "simple pantry flour",
+      "whole-grain leaning flour"
+    ],
+    "signal": "okay",
+    "note": "A straightforward pantry flour that aligns better than generic refined flour.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Rye",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
   },
   {
     "canonical_name": "safflower oil",
@@ -2620,6 +4952,107 @@
     "sources": []
   },
   {
+    "canonical_name": "salmon",
+    "aliases": [
+      "salmon"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "animal protein"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple seafood ingredient"
+    ],
+    "signal": "okay",
+    "note": "A simple seafood ingredient that aligns well with a minimally processed pantry.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Salmon",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "sardines",
+    "aliases": [
+      "sardines",
+      "sardine"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "animal protein"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple seafood ingredient"
+    ],
+    "signal": "okay",
+    "note": "A simple whole-food seafood ingredient that fits well with a cleaner-label pantry.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Sardines",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "sauerkraut",
+    "aliases": [
+      "sauerkraut"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "fermented vegetable"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "traditional fermented food",
+      "whole-food aligned"
+    ],
+    "signal": "okay",
+    "note": "A traditional fermented food that can fit strongly within a simpler pantry when the label stays clean.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Sauerkraut",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "sausage",
+    "aliases": [
+      "sausage"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "processed meat"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "high",
+    "traits": [
+      "processed meat",
+      "formulated meat product"
+    ],
+    "signal": "avoid",
+    "note": "Usually a formulated processed meat product rather than a simple whole-food protein.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Sausage",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "sea salt",
     "aliases": [
       "sea salt",
@@ -2638,6 +5071,81 @@
     "signal": "okay",
     "note": "Basic seasoning ingredient and not a processing red flag by itself.",
     "sources": []
+  },
+  {
+    "canonical_name": "seaweed",
+    "aliases": [
+      "seaweed"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "whole-food ingredient"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple marine ingredient"
+    ],
+    "signal": "okay",
+    "note": "A simple whole-food ingredient that is very different from processed derivatives like carrageenan.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Seaweed",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "sesame oil",
+    "aliases": [
+      "sesame oil"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "oil or fat"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "culinary oil",
+      "less industrial than generic seed-oil blends"
+    ],
+    "signal": "caution",
+    "note": "Still an extracted oil, so it does not read as ideal by a stricter standard, even if it is more traditional than commodity seed oils.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Sesame Oil",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "shrimp",
+    "aliases": [
+      "shrimp"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "animal protein"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple seafood ingredient"
+    ],
+    "signal": "okay",
+    "note": "A recognizable whole-food protein that aligns well with a simple ingredient list.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Shrimp",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
   },
   {
     "canonical_name": "silicon dioxide",
@@ -2661,6 +5169,31 @@
       {
         "label": "PubChem Silicon Dioxide",
         "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Silicon-dioxide"
+      }
+    ]
+  },
+  {
+    "canonical_name": "skim milk",
+    "aliases": [
+      "skim milk"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "dairy base"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "processed dairy ingredient",
+      "more altered than whole milk"
+    ],
+    "signal": "caution",
+    "note": "Still a recognizable food, but somewhat more processed and altered than a whole-food dairy ingredient.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Skim Milk",
+        "url": "https://fdc.nal.usda.gov/"
       }
     ]
   },
@@ -2811,6 +5344,81 @@
     ]
   },
   {
+    "canonical_name": "sorghum flour",
+    "aliases": [
+      "sorghum flour"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "flour"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "simple pantry flour",
+      "single-ingredient grain flour"
+    ],
+    "signal": "okay",
+    "note": "A straightforward flour that stays close to the original grain.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Sorghum",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "sourdough bread",
+    "aliases": [
+      "sourdough bread"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "bread"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "traditional fermented bread",
+      "depends heavily on the rest of the label"
+    ],
+    "signal": "caution",
+    "note": "Can be much cleaner than packaged bread products, but still depends on the full ingredient panel.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Bread",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "sourdough starter",
+    "aliases": [
+      "sourdough starter"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "fermentation starter"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "traditional fermentation ingredient",
+      "simple pantry component"
+    ],
+    "signal": "okay",
+    "note": "A traditional fermentation ingredient that fits strongly with a simpler pantry standard.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Sourdough",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "soy lecithin",
     "aliases": [
       "soy lecithin"
@@ -2924,6 +5532,56 @@
     "sources": []
   },
   {
+    "canonical_name": "spelt flour",
+    "aliases": [
+      "spelt flour"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "flour"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "simple pantry flour",
+      "whole-grain leaning flour"
+    ],
+    "signal": "okay",
+    "note": "A simpler flour ingredient that fits better than generic refined flour in a cleaner pantry.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Spelt",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "spinach",
+    "aliases": [
+      "spinach"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "leafy green"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple produce ingredient"
+    ],
+    "signal": "okay",
+    "note": "A simple leafy green ingredient with strong whole-food alignment.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Spinach",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "sprouted grains",
     "aliases": [
       "sprouted grains",
@@ -2968,6 +5626,32 @@
     "sources": []
   },
   {
+    "canonical_name": "strawberries",
+    "aliases": [
+      "strawberries",
+      "strawberry"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "whole fruit"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple produce ingredient"
+    ],
+    "signal": "okay",
+    "note": "A whole-food fruit ingredient that aligns well with a simpler ingredient standard.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Strawberries",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "sucralose",
     "aliases": [
       "sucralose"
@@ -2986,6 +5670,31 @@
     "signal": "avoid",
     "note": "Artificial sweetener that strongly conflicts with a cleaner-label standard.",
     "sources": []
+  },
+  {
+    "canonical_name": "sugar",
+    "aliases": [
+      "sugar"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "sweetener"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "refined sweetener",
+      "common packaged-food sweetener"
+    ],
+    "signal": "caution",
+    "note": "A refined sweetener that is common and familiar, but still more processed than a whole-food pantry ingredient.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Sugar",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
   },
   {
     "canonical_name": "sulfites",
@@ -3010,6 +5719,31 @@
       {
         "label": "FDA Sulfiting Agents",
         "url": "https://www.fda.gov/food/food-additives-petitions/sulfiting-agents"
+      }
+    ]
+  },
+  {
+    "canonical_name": "sunflower butter",
+    "aliases": [
+      "sunflower butter"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "nut or seed butter alternative"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "ground seed product",
+      "different from refined seed oil"
+    ],
+    "signal": "caution",
+    "note": "Less concerning than refined sunflower oil, but still not as aligned as simpler whole-food options.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Seed Butters",
+        "url": "https://fdc.nal.usda.gov/"
       }
     ]
   },
@@ -3055,6 +5789,32 @@
     "signal": "avoid",
     "note": "Industrial seed oil that strongly conflicts with a cleaner-label standard focused on minimally processed ingredients.",
     "sources": []
+  },
+  {
+    "canonical_name": "sweet potatoes",
+    "aliases": [
+      "sweet potatoes",
+      "sweet potato"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "root vegetable"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple produce ingredient"
+    ],
+    "signal": "okay",
+    "note": "A whole-food root vegetable ingredient that aligns strongly with a simpler standard.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Sweet Potatoes",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
   },
   {
     "canonical_name": "tapioca starch",
@@ -3129,6 +5889,32 @@
     ]
   },
   {
+    "canonical_name": "thyme",
+    "aliases": [
+      "thyme"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "herb",
+      "flavoring"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple herb ingredient"
+    ],
+    "signal": "okay",
+    "note": "A simple herb ingredient that aligns strongly with a clean pantry standard.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Thyme",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "titanium dioxide",
     "aliases": [
       "titanium dioxide"
@@ -3147,6 +5933,31 @@
     "signal": "avoid",
     "note": "Appearance-focused additive with significant controversy and no whole-food value.",
     "sources": []
+  },
+  {
+    "canonical_name": "toasted sesame oil",
+    "aliases": [
+      "toasted sesame oil"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "oil or fat"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "culinary oil",
+      "used more as flavor oil than bulk fat"
+    ],
+    "signal": "caution",
+    "note": "More traditional than industrial seed-oil blends, but still an extracted oil rather than a whole food.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Sesame Oil",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
   },
   {
     "canonical_name": "tocopherols",
@@ -3171,6 +5982,132 @@
     "sources": []
   },
   {
+    "canonical_name": "tomato paste",
+    "aliases": [
+      "tomato paste"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "concentrated vegetable ingredient"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "concentrated pantry ingredient",
+      "simpler than additive-heavy sauces"
+    ],
+    "signal": "caution",
+    "note": "More processed than fresh tomatoes, but still much simpler than many formulated sauces and condiments.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Tomato Paste",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "tomatoes",
+    "aliases": [
+      "tomatoes",
+      "tomato"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "produce ingredient"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple produce ingredient"
+    ],
+    "signal": "okay",
+    "note": "A straightforward produce ingredient that fits naturally into a simple ingredient list.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Tomatoes",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "tuna",
+    "aliases": [
+      "tuna"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "animal protein"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple seafood ingredient"
+    ],
+    "signal": "okay",
+    "note": "A simple seafood ingredient that fits naturally into a cleaner-label pantry.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Tuna",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "turbinado sugar",
+    "aliases": [
+      "turbinado sugar"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "sweetener"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "less refined sweetener",
+      "still concentrated sugar"
+    ],
+    "signal": "caution",
+    "note": "Less refined than white sugar, but still very much a concentrated sweetener.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Turbinado Sugar",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "turkey",
+    "aliases": [
+      "turkey"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "animal protein"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple animal protein"
+    ],
+    "signal": "okay",
+    "note": "A simple animal protein that fits well within a minimally processed ingredient standard.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Turkey",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "turmeric",
     "aliases": [
       "turmeric"
@@ -3189,6 +6126,57 @@
     "signal": "okay",
     "note": "Simple spice ingredient that aligns well with a cleaner-label standard.",
     "sources": []
+  },
+  {
+    "canonical_name": "vanilla beans",
+    "aliases": [
+      "vanilla beans",
+      "vanilla bean"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "flavoring"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food spice ingredient",
+      "simple flavor source"
+    ],
+    "signal": "okay",
+    "note": "A simple whole-food flavor ingredient that fits a cleaner-label pantry well.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Vanilla",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "vanilla extract",
+    "aliases": [
+      "vanilla extract"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "flavoring"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "traditional extract",
+      "cleaner than artificial flavor"
+    ],
+    "signal": "caution",
+    "note": "An extract is still processed, but it is much more aligned than vague or artificial flavor systems.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Vanilla Extract",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
   },
   {
     "canonical_name": "vinegar",
@@ -3230,6 +6218,31 @@
     "signal": "okay",
     "note": "Whole-food ingredient that fits a cleaner ingredient panel.",
     "sources": []
+  },
+  {
+    "canonical_name": "whey",
+    "aliases": [
+      "whey"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "dairy protein ingredient"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "traditional dairy derivative",
+      "less refined than isolates"
+    ],
+    "signal": "caution",
+    "note": "More traditional than protein isolates, but still a processed dairy ingredient rather than a whole food.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Whey",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
   },
   {
     "canonical_name": "whey protein concentrate",
@@ -3277,6 +6290,31 @@
     "sources": []
   },
   {
+    "canonical_name": "white rice",
+    "aliases": [
+      "white rice"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "grain"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "refined grain",
+      "simpler than ultra-processed additives"
+    ],
+    "signal": "caution",
+    "note": "Still a fairly simple ingredient, but more refined than a whole-grain option.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central White Rice",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "white rice flour",
     "aliases": [
       "white rice flour",
@@ -3295,6 +6333,31 @@
     "signal": "caution",
     "note": "More processed than intact grains and less aligned with a stricter cleaner-label standard.",
     "sources": []
+  },
+  {
+    "canonical_name": "whole milk",
+    "aliases": [
+      "whole milk"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "dairy base"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "traditional food ingredient",
+      "simple dairy ingredient"
+    ],
+    "signal": "okay",
+    "note": "A more traditional and simple dairy ingredient than many powdered or isolated dairy components.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Whole Milk",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
   },
   {
     "canonical_name": "whole wheat flour",
@@ -3407,6 +6470,31 @@
       {
         "label": "FDA Color Additives Questions and Answers",
         "url": "https://www.fda.gov/food/color-additives-information-consumers/color-additives-questions-and-answers-consumers"
+      }
+    ]
+  },
+  {
+    "canonical_name": "zucchini",
+    "aliases": [
+      "zucchini"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "produce ingredient"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple produce ingredient"
+    ],
+    "signal": "okay",
+    "note": "A straightforward vegetable ingredient with strong whole-food alignment.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Zucchini",
+        "url": "https://fdc.nal.usda.gov/"
       }
     ]
   }
