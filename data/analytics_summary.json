@@ -1,12 +1,12 @@
 {
   "totals": {
-    "searches": 10,
+    "searches": 16,
     "ingredient_pages": 45,
-    "index_pages": 5
+    "index_pages": 7
   },
   "ingredient_queries": {
-    "carrageenan": 2,
-    "ploster": 2,
+    "carrageenan": 4,
+    "ploster": 4,
     "turmeric": 1
   },
   "product_queries": {
@@ -14,7 +14,8 @@
     "water, almondmilk, carrageenan, sea salt": 1,
     "ingredients: sunflower oil, sea salt, paprika": 1,
     "ingredients: mustard seed, vinegar, salt, apple cider vinegar, wheat mustard (water, vinegar, mustard seed, salt, turmeric, spices), molasses, horseradish t,natural flavorings), onion powder, xanthan gum, tor (water, natural": 1,
-    "ingredients: water, whole ground mustard (water, mustard seed, vinegar, salt, apple cider vinegar), wheat mustard (water, vinegar, mustard seed, salt, turmeric, spices), molasses, horseradish, natural flavorings, dried chopped onion, onion powder, xanthan gum, natural smoke flavor (water, natural woodry smoke concentrate)": 1
+    "ingredients: water, whole ground mustard (water, mustard seed, vinegar, salt, apple cider vinegar), wheat mustard (water, vinegar, mustard seed, salt, turmeric, spices), molasses, horseradish, natural flavorings, dried chopped onion, onion powder, xanthan gum, natural smoke flavor (water, natural woodry smoke concentrate)": 1,
+    "ingredients: water, sunflower oil, sea salt": 2
   },
   "pageviews": {
     "carrageenan": 4,
@@ -51,6 +52,30 @@
     "mayonnaise": 1
   },
   "recent_events": [
+    {
+      "kind": "search:ingredient",
+      "value": "ploster"
+    },
+    {
+      "kind": "search:product",
+      "value": "ingredients: water, sunflower oil, sea salt"
+    },
+    {
+      "kind": "search:ingredient",
+      "value": "carrageenan"
+    },
+    {
+      "kind": "search:ingredient",
+      "value": "ploster"
+    },
+    {
+      "kind": "search:product",
+      "value": "ingredients: water, sunflower oil, sea salt"
+    },
+    {
+      "kind": "search:ingredient",
+      "value": "carrageenan"
+    },
     {
       "kind": "search:product",
       "value": "ingredients: water, whole ground mustard (water, mustard seed, vinegar, salt, apple cider vinegar), wheat mustard (water, vinegar, mustard seed, salt, turmeric, spices), molasses, horseradish, natural flavorings, dried chopped onion, onion powder, xanthan gum, natural smoke flavor (water, natural woodry smoke concentrate)"
@@ -101,6 +126,6 @@
   },
   "ingredient_pageviews": {},
   "site_pageviews": {
-    "ingredients-index": 2
+    "ingredients-index": 3
   }
 }
