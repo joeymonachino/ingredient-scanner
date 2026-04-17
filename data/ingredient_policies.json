@@ -164,6 +164,31 @@
     "sources": []
   },
   {
+    "canonical_name": "ammonium bicarbonate",
+    "aliases": [
+      "ammonium bicarbonate"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "leavening agent"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "moderate",
+    "traits": [
+      "industrial leavening agent",
+      "baking additive"
+    ],
+    "signal": "caution",
+    "note": "A formulation-oriented leavening ingredient that reads more processed than simple pantry baking soda.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "annatto",
     "aliases": [
       "annatto",
@@ -460,6 +485,31 @@
       {
         "label": "USDA FoodData Central Avocados",
         "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "azodicarbonamide",
+    "aliases": [
+      "azodicarbonamide"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "dough conditioner"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "high",
+    "traits": [
+      "industrial dough conditioner",
+      "highly processed additive"
+    ],
+    "signal": "avoid",
+    "note": "A highly processed dough conditioner that is strongly out of step with a cleaner-label approach.",
+    "sources": [
+      {
+        "label": "FDA Food Additives Status List",
+        "url": "https://www.fda.gov/food/food-additives-petitions/food-additives-status-list"
       }
     ]
   },
@@ -1957,6 +2007,32 @@
     "sources": []
   },
   {
+    "canonical_name": "corn syrup solids",
+    "aliases": [
+      "corn syrup solids"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "sweetener",
+      "bulking agent"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "high",
+    "traits": [
+      "refined corn sweetener",
+      "ultra-processed carbohydrate additive"
+    ],
+    "signal": "avoid",
+    "note": "A refined processed corn sweetener that strongly conflicts with a whole-food ingredient approach.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Corn Syrup",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "cornmeal",
     "aliases": [
       "cornmeal"
@@ -2102,6 +2178,32 @@
     ]
   },
   {
+    "canonical_name": "cyanocobalamin",
+    "aliases": [
+      "cyanocobalamin",
+      "vitamin b12"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "fortification nutrient"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "low",
+    "traits": [
+      "synthetic vitamin fortification",
+      "supplement-style additive"
+    ],
+    "signal": "caution",
+    "note": "A synthetic B12 form that reads more like supplement fortification than a whole-food ingredient.",
+    "sources": [
+      {
+        "label": "NIH Vitamin B12 Fact Sheet",
+        "url": "https://ods.od.nih.gov/factsheets/VitaminB12-Consumer/"
+      }
+    ]
+  },
+  {
     "canonical_name": "date syrup",
     "aliases": [
       "date syrup"
@@ -2119,6 +2221,33 @@
     "signal": "caution",
     "note": "Still a syrup, but often reads cleaner than highly refined sweeteners.",
     "sources": []
+  },
+  {
+    "canonical_name": "datem",
+    "aliases": [
+      "datem",
+      "diacetyl tartaric acid esters of mono and diglycerides"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "emulsifier",
+      "dough conditioner"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "high",
+    "traits": [
+      "industrial emulsifier",
+      "bread improver additive"
+    ],
+    "signal": "avoid",
+    "note": "An industrial dough conditioner and emulsifier that strongly conflicts with a simpler ingredient standard.",
+    "sources": [
+      {
+        "label": "Open Food Facts DATEM",
+        "url": "https://world.openfoodfacts.org/"
+      }
+    ]
   },
   {
     "canonical_name": "dates",
@@ -2287,6 +2416,32 @@
     "sources": []
   },
   {
+    "canonical_name": "enzyme",
+    "aliases": [
+      "enzyme",
+      "enzymes"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "processing aid"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "moderate",
+    "traits": [
+      "vague processing aid",
+      "low-transparency additive term"
+    ],
+    "signal": "caution",
+    "note": "A vague label term that usually points to a processing aid rather than a clear whole-food ingredient.",
+    "sources": [
+      {
+        "label": "FDA Enzyme Preparations",
+        "url": "https://www.fda.gov/food/food-ingredients-packaging/generally-recognized-safe-gras"
+      }
+    ]
+  },
+  {
     "canonical_name": "erythritol",
     "aliases": [
       "erythritol"
@@ -2343,6 +2498,31 @@
     "signal": "caution",
     "note": "More processed than simple milk.",
     "sources": []
+  },
+  {
+    "canonical_name": "ferrous sulfate",
+    "aliases": [
+      "ferrous sulfate"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "fortification mineral"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "moderate",
+    "traits": [
+      "synthetic mineral fortification",
+      "supplement-style additive"
+    ],
+    "signal": "caution",
+    "note": "A supplemental iron salt that reads more like fortification than a simple whole-food ingredient.",
+    "sources": [
+      {
+        "label": "NIH Iron Fact Sheet",
+        "url": "https://ods.od.nih.gov/factsheets/Iron-Consumer/"
+      }
+    ]
   },
   {
     "canonical_name": "filtered water",
@@ -2413,6 +2593,32 @@
       {
         "label": "USDA FoodData Central Flour",
         "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "folic acid",
+    "aliases": [
+      "folic acid",
+      "folate fortification"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "fortification nutrient"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "moderate",
+    "traits": [
+      "synthetic vitamin fortification",
+      "common in enriched grain products"
+    ],
+    "signal": "caution",
+    "note": "A synthetic fortification nutrient commonly used in enriched foods rather than naturally nutrient-dense whole foods.",
+    "sources": [
+      {
+        "label": "FDA Folic Acid Information",
+        "url": "https://www.fda.gov/food/metals-and-your-food/folic-acid"
       }
     ]
   },
@@ -3194,6 +3400,31 @@
     ]
   },
   {
+    "canonical_name": "malted barley flour",
+    "aliases": [
+      "malted barley flour"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "baking aid"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "low",
+    "traits": [
+      "grain processing aid",
+      "common in bread formulations"
+    ],
+    "signal": "caution",
+    "note": "Common in bread products, but still more formulation-driven than a simple whole-grain ingredient.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Barley",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "maltodextrin",
     "aliases": [
       "maltodextrin"
@@ -3677,6 +3908,32 @@
       {
         "label": "USDA FoodData Central Navy Beans",
         "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "niacinamide",
+    "aliases": [
+      "niacinamide",
+      "vitamin b3"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "fortification nutrient"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "low",
+    "traits": [
+      "synthetic vitamin fortification",
+      "common in enriched packaged foods"
+    ],
+    "signal": "caution",
+    "note": "A synthetic fortification ingredient more associated with enriched packaged foods than whole-food nutrition.",
+    "sources": [
+      {
+        "label": "FDA Food Fortification Overview",
+        "url": "https://www.fda.gov/food/food-additives-petitions/food-additives-status-list"
       }
     ]
   },
@@ -4690,6 +4947,32 @@
     ]
   },
   {
+    "canonical_name": "pyridoxine hydrochloride",
+    "aliases": [
+      "pyridoxine hydrochloride",
+      "vitamin b6"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "fortification nutrient"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "low",
+    "traits": [
+      "synthetic vitamin fortification",
+      "enriched-food additive"
+    ],
+    "signal": "caution",
+    "note": "A synthetic B6 additive commonly used in fortified processed foods.",
+    "sources": [
+      {
+        "label": "NIH Vitamin B6 Fact Sheet",
+        "url": "https://ods.od.nih.gov/factsheets/VitaminB6-Consumer/"
+      }
+    ]
+  },
+  {
     "canonical_name": "quinoa",
     "aliases": [
       "quinoa"
@@ -4781,6 +5064,58 @@
       {
         "label": "FDA Color Additives Questions and Answers",
         "url": "https://www.fda.gov/food/color-additives-information-consumers/color-additives-questions-and-answers-consumers"
+      }
+    ]
+  },
+  {
+    "canonical_name": "reduced iron",
+    "aliases": [
+      "reduced iron",
+      "iron fortification"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "fortification mineral"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "moderate",
+    "traits": [
+      "synthetic mineral fortification",
+      "enriched flour additive"
+    ],
+    "signal": "caution",
+    "note": "A mineral fortification additive that usually appears in enriched processed grains.",
+    "sources": [
+      {
+        "label": "FDA Food Fortification Overview",
+        "url": "https://www.fda.gov/food/food-additives-petitions/food-additives-status-list"
+      }
+    ]
+  },
+  {
+    "canonical_name": "riboflavin",
+    "aliases": [
+      "riboflavin",
+      "vitamin b2"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "fortification nutrient"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "low",
+    "traits": [
+      "synthetic vitamin fortification",
+      "common in enriched grains"
+    ],
+    "signal": "caution",
+    "note": "Usually appears as a fortification ingredient in processed grain products rather than a whole-food nutrient source.",
+    "sources": [
+      {
+        "label": "FDA Food Fortification Overview",
+        "url": "https://www.fda.gov/food/food-additives-petitions/food-additives-status-list"
       }
     ]
   },
@@ -5419,6 +5754,32 @@
     ]
   },
   {
+    "canonical_name": "soy flour",
+    "aliases": [
+      "soy flour"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "medium",
+    "functional_roles": [
+      "flour",
+      "protein extender"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "moderate",
+    "traits": [
+      "processed soy ingredient",
+      "common in packaged baked goods"
+    ],
+    "signal": "caution",
+    "note": "More processed than whole soy foods and often used in formulation-heavy baked products.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Soy Flour",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "soy lecithin",
     "aliases": [
       "soy lecithin"
@@ -5505,6 +5866,32 @@
       {
         "label": "USDA FoodData Central Soy",
         "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "soybean lecithin",
+    "aliases": [
+      "soybean lecithin",
+      "soya lecithin"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "emulsifier"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "moderate",
+    "traits": [
+      "processed soy emulsifier",
+      "formulation aid"
+    ],
+    "signal": "caution",
+    "note": "A formulation-oriented emulsifier that is more processed than a simple pantry ingredient.",
+    "sources": [
+      {
+        "label": "Open Food Facts Lecithins",
+        "url": "https://world.openfoodfacts.org/"
       }
     ]
   },
@@ -5889,6 +6276,33 @@
     ]
   },
   {
+    "canonical_name": "thiamin mononitrate",
+    "aliases": [
+      "thiamin mononitrate",
+      "thiamine mononitrate",
+      "vitamin b1"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "fortification nutrient"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "low",
+    "traits": [
+      "synthetic vitamin fortification",
+      "enriched flour additive"
+    ],
+    "signal": "caution",
+    "note": "A synthetic vitamin added back into enriched foods, which fits a processed-food pattern more than a whole-food one.",
+    "sources": [
+      {
+        "label": "FDA Food Fortification Overview",
+        "url": "https://www.fda.gov/food/food-additives-petitions/food-additives-status-list"
+      }
+    ]
+  },
+  {
     "canonical_name": "thyme",
     "aliases": [
       "thyme"
@@ -6128,6 +6542,32 @@
     "sources": []
   },
   {
+    "canonical_name": "unbleached enriched flour",
+    "aliases": [
+      "unbleached enriched flour",
+      "unbleached enriched wheat flour"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "refined flour base"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "moderate",
+    "traits": [
+      "refined grain base",
+      "fortified processed flour"
+    ],
+    "signal": "avoid",
+    "note": "Still a refined fortified flour even if it skips bleaching, so it does not read as whole-food aligned.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Wheat Flour",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
     "canonical_name": "vanilla beans",
     "aliases": [
       "vanilla beans",
@@ -6199,6 +6639,58 @@
     "sources": []
   },
   {
+    "canonical_name": "vital wheat gluten",
+    "aliases": [
+      "vital wheat gluten"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "protein concentrate",
+      "texture aid"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "moderate",
+    "traits": [
+      "isolated grain protein",
+      "bread texture booster"
+    ],
+    "signal": "caution",
+    "note": "A concentrated wheat protein used to engineer texture in breads and snacks.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Gluten",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "vitamin a palmitate",
+    "aliases": [
+      "vitamin a palmitate",
+      "retinyl palmitate"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "fortification nutrient"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "moderate",
+    "traits": [
+      "synthetic vitamin fortification",
+      "added nutrient isolate"
+    ],
+    "signal": "caution",
+    "note": "An added vitamin isolate that usually signals fortification rather than naturally nutrient-rich ingredients.",
+    "sources": [
+      {
+        "label": "NIH Vitamin A Fact Sheet",
+        "url": "https://ods.od.nih.gov/factsheets/VitaminA-Consumer/"
+      }
+    ]
+  },
+  {
     "canonical_name": "walnuts",
     "aliases": [
       "walnuts",
@@ -6218,6 +6710,58 @@
     "signal": "okay",
     "note": "Whole-food ingredient that fits a cleaner ingredient panel.",
     "sources": []
+  },
+  {
+    "canonical_name": "wheat gluten",
+    "aliases": [
+      "wheat gluten"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "protein concentrate",
+      "texture aid"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "moderate",
+    "traits": [
+      "isolated grain protein",
+      "processed baking aid"
+    ],
+    "signal": "caution",
+    "note": "An isolated wheat protein that is more formulation-oriented than a simple flour ingredient.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Gluten",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "wheat starch",
+    "aliases": [
+      "wheat starch"
+    ],
+    "processing_level": "moderately processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "starch",
+      "texture modifier"
+    ],
+    "organic_alignment": "mixed",
+    "controversy_level": "moderate",
+    "traits": [
+      "refined starch fraction",
+      "texture-focused ingredient"
+    ],
+    "signal": "caution",
+    "note": "A refined starch fraction that reads more processed than whole-grain wheat ingredients.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Wheat Starch",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
   },
   {
     "canonical_name": "whey",
@@ -6333,6 +6877,82 @@
     "signal": "caution",
     "note": "More processed than intact grains and less aligned with a stricter cleaner-label standard.",
     "sources": []
+  },
+  {
+    "canonical_name": "whole grain corn",
+    "aliases": [
+      "whole grain corn"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "whole grain ingredient"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple grain ingredient"
+    ],
+    "signal": "okay",
+    "note": "A whole-grain corn ingredient that reads much cleaner than refined corn sweeteners or starches.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Corn",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "whole grain oats",
+    "aliases": [
+      "whole grain oats",
+      "whole grain rolled oats"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "whole grain ingredient"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple grain ingredient"
+    ],
+    "signal": "okay",
+    "note": "A straightforward whole-grain ingredient that stays close to the original food.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Oats",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
+  },
+  {
+    "canonical_name": "whole grain wheat",
+    "aliases": [
+      "whole grain wheat"
+    ],
+    "processing_level": "minimally processed",
+    "whole_food_alignment": "high",
+    "functional_roles": [
+      "whole grain ingredient"
+    ],
+    "organic_alignment": "strong",
+    "controversy_level": "low",
+    "traits": [
+      "whole-food aligned",
+      "simple grain ingredient"
+    ],
+    "signal": "okay",
+    "note": "A whole-grain wheat ingredient that is much closer to a simple food standard than refined flour bases.",
+    "sources": [
+      {
+        "label": "USDA FoodData Central Wheat",
+        "url": "https://fdc.nal.usda.gov/"
+      }
+    ]
   },
   {
     "canonical_name": "whole milk",
@@ -6470,6 +7090,31 @@
       {
         "label": "FDA Color Additives Questions and Answers",
         "url": "https://www.fda.gov/food/color-additives-information-consumers/color-additives-questions-and-answers-consumers"
+      }
+    ]
+  },
+  {
+    "canonical_name": "zinc oxide",
+    "aliases": [
+      "zinc oxide"
+    ],
+    "processing_level": "highly processed",
+    "whole_food_alignment": "low",
+    "functional_roles": [
+      "fortification mineral"
+    ],
+    "organic_alignment": "poor",
+    "controversy_level": "moderate",
+    "traits": [
+      "synthetic mineral fortification",
+      "isolated mineral additive"
+    ],
+    "signal": "caution",
+    "note": "An isolated mineral additive common in fortified processed foods.",
+    "sources": [
+      {
+        "label": "NIH Zinc Fact Sheet",
+        "url": "https://ods.od.nih.gov/factsheets/Zinc-Consumer/"
       }
     ]
   },

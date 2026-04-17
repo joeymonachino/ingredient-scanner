@@ -69,7 +69,10 @@ OCR_REPAIR_VOCAB = {
     "ingredients", "brown", "sugar", "water", "whole", "ground", "mustard", "seed", "seeds", "vinegar",
     "salt", "citric", "acid", "turmeric", "apple", "cider", "wheat", "molasses", "horseradish",
     "natural", "flavor", "flavorings", "chopped", "onion", "powder", "xanthan", "gum", "smoke",
-    "smoke", "concentrate", "spices", "refrigerate", "opening", "packed", "for", "and", "with"
+    "concentrate", "spices", "refrigerate", "opening", "packed", "for", "and", "with", "vitamin",
+    "niacinamide", "riboflavin", "thiamin", "thiamine", "mononitrate", "folic", "cyanocobalamin",
+    "pyridoxine", "hydrochloride", "palmitate", "reduced", "iron", "ferrous", "sulfate", "zinc",
+    "oxide", "enriched", "flour", "unbleached", "malted", "barley", "annatto", "extract", "datem"
 }
 
 
@@ -126,6 +129,19 @@ def load_policy_records() -> list[dict[str, Any]]:
 
 
 POLICY_RECORDS = load_policy_records()
+
+
+def build_catalog_ocr_vocabulary() -> set[str]:
+    vocab = set(OCR_REPAIR_VOCAB)
+    for record in POLICY_RECORDS:
+        for alias in record.get("aliases", []):
+            for token in re.findall(r"[a-z]+", str(alias).lower()):
+                if len(token) >= 4:
+                    vocab.add(token)
+    return vocab
+
+
+CATALOG_OCR_VOCAB = build_catalog_ocr_vocabulary()
 
 
 def ingredient_slug(name: str) -> str:
@@ -210,13 +226,13 @@ def repair_ocr_word(word: str) -> str:
     if len(word) < 4 or not word.isalpha():
         return word
     lowered = word.lower()
-    if lowered in OCR_REPAIR_VOCAB:
+    if lowered in CATALOG_OCR_VOCAB:
         return word
     # Prefer restoring a missing leading letter when the rest matches a known word.
-    for candidate in OCR_REPAIR_VOCAB:
+    for candidate in CATALOG_OCR_VOCAB:
         if len(candidate) == len(lowered) + 1 and candidate.endswith(lowered):
             return candidate.upper() if word.isupper() else candidate
-    matches = difflib.get_close_matches(lowered, list(OCR_REPAIR_VOCAB), n=1, cutoff=0.8)
+    matches = difflib.get_close_matches(lowered, list(CATALOG_OCR_VOCAB), n=1, cutoff=0.82)
     if matches:
         candidate = matches[0]
         return candidate.upper() if word.isupper() else candidate
@@ -236,6 +252,24 @@ def repair_ocr_line(line: str) -> str:
     fixed = re.sub(r"[A-Za-z]+", replace_word, line)
     phrase_repairs = [
         (r"^JER, WHOLE GROUND$", "WATER, WHOLE GROUND"),
+        (r"^ENRICHED WHEAT FLOUR$", "ENRICHED WHEAT FLOUR"),
+        (r"^UNBLEACHED ENRICHED FLOUR$", "UNBLEACHED ENRICHED FLOUR"),
+        (r"^THIAMIN MONONITRATE$", "THIAMIN MONONITRATE"),
+        (r"^THIAMINE MONONITRATE$", "THIAMIN MONONITRATE"),
+        (r"^RIBOFLAVIN$", "RIBOFLAVIN"),
+        (r"^NIACINAMIDE$", "NIACINAMIDE"),
+        (r"^FOLIC ACID$", "FOLIC ACID"),
+        (r"^REDUCED IRON$", "REDUCED IRON"),
+        (r"^FERROUS SULFATE$", "FERROUS SULFATE"),
+        (r"^PYRIDOXINE HYDROCHLORIDE$", "PYRIDOXINE HYDROCHLORIDE"),
+        (r"^CYANOCOBALAMIN$", "CYANOCOBALAMIN"),
+        (r"^CORN SYRUP SOLIDS$", "CORN SYRUP SOLIDS"),
+        (r"^SOYBEAN LECITHIN$", "SOYBEAN LECITHIN"),
+        (r"^VITAL WHEAT GLUTEN$", "VITAL WHEAT GLUTEN"),
+        (r"^WHEAT GLUTEN$", "WHEAT GLUTEN"),
+        (r"^WHEAT STARCH$", "WHEAT STARCH"),
+        (r"^ENZYMES$", "ENZYMES"),
+        (r"^BROWN RICE SYRUP$", "BROWN RICE SYRUP"),
         (r"^SEED, VINEGAR, SALT$", "MUSTARD SEED, VINEGAR, SALT"),
         (r"^MUSTARD SEED, VINEGAR, SALT$", "MUSTARD SEED, VINEGAR, SALT"),
         (r"^PLE CIDER VINEGAR\.?$", "APPLE CIDER VINEGAR"),
@@ -261,6 +295,24 @@ def repair_ocr_line(line: str) -> str:
     fixed = re.sub(r"TNATURAL", "NATURAL", fixed, flags=re.IGNORECASE)
     fixed = re.sub(r"GN POWDER", "ONION POWDER", fixed, flags=re.IGNORECASE)
     fixed = re.sub(r"\? \(WATER", "FLAVOR (WATER", fixed)
+    fixed = re.sub(r"\bIAMIN\b", "THIAMIN", fixed, flags=re.IGNORECASE)
+    fixed = re.sub(r"\bIBOFLAVIN\b", "RIBOFLAVIN", fixed, flags=re.IGNORECASE)
+    fixed = re.sub(r"\bIACINAMIDE\b", "NIACINAMIDE", fixed, flags=re.IGNORECASE)
+    fixed = re.sub(r"\bOLIC ACID\b", "FOLIC ACID", fixed, flags=re.IGNORECASE)
+    fixed = re.sub(r"\bEDUCED IRON\b", "REDUCED IRON", fixed, flags=re.IGNORECASE)
+    fixed = re.sub(r"\bYRIDOXINE HYDROCHLORIDE\b", "PYRIDOXINE HYDROCHLORIDE", fixed, flags=re.IGNORECASE)
+    fixed = re.sub(r"\bORN SYRUP SOLIDS\b", "CORN SYRUP SOLIDS", fixed, flags=re.IGNORECASE)
+    fixed = re.sub(r"\bOYBEAN LECITHIN\b", "SOYBEAN LECITHIN", fixed, flags=re.IGNORECASE)
+    fixed = re.sub(r"\bITAL WHEAT GLUTEN\b", "VITAL WHEAT GLUTEN", fixed, flags=re.IGNORECASE)
+    fixed = re.sub(r"\bHEAT GLUTEN\b", "WHEAT GLUTEN", fixed, flags=re.IGNORECASE)
+    fixed = re.sub(r"\bHEAT STARCH\b", "WHEAT STARCH", fixed, flags=re.IGNORECASE)
+    fixed = re.sub(r"\bNZYMES\b", "ENZYMES", fixed, flags=re.IGNORECASE)
+    fixed = re.sub(r"\bROWN RICE SYRUP\b", "BROWN RICE SYRUP", fixed, flags=re.IGNORECASE)
+    fixed = re.sub(r"\bONTAINS\b", "CONTAINS", fixed, flags=re.IGNORECASE)
+    fixed = re.sub(r"\bITAMINS\b", "VITAMINS", fixed, flags=re.IGNORECASE)
+    fixed = re.sub(r"\bINERALS\b", "MINERALS", fixed, flags=re.IGNORECASE)
+    fixed = re.sub(r"\bADE\b", "MADE", fixed, flags=re.IGNORECASE)
+    fixed = re.sub(r"\bOLLOWING\b", "FOLLOWING", fixed, flags=re.IGNORECASE)
     return fixed
 
 
@@ -271,6 +323,10 @@ def repair_ocr_candidate_text(text: str) -> str:
 
 def normalize_merged_ingredient_text(text: str) -> str:
     cleaned = text
+    cleaned = re.sub(r"^\s*INGREDIENTS\s*:?\s*", "", cleaned, flags=re.IGNORECASE)
+    cleaned = cleaned.replace(";", ", ")
+    cleaned = re.sub(r"(?<=[a-zA-Z])\s*\n\s*(?=[A-Z])", ", ", cleaned)
+    cleaned = re.sub(r"(?<=[a-zA-Z0-9])\s+(?=(WATER|SUGAR|SALT|CORN|WHEAT|WHOLE|ENRICHED|UNBLEACHED|MALTODEXTRIN|DEXTROSE|NATURAL|SOYBEAN|VINEGAR|SPICES|NIACINAMIDE|RIBOFLAVIN|THIAMIN|FOLIC|REDUCED|FERROUS|CYANOCOBALAMIN|PYRIDOXINE|VITAMINS|MINERALS)\b)", ", ", cleaned)
     replacements = [
         (
             "WATER, WHOLE GROUND, MUSTARD SEED, VINEGAR, SALT, APPLE CIDER VINEGAR, VINEGAR, MUSTARD SEED",
@@ -293,8 +349,41 @@ def normalize_merged_ingredient_text(text: str) -> str:
     cleaned = re.sub(r"NATURAL FLAVORINGS", "NATURAL FLAVORINGS", cleaned)
     if cleaned.count("(") > cleaned.count(")"):
         cleaned += ")" * (cleaned.count("(") - cleaned.count(")"))
+    elif cleaned.count(")") > cleaned.count("("):
+        extra = cleaned.count(")") - cleaned.count("(")
+        for _ in range(extra):
+            cleaned = cleaned[::-1].replace(")", "", 1)[::-1]
+    cleaned = re.sub(r"\(([A-Z][A-Z ]+),\s*([A-Z][A-Z ]+)\)", r"(\1, \2)", cleaned)
+    cleaned = re.sub(r"\(([^()]*)$", r"(\1)", cleaned)
     cleaned = re.sub(r"\s+,", ",", cleaned)
     cleaned = re.sub(r",\s*,+", ", ", cleaned)
+    cleaned = re.sub(r"\bENRICHED, WHEAT FLOUR\b", "ENRICHED WHEAT FLOUR", cleaned)
+    cleaned = re.sub(r"\bUNBLEACHED, ENRICHED FLOUR\b", "UNBLEACHED ENRICHED FLOUR", cleaned)
+    cleaned = re.sub(r"\bCORN, SYRUP SOLIDS\b", "CORN SYRUP SOLIDS", cleaned)
+    cleaned = re.sub(r"\bSOYBEAN, LECITHIN\b", "SOYBEAN LECITHIN", cleaned)
+    cleaned = re.sub(r"\bWHEAT, STARCH\b", "WHEAT STARCH", cleaned)
+    cleaned = re.sub(r"\bWHEAT, GLUTEN\b", "WHEAT GLUTEN", cleaned)
+    cleaned = re.sub(r"\bVITAL, WHEAT GLUTEN\b", "VITAL WHEAT GLUTEN", cleaned)
+    cleaned = re.sub(r"\bTHIAMIN, MONONITRATE\b", "THIAMIN MONONITRATE", cleaned)
+    cleaned = re.sub(r"\bFOLIC, ACID\b", "FOLIC ACID", cleaned)
+    cleaned = re.sub(r"\bREDUCED, IRON\b", "REDUCED IRON", cleaned)
+    cleaned = re.sub(r"\bSEA, SALT\b", "SEA SALT", cleaned)
+    cleaned = re.sub(r"\bGARLIC, POWDER\b", "GARLIC POWDER", cleaned)
+    cleaned = re.sub(r"\bONION, POWDER\b", "ONION POWDER", cleaned)
+    cleaned = re.sub(r"\bAPPLE, JUICE CONCENTRATE\b", "APPLE JUICE CONCENTRATE", cleaned)
+    cleaned = re.sub(r"\bWHOLE GRAIN, CORN\b", "WHOLE GRAIN CORN", cleaned)
+    cleaned = re.sub(r"\bWHOLE GRAIN, OATS\b", "WHOLE GRAIN OATS", cleaned)
+    cleaned = re.sub(r"\bLESS THAN, 2% OF\b", "LESS THAN 2% OF", cleaned)
+    cleaned = re.sub(r"\bMADE WITH,\s*WHOLE GRAIN OATS\b", "MADE WITH WHOLE GRAIN OATS", cleaned)
+    cleaned = re.sub(r"\bCONTAINS ONE OR MORE OF THE FOLLOWING,\s*", "CONTAINS ONE OR MORE OF THE FOLLOWING ", cleaned)
+    cleaned = re.sub(r"\bCONTAINS, 2% OR LESS OF\b", "CONTAINS 2% OR LESS OF", cleaned)
+    cleaned = re.sub(r"\bVITAMINS, AND MINERALS:?\b", "VITAMINS AND MINERALS:", cleaned)
+    cleaned = re.sub(r"\bVITAMIN, AND MINERALS:?\b", "VITAMINS AND MINERALS:", cleaned)
+    cleaned = re.sub(r"CONTAINS 2% OR LESS OF,\s*", "CONTAINS 2% OR LESS OF ", cleaned, flags=re.IGNORECASE)
+    cleaned = re.sub(r"LESS THAN 2% OF,\s*", "LESS THAN 2% OF ", cleaned, flags=re.IGNORECASE)
+    cleaned = re.sub(r"MADE WITH,\s*", "MADE WITH ", cleaned, flags=re.IGNORECASE)
+    cleaned = re.sub(r"VITAMIN AND,\s*MINERALS:?", "VITAMINS AND MINERALS:", cleaned, flags=re.IGNORECASE)
+    cleaned = re.sub(r"VITAMINS AND,\s*MINERALS:?", "VITAMINS AND MINERALS:", cleaned, flags=re.IGNORECASE)
     cleaned = re.sub(r"\s+", " ", cleaned).strip(" ,")
     if cleaned and "ingredients:" not in cleaned.lower():
         cleaned = f"Ingredients: {cleaned}"
@@ -308,7 +397,9 @@ def merge_ocr_lines_into_label(lines: list[str]) -> str:
 
     likely_new_ingredient_starts = {
         "water", "vinegar", "apple", "molasses", "natural", "onion", "smoke", "mustard",
-        "horseradish", "salt", "turmeric", "citric", "flavor", "whole", "brown"
+        "horseradish", "salt", "turmeric", "citric", "flavor", "whole", "brown", "enriched",
+        "unbleached", "corn", "soybean", "wheat", "thiamin", "riboflavin", "niacinamide",
+        "folic", "reduced", "ferrous", "cyanocobalamin", "pyridoxine", "enzymes"
     }
 
     merged_parts: list[str] = []
@@ -324,10 +415,34 @@ def merge_ocr_lines_into_label(lines: list[str]) -> str:
         first_word = re.sub(r"[^A-Za-z]", "", candidate.split()[0]).lower() if candidate.split() else ""
         prev_has_terminal_punctuation = previous.endswith(",") or previous.endswith(")")
         likely_new_ingredient = first_word in likely_new_ingredient_starts or ingredient_line_score(candidate) >= 10
+        phrase_pair = f"{previous} {candidate}".upper()
         looks_like_continuation = (
             (len(candidate.split()) <= 2 and not likely_new_ingredient)
-            or candidate.lower().startswith(("and ", "or ", "with "))
+            or candidate.lower().startswith(("and ", "or ", "with ", "contains "))
             or candidate.startswith("(")
+            or previous.endswith("(")
+            or previous.endswith("/")
+            or phrase_pair.startswith("ENRICHED WHEAT FLOUR")
+            or phrase_pair.startswith("UNBLEACHED ENRICHED FLOUR")
+            or phrase_pair.startswith("CORN SYRUP SOLIDS")
+            or phrase_pair.startswith("SOYBEAN LECITHIN")
+            or phrase_pair.startswith("WHEAT STARCH")
+            or phrase_pair.startswith("WHEAT GLUTEN")
+            or phrase_pair.startswith("VITAL WHEAT GLUTEN")
+            or phrase_pair.startswith("THIAMIN MONONITRATE")
+            or phrase_pair.startswith("FOLIC ACID")
+            or phrase_pair.startswith("REDUCED IRON")
+            or phrase_pair.startswith("SEA SALT")
+            or phrase_pair.startswith("GARLIC POWDER")
+            or phrase_pair.startswith("ONION POWDER")
+            or phrase_pair.startswith("APPLE JUICE CONCENTRATE")
+            or phrase_pair.startswith("CONTAINS 2% OR LESS OF")
+            or phrase_pair.startswith("VITAMINS AND MINERALS")
+            or phrase_pair.startswith("LESS THAN 2% OF")
+            or phrase_pair.startswith("MADE WITH WHOLE GRAIN OATS")
+            or phrase_pair.startswith("CONTAINS ONE OR MORE OF THE FOLLOWING")
+            or phrase_pair.startswith("WHOLE GRAIN CORN")
+            or phrase_pair.startswith("WHOLE GRAIN OATS")
         )
 
         if prev_has_terminal_punctuation or likely_new_ingredient:
