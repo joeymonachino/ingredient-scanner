@@ -92,10 +92,15 @@
       "value": "carrageenan"
     }
   ],
-  "ingredient_searches": {},
-  "product_searches": {},
+  "ingredient_searches": {
+    "carrageenan": 1,
+    "ploster": 1
+  },
+  "product_searches": {
+    "ingredients: water, sunflower oil, sea salt": 1
+  },
   "ingredient_pageviews": {},
   "site_pageviews": {
-    "ingredients-index": 1
+    "ingredients-index": 2
   }
 }

@@ -14,48 +14,15 @@ python app.py
 
 Then open `http://127.0.0.1:5000`.
 
-## Production OCR on Vercel
+## OCR setup
 
-For production, use Google Cloud Vision so OCR works on the web and on mobile in Vercel.
+Photo scanning now uses free browser-side Tesseract.js in production and locally.
 
-### Vercel environment variable
-
-In your Vercel project settings, add this environment variable:
-
-- `No OCR API key is required now; browser OCR runs with Tesseract.js`
-
-You can also use `GOOGLE_VISION_API_KEY`, but `No OCR API key is required now; browser OCR runs with Tesseract.js` is the preferred name.
-
-### Vercel steps
-
-1. Open your Vercel project.
-2. Go to `Settings` -> `Environment Variables`.
-3. Add:
-   - Name: `No OCR API key is required now; browser OCR runs with Tesseract.js`
-   - Value: your Google Cloud Vision API key
-4. Save.
-5. Redeploy the app.
-
-When that key is present, uploaded label photos use Google Vision OCR in production.
+That means:
+- no Google Vision setup
+- no OCR API key
+- no OCR billing just to scan labels
 
 ## Local secrets
 
-The app now also supports a local secrets folder so you can run the same OCR flow on your machine without exporting environment variables.
-
-Create this file:
-
-- [No local OCR secret file is required for scanning anymore](C:/Users/joeym/Repos/ingredient-scanner/secrets/No local OCR secret file is required for scanning anymore)
-
-Put only the raw API key inside the file. No quotes, no extra text.
-
-Example file contents:
-
-```text
-AIza...
-```
-
-You can also use:
-
-- [google_vision_api_key.txt](C:/Users/joeym/Repos/ingredient-scanner/secrets/google_vision_api_key.txt)
-
-The `secrets` folder is ignored by git, so the key stays local.
+The `secrets` folder is still ignored by git, but OCR scanning no longer requires a local secret file.

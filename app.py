@@ -215,6 +215,218 @@ def find_policy_by_slug(slug: str) -> dict[str, Any] | None:
     return policy_slug_map().get(slug)
 
 
+
+
+def find_policy(term: str) -> dict[str, Any] | None:
+    needle = " ".join(term.strip().lower().split())
+    if not needle:
+        return None
+    records = sorted(POLICY_RECORDS, key=lambda record: max(len(alias) for alias in record.get("aliases", [record.get("canonical_name", "")]) or [""]), reverse=True)
+    for record in records:
+        aliases = [str(alias).strip().lower() for alias in record.get("aliases", []) if str(alias).strip()]
+        canonical = str(record.get("canonical_name", "")).strip().lower()
+        candidates = [candidate for candidate in aliases + [canonical] if candidate]
+        if needle in candidates:
+            return record
+    for record in records:
+        aliases = [str(alias).strip().lower() for alias in record.get("aliases", []) if str(alias).strip()]
+        canonical = str(record.get("canonical_name", "")).strip().lower()
+        candidates = [candidate for candidate in aliases + [canonical] if candidate]
+        if any(candidate and candidate in needle for candidate in candidates):
+            return record
+    return None
+
+
+def split_ingredient_list(raw_text: str) -> list[str]:
+    text = " ".join((raw_text or "").replace("\n", " ").replace("\r", " ").split()).strip(" ,;.")
+    if not text:
+        return []
+    lowered = text.lower()
+    for prefix in ["ingredients:", "ingredient:"]:
+        if lowered.startswith(prefix):
+            text = text[len(prefix):].strip(" ,;.")
+            lowered = text.lower()
+            break
+    parts = []
+    current = []
+    depth = 0
+    for char in text:
+        if char == '(':
+            depth += 1
+        elif char == ')' and depth > 0:
+            depth -= 1
+        if char in ',;' and depth == 0:
+            item = ''.join(current).strip(" ,;.")
+            if item:
+                parts.append(item)
+            current = []
+            continue
+        current.append(char)
+    tail = ''.join(current).strip(" ,;.")
+    if tail:
+        parts.append(tail)
+    cleaned = []
+    for item in parts:
+        candidate = re.sub(r'^ingredients?\s*:?\s*', '', item, flags=re.IGNORECASE).strip()
+        if candidate:
+            cleaned.append(candidate)
+    return cleaned
+
+
+def classify_confidence(ingredient: str, policy: dict[str, Any] | None) -> tuple[str, str, str]:
+    normalized = ingredient.lower().strip()
+    if policy:
+        return "high", "policy-backed", "This ingredient matched a curated policy record in the ingredient catalog."
+    if any(marker in normalized for marker in HEURISTIC_TERMS):
+        return "medium", "heuristic-only", "This read is based on fallback ingredient heuristics rather than a curated policy record."
+    return "low", "unknown", "We couldn't confidently identify this ingredient from the current catalog or fallback rules."
+
+
+def detect_chemistry_family(ingredient: str) -> tuple[str, list[str]]:
+    lowered = ingredient.lower()
+    if any(marker in lowered for marker in MINERAL_MARKERS):
+        return "inorganic or mineral-leaning", ["mineral-like naming pattern"]
+    if any(marker in lowered for marker in ANIMAL_MARKERS):
+        return "animal-derived or animal-linked", ["animal-derived naming pattern"]
+    if any(marker in lowered for marker in SYNTHETIC_MARKERS):
+        return "synthetic or additive-style", ["additive-style naming pattern"]
+    if any(marker in lowered for marker in PLANT_MARKERS | WHOLE_FOOD_MARKERS):
+        return "organic or carbon-based", ["food-derived naming pattern"]
+    return "needs context", []
+
+
+def detect_source_profile(ingredient: str) -> str:
+    lowered = ingredient.lower()
+    if any(marker in lowered for marker in ANIMAL_MARKERS):
+        return "animal-linked"
+    if any(marker in lowered for marker in MINERAL_MARKERS):
+        return "mineral-linked"
+    if any(marker in lowered for marker in PLANT_MARKERS | WHOLE_FOOD_MARKERS):
+        return "plant or whole-food linked"
+    if any(marker in lowered for marker in SYNTHETIC_MARKERS):
+        return "industrial or additive-linked"
+    return "needs context"
+
+
+def detect_processing_level(ingredient: str, policy: dict[str, Any] | None, confidence_label: str) -> str:
+    if policy:
+        return str(policy.get("processing_level", "needs context"))
+    lowered = ingredient.lower()
+    if confidence_label == "unknown":
+        return "needs context"
+    if any(marker in lowered for marker in ["color", "benzoate", "sorbate", "sucralose", "aspartame", "acesulfame", "polysorbate"]):
+        return "highly processed"
+    if any(marker in lowered for marker in ["oil", "gum", "flavor", "flavour", "starch", "extract", "powder", "syrup"]):
+        return "moderately processed"
+    return "minimally processed"
+
+
+def detect_common_uses(ingredient: str, policy: dict[str, Any] | None) -> list[str]:
+    if policy and policy.get("functional_roles"):
+        return [str(role) for role in policy.get("functional_roles", [])]
+    lowered = ingredient.lower()
+    found = []
+    for label, markers in USE_MAP.items():
+        if any(marker in lowered for marker in markers):
+            found.append(label)
+    return found or ["ingredient"]
+
+
+def derive_signal(policy: dict[str, Any] | None, processing_level: str, ingredient: str, confidence_label: str) -> str:
+    if policy:
+        return str(policy.get("signal", "needs context"))
+    if confidence_label == "unknown":
+        return "unknown"
+    lowered = ingredient.lower()
+    if any(marker in lowered for marker in ["sunflower oil", "soybean oil", "canola oil", "corn oil", "cottonseed oil", "grapeseed oil", "safflower oil", "rice bran oil", "vegetable oil", "palm oil", "red 40", "yellow 5", "yellow 6", "blue 1", "blue 2"]):
+        return "avoid"
+    if processing_level == "highly processed":
+        return "avoid"
+    if processing_level == "moderately processed":
+        return "caution"
+    return "okay"
+
+
+def build_cautions(policy: dict[str, Any] | None, shopper_signal: str) -> list[str]:
+    if policy and policy.get("note"):
+        base = str(policy.get("note"))
+        if shopper_signal == "avoid":
+            return [base]
+        if shopper_signal == "caution":
+            return [base]
+        return [base]
+    messages = {
+        "avoid": "This ingredient conflicts strongly with the cleaner-label standard used in this app.",
+        "caution": "This ingredient is more processed or formulation-heavy than ideal by this policy model.",
+        "okay": "This ingredient reads relatively simple by the current policy model.",
+        "needs context": "This ingredient needs more context before it can be judged confidently.",
+        "unknown": "We couldn't confidently identify this ingredient.",
+    }
+    return [messages.get(shopper_signal, "Needs more context.")]
+
+
+def build_highlights(ingredient: str, source_profile: str, chemistry_family: str, processing_level: str, policy: dict[str, Any] | None, confidence_label: str) -> list[str]:
+    highlights = []
+    if policy and policy.get("traits"):
+        highlights.extend(str(trait) for trait in policy.get("traits", []))
+    highlights.append(f"Source profile: {source_profile}")
+    highlights.append(f"Chemistry family: {chemistry_family}")
+    highlights.append(f"Processing level: {processing_level}")
+    highlights.append(f"Confidence: {confidence_label}")
+    seen = []
+    for item in highlights:
+        if item not in seen:
+            seen.append(item)
+    return seen[:6]
+
+
+def enrich_from_web(ingredient: str) -> tuple[str | None, list[dict[str, str]]]:
+    return None, []
+
+
+def build_quick_blurb(ingredient: str, source_profile: str, shopper_signal: str, common_uses: list[str], processing_level: str, policy: dict[str, Any] | None, confidence_label: str) -> str:
+    if policy and policy.get("note"):
+        return str(policy.get("note"))
+    if confidence_label == "unknown":
+        return "We couldn't confidently identify this ingredient from the current catalog, so treat this result cautiously."
+    use_text = common_uses[0] if common_uses else "ingredient"
+    return f"{ingredient.title()} reads as {shopper_signal} here. It looks {processing_level} and is often used as a {use_text}."
+
+
+def build_what_it_does(common_uses: list[str], policy: dict[str, Any] | None, confidence_label: str) -> str:
+    if policy and policy.get("functional_roles"):
+        return "Often used as: " + ", ".join(str(role) for role in policy.get("functional_roles", [])) + "."
+    if confidence_label == "unknown":
+        return "Its role is unclear because the ingredient itself was not confidently identified."
+    return "Often used as: " + ", ".join(common_uses) + "."
+
+
+def build_why_flagged(policy: dict[str, Any] | None, shopper_signal: str, confidence_label: str) -> str:
+    if policy and policy.get("note"):
+        return str(policy.get("note"))
+    if confidence_label == "unknown":
+        return "This result is not policy-backed, so the app is holding back instead of pretending certainty."
+    return {
+        "avoid": "It looks highly processed or additive-like by the current cleaner-label standard.",
+        "caution": "It looks more processed or formulation-heavy than ideal by this cleaner-label standard.",
+        "okay": "It looks relatively simple and closer to a whole-food ingredient pattern.",
+        "needs context": "There is not enough information to place this ingredient confidently.",
+        "unknown": "The ingredient could not be identified confidently.",
+    }.get(shopper_signal, "There is not enough information to place this ingredient confidently.")
+
+
+def build_cleaner_takeaway(shopper_signal: str, confidence_label: str) -> str:
+    if confidence_label == "unknown":
+        return "Double-check the label manually before making a purchase decision."
+    return {
+        "avoid": "Best treated as something to avoid if you want a stricter, organic-leaning ingredient standard.",
+        "caution": "This is not an automatic no, but it does not read as truly clean by a stricter ingredient standard.",
+        "okay": "This ingredient generally fits a simpler cleaner-label standard better than industrial additives do.",
+        "needs context": "Look for more ingredient context before trusting the read completely.",
+        "unknown": "Double-check the label manually before making a purchase decision.",
+    }.get(shopper_signal, "Look for more ingredient context before trusting the read completely.")
+
+
 def allowed_image_upload(filename: str, mime_type: str | None) -> bool:
     suffix = Path(filename).suffix.lower()
     if suffix not in ALLOWED_IMAGE_EXTENSIONS:
