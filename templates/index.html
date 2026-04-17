@@ -159,7 +159,7 @@
             <article class="result-card wide">
                 <p class="eyebrow">Preview</p>
                 <h3>Uploaded label image</h3>
-                <img class="upload-preview" id="uploaded-label-preview" src="{{ photo_upload.preview_url }}" alt="Uploaded ingredient label preview">
+                <img class="upload-preview" id="uploaded-label-preview" src="{{ photo_upload.ocr_preview_url or photo_upload.preview_url }}" data-original-src="{{ photo_upload.preview_url }}" data-ocr-src="{{ photo_upload.ocr_preview_url or photo_upload.preview_url }}" alt="Uploaded ingredient label preview used for OCR">
             </article>
 
             <article class="result-card wide">

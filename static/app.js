@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    const updateBrowserOcrUi = (ocr, tesseractConfidence) => {
+    const updateBrowserOcrUi = (ocr, tesseractConfidence, variantName) => {
         if (photoUploadStatusPill) photoUploadStatusPill.textContent = "uploaded";
         if (photoUploadOcrStatusPill) photoUploadOcrStatusPill.textContent = (ocr.status || "ready").replace(/-/g, " ");
         if (photoUploadReconstructionPill) {
@@ -154,7 +154,10 @@ document.addEventListener("DOMContentLoaded", () => {
             photoUploadReconstructionPill.className = `confidence-pill ${ocr.reconstruction_confidence || "high"}`;
         }
         if (photoUploadNextStep) photoUploadNextStep.textContent = ocr.message || "Browser OCR finished. Review the extracted text before analysis.";
-        if (photoUploadHelperText) photoUploadHelperText.textContent = "The OCR step ran in your browser with free Tesseract.js, then the app applied label-specific cleanup and repair suggestions.";
+        if (photoUploadHelperText) {
+            const variantText = variantName ? ` Best scan pass: ${variantName}.` : "";
+            photoUploadHelperText.textContent = `The OCR step ran in your browser with free Tesseract.js, then the app applied label-specific cleanup and repair suggestions.${variantText}`;
+        }
         if (photoUploadReconstructionNote) photoUploadReconstructionNote.textContent = ocr.reconstruction_note || "";
         if (photoUploadOcrLines) photoUploadOcrLines.textContent = String(ocr.line_count || 0);
         if (photoUploadOcrConfidence) {
@@ -168,6 +171,182 @@ document.addEventListener("DOMContentLoaded", () => {
             ocrQueryText.value = ocr.suggested_merged_text || ocr.suggested_text || ocr.candidate_text || ocr.raw_text || "";
         }
         renderOcrSuggestions(ocr);
+    };
+
+    const cloneCanvas = (sourceCanvas) => {
+        const canvas = document.createElement("canvas");
+        canvas.width = sourceCanvas.width;
+        canvas.height = sourceCanvas.height;
+        const ctx = canvas.getContext("2d", { willReadFrequently: true });
+        ctx.drawImage(sourceCanvas, 0, 0);
+        return canvas;
+    };
+
+    const buildBaseCanvasFromImage = (image, scale = 1) => {
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.max(1, Math.round((image.naturalWidth || image.width) * scale));
+        canvas.height = Math.max(1, Math.round((image.naturalHeight || image.height) * scale));
+        const ctx = canvas.getContext("2d", { willReadFrequently: true });
+        ctx.imageSmoothingEnabled = true;
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        return canvas;
+    };
+
+    const cropCanvas = (sourceCanvas, bounds) => {
+        const canvas = document.createElement("canvas");
+        canvas.width = bounds.width;
+        canvas.height = bounds.height;
+        const ctx = canvas.getContext("2d", { willReadFrequently: true });
+        ctx.drawImage(
+            sourceCanvas,
+            bounds.left,
+            bounds.top,
+            bounds.width,
+            bounds.height,
+            0,
+            0,
+            bounds.width,
+            bounds.height,
+        );
+        return canvas;
+    };
+
+    const detectTextBounds = (sourceCanvas) => {
+        const ctx = sourceCanvas.getContext("2d", { willReadFrequently: true });
+        const { width, height } = sourceCanvas;
+        const imageData = ctx.getImageData(0, 0, width, height).data;
+        let minX = width;
+        let minY = height;
+        let maxX = 0;
+        let maxY = 0;
+        let darkPixelCount = 0;
+
+        for (let y = 0; y < height; y += 1) {
+            for (let x = 0; x < width; x += 1) {
+                const index = (y * width + x) * 4;
+                const gray = 0.299 * imageData[index] + 0.587 * imageData[index + 1] + 0.114 * imageData[index + 2];
+                if (gray < 165) {
+                    darkPixelCount += 1;
+                    if (x < minX) minX = x;
+                    if (y < minY) minY = y;
+                    if (x > maxX) maxX = x;
+                    if (y > maxY) maxY = y;
+                }
+            }
+        }
+
+        if (darkPixelCount < Math.max(250, Math.round(width * height * 0.004))) {
+            return null;
+        }
+
+        const horizontalPadding = Math.max(14, Math.round(width * 0.035));
+        const verticalPadding = Math.max(14, Math.round(height * 0.035));
+        const left = Math.max(0, minX - horizontalPadding);
+        const top = Math.max(0, minY - verticalPadding);
+        const right = Math.min(width, maxX + horizontalPadding);
+        const bottom = Math.min(height, maxY + verticalPadding);
+
+        if (right - left < 40 || bottom - top < 40) {
+            return null;
+        }
+
+        return {
+            left,
+            top,
+            width: right - left,
+            height: bottom - top,
+        };
+    };
+
+    const normalizeCanvasForOcr = (sourceCanvas, variantKind) => {
+        const canvas = cloneCanvas(sourceCanvas);
+        const ctx = canvas.getContext("2d", { willReadFrequently: true });
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imageData.data;
+
+        for (let index = 0; index < data.length; index += 4) {
+            const gray = 0.299 * data[index] + 0.587 * data[index + 1] + 0.114 * data[index + 2];
+            let value = gray;
+            if (variantKind === "high-contrast") {
+                value = gray < 185 ? Math.max(0, gray * 0.45) : 255;
+            } else if (variantKind === "binary") {
+                value = gray > 172 ? 255 : 0;
+            } else if (variantKind === "top-focused") {
+                value = gray < 180 ? Math.max(0, gray * 0.55) : 255;
+            }
+            data[index] = value;
+            data[index + 1] = value;
+            data[index + 2] = value;
+            data[index + 3] = 255;
+        }
+
+        ctx.putImageData(imageData, 0, 0);
+        return canvas;
+    };
+
+    const createCanvasVariant = (image, kind) => {
+        const scaleMap = {
+            original: 2.2,
+            "high-contrast": 3.0,
+            binary: 3.2,
+            "top-focused": 3.0,
+        };
+        let canvas = buildBaseCanvasFromImage(image, scaleMap[kind] || 2.6);
+
+        if (kind === "top-focused") {
+            canvas = cropCanvas(canvas, {
+                left: 0,
+                top: 0,
+                width: canvas.width,
+                height: Math.max(1, Math.round(canvas.height * 0.74)),
+            });
+        }
+
+        canvas = normalizeCanvasForOcr(canvas, kind);
+        const textBounds = detectTextBounds(canvas);
+        if (textBounds) {
+            canvas = cropCanvas(canvas, textBounds);
+        }
+        return canvas.toDataURL("image/png");
+    };
+
+    const scoreCleanupResult = (ocr) => {
+        const candidate = (ocr.suggested_merged_text || ocr.suggested_text || ocr.candidate_text || ocr.raw_text || "").trim();
+        const weirdPenalty = ((candidate.match(/[^A-Za-z0-9,.:;%()\-\s]/g) || []).length) * 12;
+        const commaBonus = (candidate.match(/,/g) || []).length * 7;
+        const ingredientBonus = /ingredients?/i.test(candidate) ? 40 : 0;
+        const pantryBonus = ((candidate.match(/\b(water|salt|sugar|vinegar|oil|flavor|mustard|citric|spices|onion|garlic|gum|wheat|corn|oats)\b/gi) || []).length) * 6;
+        const statusBonus = ocr.status === "ready" ? 45 : 0;
+        const repairPenalty = Math.round(Number(ocr.repair_ratio || 0) * 55);
+        const shortTokenPenalty = ((candidate.match(/\b[A-Z]{1,2}\b/g) || []).length) * 10;
+        const lengthScore = Math.min(candidate.length, 280);
+        return statusBonus + ingredientBonus + pantryBonus + commaBonus + lengthScore - weirdPenalty - repairPenalty - shortTokenPenalty;
+    };
+
+    const cleanupOcrText = async (text, confidence, variantName) => {
+        const response = await fetch("/api/ocr-cleanup", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text, confidence }),
+        });
+        const payload = await response.json();
+        if (!response.ok || !payload.ok) {
+            throw new Error(payload.message || "OCR cleanup failed.");
+        }
+        return { ...payload.ocr, variantName, variantScore: scoreCleanupResult(payload.ocr), tesseractConfidence: confidence };
+    };
+
+    const runVariantOcr = async (variant) => {
+        const result = await window.Tesseract.recognize(variant.image, "eng", {
+            logger: (message) => {
+                if (!photoUploadHelperText || message.status !== "recognizing text") return;
+                const percent = typeof message.progress === "number" ? `${Math.round(message.progress * 100)}%` : "";
+                photoUploadHelperText.textContent = `Browser OCR is scanning ${variant.name}${percent ? ` (${percent})` : ""}.`;
+            },
+            tessedit_pageseg_mode: variant.pageSegMode,
+            preserve_interword_spaces: "1",
+        });
+        return cleanupOcrText(result?.data?.text || "", result?.data?.confidence ?? null, variant.name);
     };
 
     const runBrowserOcr = async () => {
@@ -186,26 +365,22 @@ document.addEventListener("DOMContentLoaded", () => {
         if (photoUploadOcrStatusPill) photoUploadOcrStatusPill.textContent = "running";
         if (photoUploadNextStep) photoUploadNextStep.textContent = "Running OCR in your browser now. This can take a few seconds on mobile.";
         try {
-            const result = await window.Tesseract.recognize(uploadedLabelPreview.src, "eng", {
-                logger: (message) => {
-                    if (!photoUploadHelperText || message.status !== "recognizing text") return;
-                    const percent = typeof message.progress === "number" ? `${Math.round(message.progress * 100)}%` : "";
-                    photoUploadHelperText.textContent = `Browser OCR is scanning the label${percent ? ` (${percent})` : ""}.`;
-                },
-            });
-            const response = await fetch("/api/ocr-cleanup", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    text: result?.data?.text || "",
-                    confidence: result?.data?.confidence ?? null,
-                }),
-            });
-            const payload = await response.json();
-            if (!response.ok || !payload.ok) {
-                throw new Error(payload.message || "OCR cleanup failed.");
+            const variants = [
+                { name: "tight original", image: createCanvasVariant(uploadedLabelPreview, "original"), pageSegMode: window.Tesseract?.PSM?.SINGLE_BLOCK },
+                { name: "high contrast", image: createCanvasVariant(uploadedLabelPreview, "high-contrast"), pageSegMode: window.Tesseract?.PSM?.SINGLE_BLOCK },
+                { name: "binary text region", image: createCanvasVariant(uploadedLabelPreview, "binary"), pageSegMode: window.Tesseract?.PSM?.SINGLE_BLOCK },
+                { name: "top-focused ingredient block", image: createCanvasVariant(uploadedLabelPreview, "top-focused"), pageSegMode: window.Tesseract?.PSM?.SINGLE_COLUMN },
+            ];
+
+            let bestResult = null;
+            for (const variant of variants) {
+                const current = await runVariantOcr(variant);
+                if (!bestResult || current.variantScore > bestResult.variantScore) {
+                    bestResult = current;
+                }
             }
-            updateBrowserOcrUi(payload.ocr, result?.data?.confidence ?? null);
+
+            updateBrowserOcrUi(bestResult, bestResult.tesseractConfidence ?? null, bestResult.variantName || "");
         } catch (error) {
             if (photoUploadOcrStatusPill) photoUploadOcrStatusPill.textContent = "unavailable";
             if (photoUploadNextStep) photoUploadNextStep.textContent = "Browser OCR did not finish cleanly on this photo.";

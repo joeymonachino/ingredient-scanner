@@ -764,12 +764,32 @@ def build_browser_ocr_cleanup(raw_text: str, confidence: float | None = None) ->
         "provider": "browser tesseract",
     })
 
+def build_browser_ocr_preview_payload(payload: bytes, *, manual_crop_applied: bool = False) -> bytes:
+    if Image is None:
+        return payload
+    try:
+        image = Image.open(io.BytesIO(payload)).convert("RGB")
+        working_image = image
+        if not manual_crop_applied and np is not None:
+            padded = ImageOps.expand(image, border=24, fill="white")
+            detected_region = detect_label_region(padded)
+            if detected_region is not None:
+                working_image = detected_region
+        buffer = io.BytesIO()
+        working_image.save(buffer, format="JPEG", quality=95)
+        return buffer.getvalue()
+    except Exception:
+        return payload
+
+
 def build_photo_upload_payload(filename: str, mime_type: str, payload: bytes, crop_settings: dict[str, float] | None = None) -> dict[str, Any]:
     crop_settings = crop_settings or {"left": 0.0, "top": 0.0, "right": 100.0, "bottom": 100.0}
     encoded = base64.b64encode(payload).decode("ascii")
     size_kb = max(1, round(len(payload) / 1024))
     ocr_payload = crop_image_payload(payload, crop_settings)
     manual_crop_applied = crop_settings != {"left": 0.0, "top": 0.0, "right": 100.0, "bottom": 100.0}
+    browser_ocr_payload = build_browser_ocr_preview_payload(ocr_payload, manual_crop_applied=manual_crop_applied)
+    browser_ocr_encoded = base64.b64encode(browser_ocr_payload).decode("ascii")
     ocr_result = extract_text_from_image(ocr_payload, allow_auto_crop=not manual_crop_applied)
     next_step = "OCR text is ready to review below." if ocr_result["status"] == "ready" else "Photo upload is working. OCR still needs a clearer label image or more tuning."
     helper_text = ocr_result["message"]
@@ -778,6 +798,7 @@ def build_photo_upload_payload(filename: str, mime_type: str, payload: bytes, cr
         "mime_type": mime_type,
         "size_kb": size_kb,
         "preview_url": f"data:{mime_type};base64,{encoded}",
+        "ocr_preview_url": f"data:image/jpeg;base64,{browser_ocr_encoded}",
         "status": "uploaded",
         "next_step": next_step,
         "helper_text": helper_text,
