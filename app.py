@@ -144,6 +144,34 @@ def build_catalog_ocr_vocabulary() -> set[str]:
 CATALOG_OCR_VOCAB = build_catalog_ocr_vocabulary()
 
 
+def build_catalog_ocr_phrase_vocabulary() -> dict[str, str]:
+    phrases: dict[str, str] = {
+        "whole ground": "WHOLE GROUND",
+        "whole ground mustard": "WHOLE GROUND MUSTARD",
+        "mustard seed": "MUSTARD SEED",
+        "apple cider vinegar": "APPLE CIDER VINEGAR",
+        "natural flavorings": "NATURAL FLAVORINGS",
+        "dried chopped onion": "DRIED CHOPPED ONION",
+        "onion powder": "ONION POWDER",
+        "xanthan gum": "XANTHAN GUM",
+        "natural smoke flavor": "NATURAL SMOKE FLAVOR",
+        "wood smoke concentrate": "WOOD SMOKE CONCENTRATE",
+        "citric acid": "CITRIC ACID",
+        "whole grain oats": "WHOLE GRAIN OATS",
+        "whole grain wheat": "WHOLE GRAIN WHEAT",
+        "whole grain corn": "WHOLE GRAIN CORN",
+    }
+    for record in POLICY_RECORDS:
+        for alias in record.get("aliases", []):
+            cleaned = re.sub(r"\s+", " ", str(alias).replace("\r", " ").replace("\n", " ")).strip(" ,;.").lower()
+            if len(cleaned.split()) >= 2:
+                phrases[cleaned] = str(alias).upper()
+    return phrases
+
+
+CATALOG_OCR_PHRASES = build_catalog_ocr_phrase_vocabulary()
+
+
 def ingredient_slug(name: str) -> str:
     slug = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
     return slug or "ingredient"
@@ -223,7 +251,7 @@ def normalize_ocr_text(text: str) -> str:
 
 
 def repair_ocr_word(word: str) -> str:
-    if len(word) < 4 or not word.isalpha():
+    if len(word) < 3 or not word.isalpha():
         return word
     lowered = word.lower()
     if lowered in CATALOG_OCR_VOCAB:
@@ -232,7 +260,8 @@ def repair_ocr_word(word: str) -> str:
     for candidate in CATALOG_OCR_VOCAB:
         if len(candidate) == len(lowered) + 1 and candidate.endswith(lowered):
             return candidate.upper() if word.isupper() else candidate
-    matches = difflib.get_close_matches(lowered, list(CATALOG_OCR_VOCAB), n=1, cutoff=0.82)
+    cutoff = 0.8 if len(lowered) <= 3 else 0.82
+    matches = difflib.get_close_matches(lowered, list(CATALOG_OCR_VOCAB), n=1, cutoff=cutoff)
     if matches:
         candidate = matches[0]
         return candidate.upper() if word.isupper() else candidate
@@ -495,12 +524,12 @@ def ingredient_line_score(text: str) -> int:
         return 0
     score = 0
     score += lowered.count(",") * 4
-    score += sum(2 for marker in ["water", "salt", "sugar", "oil", "vinegar", "spice", "flavor", "mustard", "garlic", "onion", "turmeric"] if marker in lowered)
+    score += sum(2 for marker in ["water", "salt", "sugar", "oil", "vinegar", "spice", "flavor", "mustard", "garlic", "onion", "turmeric", "citric", "gum", "corn", "wheat", "oat"] if marker in lowered)
     if "ingredient" in lowered:
         score += 40
     if len(lowered) > 25:
         score += 4
-    for penalty in ["packed for", "refrigerate", "opening", "new york", "ny 100", "deluca"]:
+    for penalty in ["packed for", "refrigerate", "opening", "new york", "ny 100", "deluca", "distributed by"]:
         if penalty in lowered:
             score -= 18
     if re.search(r"\b\d{5}\b", lowered):
@@ -508,26 +537,191 @@ def ingredient_line_score(text: str) -> int:
     return score
 
 
-def extract_candidate_label_text(text: str) -> str:
-    cleaned = normalize_ocr_text(text)
-    if not cleaned:
+OCR_STOP_MARKERS = {
+    "packed for", "distributed by", "refrigerate", "keep refrigerated", "new york", "ny 100", "opening", "serving size"
+}
+
+
+OCR_CONTINUATION_STARTS = (
+    "and ", "or ", "with ", "contains ", "less than ", "made with ", "vitamins and minerals", "spices", "natural flavor", "artificial flavor"
+)
+
+
+def looks_like_ingredient_header(token: str) -> bool:
+    lowered = re.sub(r"[^a-z]", "", token.lower())
+    if not lowered:
+        return False
+    if lowered.startswith("ingred"):
+        return True
+    return bool(difflib.get_close_matches(lowered, ["ingredient", "ingredients"], n=1, cutoff=0.72))
+
+
+def extract_header_candidate(text: str) -> str:
+    lines = [line.strip() for line in normalize_ocr_text(text).split("\n") if line.strip()]
+    if not lines:
         return ""
-    match = re.search(r"ingredients?", cleaned, flags=re.IGNORECASE)
-    if match:
-        tail = cleaned[match.start():].strip()
-        for stopper in ["refrigerate", "packed for", "distributed by", "keep refrigerated"]:
-            stopper_match = re.search(stopper, tail, flags=re.IGNORECASE)
-            if stopper_match:
-                tail = tail[:stopper_match.start()].strip(" ,;:\n")
-        return tail
-    lines = [line.strip(" ,;:") for line in cleaned.split("\n") if line.strip()]
+    for index, line in enumerate(lines):
+        token_matches = list(re.finditer(r"[A-Za-z]+", line))
+        for match in token_matches:
+            token = match.group(0)
+            if not looks_like_ingredient_header(token):
+                continue
+            tail = line[match.end():]
+            tail = re.sub(r"^[^A-Za-z0-9]+", "", tail).strip()
+            candidate_lines = ([tail] if tail else []) + lines[index + 1:]
+            candidate = "\n".join(part for part in candidate_lines if part).strip()
+            if candidate:
+                for stopper in OCR_STOP_MARKERS:
+                    stopper_match = re.search(stopper, candidate, flags=re.IGNORECASE)
+                    if stopper_match:
+                        candidate = candidate[:stopper_match.start()].strip(" ,;:\n")
+                return candidate
+    return ""
+
+
+def is_stop_fragment(fragment: str) -> bool:
+    lowered = fragment.lower().strip()
+    if not lowered:
+        return True
+    if any(marker in lowered for marker in OCR_STOP_MARKERS):
+        return True
+    return bool(re.search(r"\b\d{5}\b", lowered))
+
+
+def fragment_vocab_hits(fragment: str) -> int:
+    words = re.findall(r"[A-Za-z]+", fragment.lower())
+    return sum(1 for word in words if word in CATALOG_OCR_VOCAB)
+
+
+def repair_ocr_phrase_fragment(fragment: str) -> str:
+    cleaned = normalize_input(fragment)
+    lowered = cleaned.lower()
+    if not lowered or len(lowered.split()) < 2:
+        return cleaned
+    if lowered.startswith("ingredients:"):
+        return cleaned
+    if lowered in CATALOG_OCR_PHRASES:
+        return CATALOG_OCR_PHRASES[lowered]
+
+    lowered_tokens = re.findall(r"[a-z]+", lowered)
+    if len(lowered_tokens) >= 3 and lowered_tokens[0] == "apple" and lowered_tokens[1] == "cider":
+        if difflib.SequenceMatcher(None, lowered_tokens[2], "vinegar").ratio() >= 0.5:
+            return "APPLE CIDER VINEGAR"
+    if len(lowered_tokens) >= 2 and lowered_tokens[0] == "whole":
+        if difflib.SequenceMatcher(None, lowered_tokens[1], "ground").ratio() >= 0.5:
+            return "WHOLE GROUND"
+    if lowered_tokens and lowered_tokens[0] == "mustard":
+        if any(difflib.SequenceMatcher(None, token, "seed").ratio() >= 0.72 for token in lowered_tokens[1:]):
+            return "MUSTARD SEED"
+    if lowered_tokens and lowered_tokens[0] == "natural":
+        if any(difflib.SequenceMatcher(None, token, "flavorings").ratio() >= 0.62 for token in lowered_tokens[1:]):
+            return "NATURAL FLAVORINGS"
+        if any(difflib.SequenceMatcher(None, token, "flavor").ratio() >= 0.68 for token in lowered_tokens[1:]):
+            return "NATURAL FLAVOR"
+    if len(lowered_tokens) >= 2 and lowered_tokens[0] == "onion":
+        if difflib.SequenceMatcher(None, lowered_tokens[1], "powder").ratio() >= 0.65:
+            return "ONION POWDER"
+    if lowered_tokens and difflib.SequenceMatcher(None, lowered_tokens[0], "xanthan").ratio() >= 0.55:
+        return "XANTHAN GUM"
+
+    best_phrase = ""
+    best_score = 0.0
+    for phrase in CATALOG_OCR_PHRASES.keys():
+        phrase_tokens = re.findall(r"[a-z]+", phrase)
+        if abs(len(phrase_tokens) - len(lowered_tokens)) > 1:
+            continue
+        pair_count = min(len(phrase_tokens), len(lowered_tokens))
+        if pair_count == 0:
+            continue
+        first_token_score = difflib.SequenceMatcher(None, lowered_tokens[0], phrase_tokens[0]).ratio()
+        if first_token_score < 0.8:
+            continue
+        token_scores = [difflib.SequenceMatcher(None, lowered_tokens[index], phrase_tokens[index]).ratio() for index in range(pair_count)]
+        average_score = sum(token_scores) / len(token_scores)
+        completeness_bonus = 0.08 if len(phrase_tokens) == len(lowered_tokens) else 0.0
+        weighted_score = average_score + completeness_bonus
+        if weighted_score > best_score:
+            best_score = weighted_score
+            best_phrase = phrase
+
+    if best_phrase and best_score >= 0.84:
+        return CATALOG_OCR_PHRASES[best_phrase]
+    return cleaned.upper() if cleaned.isupper() else cleaned
+
+
+def should_merge_ocr_fragment(previous: str, candidate: str) -> bool:
+    prev_clean = previous.strip()
+    cand_clean = candidate.strip()
+    if not prev_clean or not cand_clean:
+        return False
+    if prev_clean.endswith("(") or cand_clean.startswith(")") or cand_clean.startswith("("):
+        return True
+    if cand_clean.lower().startswith(OCR_CONTINUATION_STARTS):
+        return True
+    if len(re.findall(r"[A-Za-z]+", cand_clean)) <= 2 and ingredient_line_score(cand_clean) < 6:
+        return True
+    if prev_clean.count("(") > prev_clean.count(")"):
+        return True
+    return False
+
+
+def salvage_ingredient_fragments(text: str) -> str:
+    repaired = repair_ocr_candidate_text(text)
+    raw_fragments = [normalize_input(part) for part in re.split(r"[,;\n]+", repaired) if normalize_input(part)]
+    chosen: list[str] = []
+    for fragment in raw_fragments:
+        if is_stop_fragment(fragment):
+            continue
+        phrase_repaired = repair_ocr_phrase_fragment(fragment)
+        recognized = bool(find_policy(phrase_repaired) or find_policy(fragment))
+        vocab_hits = max(fragment_vocab_hits(fragment), fragment_vocab_hits(phrase_repaired))
+        score = max(ingredient_line_score(fragment), ingredient_line_score(phrase_repaired))
+        if not recognized and score < 4 and vocab_hits == 0 and len(phrase_repaired.split()) < 2:
+            continue
+        chosen_fragment = phrase_repaired
+        if chosen and should_merge_ocr_fragment(chosen[-1], chosen_fragment):
+            chosen[-1] = f"{chosen[-1]} {chosen_fragment}".strip()
+        else:
+            chosen.append(chosen_fragment)
+    if len(chosen) < 2:
+        return ""
+    return normalize_merged_ingredient_text(", ".join(chosen))
+
+
+def repair_phrase_candidate_text(text: str) -> str:
+    if not text:
+        return ""
+    repaired = repair_ocr_candidate_text(text)
+    fragments = [normalize_input(part) for part in re.split(r"[,;\n]+", repaired) if normalize_input(part)]
+    if not fragments:
+        return repaired
+    cleaned_fragments: list[str] = []
+    for fragment in fragments:
+        repaired_fragment = repair_ocr_phrase_fragment(fragment)
+        words = re.findall(r"[A-Za-z]+", repaired_fragment)
+        if repaired_fragment.lower().startswith("ingredients:"):
+            cleaned_fragments.append(repaired_fragment)
+            continue
+        if repaired_fragment.upper() in {"AR", "BES", "OK", "XAT", "RIC", "SAT"}:
+            continue
+        if not find_policy(repaired_fragment) and fragment_vocab_hits(repaired_fragment) == 0:
+            if len(words) <= 1:
+                continue
+            if len(words) == 2 and all(len(word) <= 3 for word in words):
+                continue
+        cleaned_fragments.append(repaired_fragment)
+    return normalize_merged_ingredient_text(", ".join(cleaned_fragments))
+
+
+def best_scored_ingredient_block(text: str) -> str:
+    lines = [line.strip(" ,;:") for line in normalize_ocr_text(text).split("\n") if line.strip(" ,;:")]
     best_block: list[str] = []
     current_block: list[str] = []
     best_score = 0
     current_score = 0
     for line in lines:
         score = ingredient_line_score(line)
-        if score > 0:
+        if score > 0 and not is_stop_fragment(line):
             current_block.append(line)
             current_score += score
             if current_score > best_score:
@@ -539,6 +733,87 @@ def extract_candidate_label_text(text: str) -> str:
             current_score = 0
     candidate = "\n".join(best_block).strip()
     return candidate if ingredient_line_score(candidate) >= 8 else ""
+
+
+def candidate_quality_score(candidate_text: str) -> int:
+    base_text = normalize_ocr_text(candidate_text)
+    if not base_text:
+        return -999
+    score = ingredient_line_score(base_text)
+    score += base_text.count(",") * 3
+    parsed_items = split_ingredient_list(base_text)
+    recognized_items = 0
+    unknown_tokens = 0
+    short_noise_tokens = 0
+    for item in parsed_items:
+        if find_policy(item):
+            recognized_items += 1
+            continue
+        words = re.findall(r"[A-Za-z]+", item)
+        vocab_hit_threshold = max(1, len(words) // 2)
+        if fragment_vocab_hits(item) >= vocab_hit_threshold:
+            recognized_items += 1
+        for word in words:
+            lowered = word.lower()
+            if len(lowered) <= 2 and lowered not in {"of", "or", "and"}:
+                short_noise_tokens += 1
+            if len(lowered) >= 3 and lowered not in CATALOG_OCR_VOCAB:
+                if not difflib.get_close_matches(lowered, list(CATALOG_OCR_VOCAB), n=1, cutoff=0.84):
+                    unknown_tokens += 1
+    if len(parsed_items) > 1:
+        score += len(parsed_items) * 3
+    score += recognized_items * 8
+    if "ingredients" in base_text.lower():
+        score += 25
+    if len(base_text) < 20:
+        score -= 12
+    score -= len(re.findall(r"[^A-Za-z0-9,.:;%()\-\s]", base_text)) * 6
+    score -= unknown_tokens * 7
+    score -= short_noise_tokens * 6
+    return score
+
+
+def extract_candidate_label_text(text: str) -> str:
+    cleaned = normalize_ocr_text(text)
+    if not cleaned:
+        return ""
+
+    repaired = repair_ocr_candidate_text(cleaned)
+    header_candidate = extract_header_candidate(cleaned)
+    repaired_header_candidate = extract_header_candidate(repaired)
+    block_candidate = best_scored_ingredient_block(cleaned)
+    repaired_block_candidate = best_scored_ingredient_block(repaired)
+    candidates = [
+        header_candidate,
+        repair_phrase_candidate_text(header_candidate),
+        repaired_header_candidate,
+        repair_phrase_candidate_text(repaired_header_candidate),
+        block_candidate,
+        repair_phrase_candidate_text(block_candidate),
+        repaired_block_candidate,
+        repair_phrase_candidate_text(repaired_block_candidate),
+        salvage_ingredient_fragments(cleaned),
+        salvage_ingredient_fragments(repaired),
+    ]
+
+    direct_match = re.search(r"ingredients?", cleaned, flags=re.IGNORECASE)
+    if direct_match:
+        tail = cleaned[direct_match.start():].strip()
+        for stopper in OCR_STOP_MARKERS:
+            stopper_match = re.search(stopper, tail, flags=re.IGNORECASE)
+            if stopper_match:
+                tail = tail[:stopper_match.start()].strip(" ,;:\n")
+        candidates.append(tail)
+
+    viable = [candidate for candidate in candidates if candidate and candidate_quality_score(candidate) >= 8]
+    if not viable:
+        return ""
+    return max(viable, key=candidate_quality_score)
+
+
+def score_ocr_candidate(candidate_text: str, raw_text: str) -> int:
+    base_text = candidate_text or raw_text
+    return candidate_quality_score(base_text)
 
 
 def detect_label_region(image: Any) -> Any | None:

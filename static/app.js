@@ -258,8 +258,49 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     };
 
-    const normalizeCanvasForOcr = (sourceCanvas, variantKind) => {
+    const applySharpenKernel = (sourceCanvas) => {
         const canvas = cloneCanvas(sourceCanvas);
+        const ctx = canvas.getContext("2d", { willReadFrequently: true });
+        const { width, height } = canvas;
+        const source = ctx.getImageData(0, 0, width, height);
+        const output = ctx.createImageData(width, height);
+        const kernel = [0, -1, 0, -1, 5, -1, 0, -1, 0];
+
+        for (let y = 1; y < height - 1; y += 1) {
+            for (let x = 1; x < width - 1; x += 1) {
+                let red = 0;
+                let green = 0;
+                let blue = 0;
+                let alpha = 0;
+                let kernelIndex = 0;
+                for (let ky = -1; ky <= 1; ky += 1) {
+                    for (let kx = -1; kx <= 1; kx += 1) {
+                        const offset = ((y + ky) * width + (x + kx)) * 4;
+                        const weight = kernel[kernelIndex];
+                        red += source.data[offset] * weight;
+                        green += source.data[offset + 1] * weight;
+                        blue += source.data[offset + 2] * weight;
+                        alpha += source.data[offset + 3] * weight;
+                        kernelIndex += 1;
+                    }
+                }
+                const target = (y * width + x) * 4;
+                output.data[target] = Math.max(0, Math.min(255, red));
+                output.data[target + 1] = Math.max(0, Math.min(255, green));
+                output.data[target + 2] = Math.max(0, Math.min(255, blue));
+                output.data[target + 3] = Math.max(0, Math.min(255, alpha || 255));
+            }
+        }
+
+        ctx.putImageData(output, 0, 0);
+        return canvas;
+    };
+
+    const normalizeCanvasForOcr = (sourceCanvas, variantKind) => {
+        let canvas = cloneCanvas(sourceCanvas);
+        if (variantKind === "sharpened") {
+            canvas = applySharpenKernel(canvas);
+        }
         const ctx = canvas.getContext("2d", { willReadFrequently: true });
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const data = imageData.data;
@@ -268,11 +309,15 @@ document.addEventListener("DOMContentLoaded", () => {
             const gray = 0.299 * data[index] + 0.587 * data[index + 1] + 0.114 * data[index + 2];
             let value = gray;
             if (variantKind === "high-contrast") {
-                value = gray < 185 ? Math.max(0, gray * 0.45) : 255;
+                value = gray < 185 ? Math.max(0, gray * 0.42) : 255;
             } else if (variantKind === "binary") {
-                value = gray > 172 ? 255 : 0;
+                value = gray > 168 ? 255 : 0;
+            } else if (variantKind === "binary-soft") {
+                value = gray > 182 ? 255 : gray < 138 ? 0 : 110;
             } else if (variantKind === "top-focused") {
                 value = gray < 180 ? Math.max(0, gray * 0.55) : 255;
+            } else if (variantKind === "sharpened") {
+                value = gray < 188 ? Math.max(0, gray * 0.48) : 255;
             }
             data[index] = value;
             data[index + 1] = value;
@@ -286,19 +331,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const createCanvasVariant = (image, kind) => {
         const scaleMap = {
-            original: 2.2,
-            "high-contrast": 3.0,
-            binary: 3.2,
-            "top-focused": 3.0,
+            original: 2.4,
+            "high-contrast": 3.2,
+            binary: 3.4,
+            "binary-soft": 3.2,
+            "top-focused": 3.2,
+            sharpened: 3.0,
         };
-        let canvas = buildBaseCanvasFromImage(image, scaleMap[kind] || 2.6);
+        let canvas = buildBaseCanvasFromImage(image, scaleMap[kind] || 2.8);
 
         if (kind === "top-focused") {
             canvas = cropCanvas(canvas, {
                 left: 0,
                 top: 0,
                 width: canvas.width,
-                height: Math.max(1, Math.round(canvas.height * 0.74)),
+                height: Math.max(1, Math.round(canvas.height * 0.72)),
             });
         }
 
@@ -345,6 +392,7 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             tessedit_pageseg_mode: variant.pageSegMode,
             preserve_interword_spaces: "1",
+            tessedit_char_whitelist: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,:;%().-/&' ",
         });
         return cleanupOcrText(result?.data?.text || "", result?.data?.confidence ?? null, variant.name);
     };
@@ -365,12 +413,27 @@ document.addEventListener("DOMContentLoaded", () => {
         if (photoUploadOcrStatusPill) photoUploadOcrStatusPill.textContent = "running";
         if (photoUploadNextStep) photoUploadNextStep.textContent = "Running OCR in your browser now. This can take a few seconds on mobile.";
         try {
-            const variants = [
-                { name: "tight original", image: createCanvasVariant(uploadedLabelPreview, "original"), pageSegMode: window.Tesseract?.PSM?.SINGLE_BLOCK },
-                { name: "high contrast", image: createCanvasVariant(uploadedLabelPreview, "high-contrast"), pageSegMode: window.Tesseract?.PSM?.SINGLE_BLOCK },
-                { name: "binary text region", image: createCanvasVariant(uploadedLabelPreview, "binary"), pageSegMode: window.Tesseract?.PSM?.SINGLE_BLOCK },
-                { name: "top-focused ingredient block", image: createCanvasVariant(uploadedLabelPreview, "top-focused"), pageSegMode: window.Tesseract?.PSM?.SINGLE_COLUMN },
-            ];
+            const baseImages = [uploadedLabelPreview];
+            if (uploadedLabelPreview.dataset.originalSrc && uploadedLabelPreview.dataset.originalSrc !== uploadedLabelPreview.src) {
+                const originalImage = new Image();
+                originalImage.src = uploadedLabelPreview.dataset.originalSrc;
+                await originalImage.decode();
+                baseImages.push(originalImage);
+            }
+
+            const variants = [];
+            baseImages.forEach((imageSource, index) => {
+                const sourceLabel = index === 0 ? "ocr crop" : "raw upload";
+                variants.push(
+                    { name: `${sourceLabel} original`, image: createCanvasVariant(imageSource, "original"), pageSegMode: window.Tesseract?.PSM?.SINGLE_BLOCK },
+                    { name: `${sourceLabel} high contrast`, image: createCanvasVariant(imageSource, "high-contrast"), pageSegMode: window.Tesseract?.PSM?.SINGLE_BLOCK },
+                    { name: `${sourceLabel} sharpened`, image: createCanvasVariant(imageSource, "sharpened"), pageSegMode: window.Tesseract?.PSM?.SINGLE_BLOCK },
+                    { name: `${sourceLabel} binary`, image: createCanvasVariant(imageSource, "binary"), pageSegMode: window.Tesseract?.PSM?.SINGLE_BLOCK },
+                    { name: `${sourceLabel} soft binary`, image: createCanvasVariant(imageSource, "binary-soft"), pageSegMode: window.Tesseract?.PSM?.SINGLE_BLOCK },
+                    { name: `${sourceLabel} top block`, image: createCanvasVariant(imageSource, "top-focused"), pageSegMode: window.Tesseract?.PSM?.SINGLE_COLUMN },
+                    { name: `${sourceLabel} sparse text`, image: createCanvasVariant(imageSource, "high-contrast"), pageSegMode: window.Tesseract?.PSM?.SPARSE_TEXT },
+                );
+            });
 
             let bestResult = null;
             for (const variant of variants) {
