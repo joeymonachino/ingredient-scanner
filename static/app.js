@@ -4,8 +4,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const photoInput = document.getElementById("label-photo");
     const photoStatus = document.getElementById("photo-upload-status");
     const cropTool = document.getElementById("crop-tool");
+    const cropPreviewFrame = document.getElementById("crop-preview-frame");
     const cropPreviewImage = document.getElementById("crop-preview-image");
     const cropOverlay = document.getElementById("crop-overlay");
+    const cropDragBox = document.getElementById("crop-drag-box");
     const cropReset = document.getElementById("crop-reset");
     const uploadedLabelPreview = document.getElementById("uploaded-label-preview");
     const photoUploadStatusPill = document.getElementById("photo-upload-status-pill");
@@ -28,12 +30,28 @@ document.addEventListener("DOMContentLoaded", () => {
     const ocrMergedDetails = document.getElementById("ocr-merged-details");
     const ocrRawDetails = document.getElementById("ocr-raw-details");
     const ocrRawText = document.getElementById("ocr-raw-text");
+    const quickScanCard = document.getElementById("quick-scan-card");
+    const quickScanTitle = document.getElementById("quick-scan-title");
+    const quickScanSignal = document.getElementById("quick-scan-signal");
+    const quickScanSummary = document.getElementById("quick-scan-summary");
+    const quickScanGrid = document.getElementById("quick-scan-grid");
+    const quickScanList = document.getElementById("quick-scan-list");
     const cropInputs = {
         top: document.getElementById("crop-top"),
         bottom: document.getElementById("crop-bottom"),
         left: document.getElementById("crop-left"),
         right: document.getElementById("crop-right"),
     };
+    const cropValueLabels = {
+        top: document.getElementById("crop-top-value"),
+        bottom: document.getElementById("crop-bottom-value"),
+        left: document.getElementById("crop-left-value"),
+        right: document.getElementById("crop-right-value"),
+    };
+    const cropPresetButtons = document.querySelectorAll("[data-crop-preset]");
+
+    let cropPointerState = null;
+    let quickScanAbortController = null;
 
     sampleQueryButtons.forEach((button) => {
         button.addEventListener("click", () => {
@@ -42,6 +60,30 @@ document.addEventListener("DOMContentLoaded", () => {
             queryInput.focus();
         });
     });
+
+    const CROP_PRESETS = {
+        full: { top: 0, bottom: 100, left: 0, right: 100 },
+        ingredients: { top: 8, bottom: 74, left: 10, right: 92 },
+        top: { top: 0, bottom: 62, left: 6, right: 96 },
+        tight: { top: 12, bottom: 78, left: 14, right: 88 },
+    };
+
+    const setActiveCropPreset = (presetName) => {
+        cropPresetButtons.forEach((button) => {
+            button.classList.toggle("is-active", button.dataset.cropPreset === presetName);
+        });
+    };
+
+    const setCropValues = ({ top, bottom, left, right }, presetName = null) => {
+        if (cropInputs.top) cropInputs.top.value = String(top);
+        if (cropInputs.bottom) cropInputs.bottom.value = String(bottom);
+        if (cropInputs.left) cropInputs.left.value = String(left);
+        if (cropInputs.right) cropInputs.right.value = String(right);
+        if (presetName) {
+            setActiveCropPreset(presetName);
+        }
+        updateCropOverlay();
+    };
 
     const updateCropOverlay = () => {
         if (!cropOverlay) return;
@@ -63,20 +105,147 @@ document.addEventListener("DOMContentLoaded", () => {
         cropOverlay.style.setProperty("--crop-left", `${left}%`);
         cropOverlay.style.setProperty("--crop-width", `${right - left}%`);
         cropOverlay.style.setProperty("--crop-height", `${bottom - top}%`);
+
+        Object.entries(cropValueLabels).forEach(([key, label]) => {
+            if (!label) return;
+            const currentValue = { top, bottom, left, right }[key];
+            label.textContent = `${currentValue}%`;
+        });
     };
 
     const resetCrop = () => {
-        if (cropInputs.top) cropInputs.top.value = "0";
-        if (cropInputs.left) cropInputs.left.value = "0";
-        if (cropInputs.right) cropInputs.right.value = "100";
-        if (cropInputs.bottom) cropInputs.bottom.value = "100";
-        updateCropOverlay();
+        setCropValues(CROP_PRESETS.full, "full");
     };
 
     Object.values(cropInputs).forEach((input) => {
         if (!input) return;
-        input.addEventListener("input", updateCropOverlay);
+        input.addEventListener("input", () => {
+            setActiveCropPreset("");
+            updateCropOverlay();
+        });
     });
+
+    cropPresetButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            const presetName = button.dataset.cropPreset || "full";
+            setCropValues(CROP_PRESETS[presetName] || CROP_PRESETS.full, presetName);
+        });
+    });
+
+    const hideCropDragBox = () => {
+        if (!cropDragBox) return;
+        cropDragBox.hidden = true;
+        cropDragBox.style.left = "0px";
+        cropDragBox.style.top = "0px";
+        cropDragBox.style.width = "0px";
+        cropDragBox.style.height = "0px";
+    };
+
+    const choosePresetFromTap = (clientX, clientY) => {
+        if (!cropPreviewFrame || !cropPreviewImage || !cropPreviewImage.getAttribute("src")) {
+            return;
+        }
+        const imageRect = cropPreviewImage.getBoundingClientRect();
+        if (
+            clientX < imageRect.left || clientX > imageRect.right ||
+            clientY < imageRect.top || clientY > imageRect.bottom
+        ) {
+            setCropValues(CROP_PRESETS.full, "full");
+            if (photoStatus) {
+                photoStatus.textContent = "Tapped outside the label area, so the crop reset to the full photo.";
+            }
+            return;
+        }
+
+        const x = (clientX - imageRect.left) / imageRect.width;
+        const y = (clientY - imageRect.top) / imageRect.height;
+        let presetName = "ingredients";
+        if (y <= 0.24) {
+            presetName = "top";
+        } else if (x >= 0.28 && x <= 0.72 && y >= 0.16 && y <= 0.86) {
+            presetName = "tight";
+        } else if (x <= 0.08 || x >= 0.92 || y >= 0.92) {
+            presetName = "full";
+        }
+        setCropValues(CROP_PRESETS[presetName] || CROP_PRESETS.ingredients, presetName);
+        if (photoStatus) {
+            const presetLabel = presetName === "top" ? "top label" : presetName === "tight" ? "tight center" : presetName === "full" ? "full photo" : "ingredient block";
+            photoStatus.textContent = `Tapped preview: using the ${presetLabel} crop preset. Fine-tune with sliders if needed.`;
+        }
+    };
+
+    const applyDraggedCrop = (startX, startY, endX, endY) => {
+        if (!cropPreviewImage) return;
+        const imageRect = cropPreviewImage.getBoundingClientRect();
+        const left = Math.max(imageRect.left, Math.min(startX, endX));
+        const right = Math.min(imageRect.right, Math.max(startX, endX));
+        const top = Math.max(imageRect.top, Math.min(startY, endY));
+        const bottom = Math.min(imageRect.bottom, Math.max(startY, endY));
+        if (right - left < 18 || bottom - top < 18) {
+            choosePresetFromTap(endX, endY);
+            return;
+        }
+        const cropValues = {
+            left: Math.max(0, Math.round(((left - imageRect.left) / imageRect.width) * 100)),
+            right: Math.min(100, Math.round(((right - imageRect.left) / imageRect.width) * 100)),
+            top: Math.max(0, Math.round(((top - imageRect.top) / imageRect.height) * 100)),
+            bottom: Math.min(100, Math.round(((bottom - imageRect.top) / imageRect.height) * 100)),
+        };
+        setCropValues(cropValues, "");
+        if (photoStatus) {
+            photoStatus.textContent = "Dragged preview: using your custom crop. Fine-tune with sliders if needed.";
+        }
+    };
+
+    const updateDragBox = (startX, startY, currentX, currentY) => {
+        if (!cropDragBox || !cropPreviewFrame) return;
+        const frameRect = cropPreviewFrame.getBoundingClientRect();
+        const left = Math.max(0, Math.min(startX, currentX) - frameRect.left);
+        const top = Math.max(0, Math.min(startY, currentY) - frameRect.top);
+        const width = Math.abs(currentX - startX);
+        const height = Math.abs(currentY - startY);
+        cropDragBox.hidden = false;
+        cropDragBox.style.left = `${left}px`;
+        cropDragBox.style.top = `${top}px`;
+        cropDragBox.style.width = `${width}px`;
+        cropDragBox.style.height = `${height}px`;
+    };
+
+    if (cropPreviewFrame) {
+        cropPreviewFrame.addEventListener("pointerdown", (event) => {
+            if (!cropPreviewImage || !cropPreviewImage.getAttribute("src")) return;
+            cropPointerState = { startX: event.clientX, startY: event.clientY, moved: false };
+            cropPreviewFrame.setPointerCapture?.(event.pointerId);
+            hideCropDragBox();
+        });
+
+        cropPreviewFrame.addEventListener("pointermove", (event) => {
+            if (!cropPointerState) return;
+            const deltaX = event.clientX - cropPointerState.startX;
+            const deltaY = event.clientY - cropPointerState.startY;
+            if (Math.abs(deltaX) > 8 || Math.abs(deltaY) > 8) {
+                cropPointerState.moved = true;
+                updateDragBox(cropPointerState.startX, cropPointerState.startY, event.clientX, event.clientY);
+            }
+        });
+
+        cropPreviewFrame.addEventListener("pointerup", (event) => {
+            if (!cropPointerState) return;
+            const { startX, startY, moved } = cropPointerState;
+            cropPointerState = null;
+            hideCropDragBox();
+            if (moved) {
+                applyDraggedCrop(startX, startY, event.clientX, event.clientY);
+            } else {
+                choosePresetFromTap(event.clientX, event.clientY);
+            }
+        });
+
+        cropPreviewFrame.addEventListener("pointercancel", () => {
+            cropPointerState = null;
+            hideCropDragBox();
+        });
+    }
 
     if (cropReset) {
         cropReset.addEventListener("click", resetCrop);
@@ -169,8 +338,91 @@ document.addEventListener("DOMContentLoaded", () => {
         if (photoUploadRepairRatio) photoUploadRepairRatio.textContent = String(ocr.repair_ratio ?? 0);
         if (ocrQueryText) {
             ocrQueryText.value = ocr.suggested_merged_text || ocr.suggested_text || ocr.candidate_text || ocr.raw_text || "";
+            if (ocrQueryText.value.trim()) {
+                runQuickScanAnalysis(ocrQueryText.value.trim());
+            }
         }
         renderOcrSuggestions(ocr);
+    };
+
+    const renderQuickScan = (payload) => {
+        if (!quickScanCard || !quickScanSignal || !quickScanSummary || !quickScanGrid || !quickScanList) return;
+        quickScanCard.hidden = false;
+        quickScanGrid.innerHTML = "";
+        quickScanList.innerHTML = "";
+
+        if (!payload || !payload.ok) {
+            quickScanSignal.textContent = "needs review";
+            quickScanSummary.textContent = payload?.message || "We could not turn this scan into a confident shopping verdict yet.";
+            return;
+        }
+
+        const report = payload.report || {};
+        const kind = payload.kind || "product";
+        const signal = kind === "ingredient" ? report.shopper_signal : report.overall_signal;
+        quickScanSignal.textContent = signal || "needs review";
+        quickScanSignal.className = `signal-pill ${(signal || "needs context").replace(/\s+/g, "-")}`;
+        quickScanTitle.textContent = kind === "ingredient" ? (report.ingredient || "Ingredient quick read") : (report.verdict_title || "Shopping verdict");
+        quickScanSummary.textContent = kind === "ingredient"
+            ? (report.quick_blurb || report.confidence_reason || "Quick ingredient read is ready.")
+            : (report.verdict_summary || "Quick label verdict is ready.");
+
+        const stats = kind === "ingredient"
+            ? [
+                { label: "Signal", value: report.shopper_signal || "needs review" },
+                { label: "Processing", value: report.processing_level || "unknown" },
+                { label: "Confidence", value: report.confidence_label || "unknown" },
+              ]
+            : [
+                { label: "Avoid", value: report.flag_counts?.avoid ?? 0 },
+                { label: "Caution", value: report.flag_counts?.caution ?? 0 },
+                { label: "Okay", value: report.flag_counts?.okay ?? 0 },
+              ];
+
+        stats.forEach((stat) => {
+            const item = document.createElement("div");
+            item.className = "quick-scan-stat";
+            item.innerHTML = `<span class="meta-label">${stat.label}</span><strong>${stat.value}</strong>`;
+            quickScanGrid.appendChild(item);
+        });
+
+        const highlights = kind === "ingredient"
+            ? (report.cautions?.slice(0, 3) || [report.confidence_reason].filter(Boolean))
+            : (report.top_concerns?.slice(0, 4) || []);
+        if (!highlights.length && kind !== "ingredient") {
+            highlights.push("No major concerns were surfaced by this quick scan.");
+        }
+        highlights.forEach((entry) => {
+            const row = document.createElement("div");
+            row.className = "quick-scan-item";
+            row.innerHTML = `<strong>${kind === "ingredient" ? "Why it was flagged" : "Watch for"}:</strong> ${entry}`;
+            quickScanList.appendChild(row);
+        });
+    };
+
+    const runQuickScanAnalysis = async (queryText) => {
+        if (!queryText || !quickScanCard) return;
+        quickScanCard.hidden = false;
+        quickScanSignal.textContent = "scanning";
+        quickScanSignal.className = "signal-pill needs-context";
+        quickScanSummary.textContent = "Turning the OCR text into a quick shopping verdict now.";
+        quickScanGrid.innerHTML = "";
+        quickScanList.innerHTML = "";
+        quickScanAbortController?.abort();
+        quickScanAbortController = new AbortController();
+        try {
+            const response = await fetch("/api/analyze-query", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ query_text: queryText }),
+                signal: quickScanAbortController.signal,
+            });
+            const payload = await response.json();
+            renderQuickScan({ ok: response.ok && payload.ok, ...payload });
+        } catch (error) {
+            if (error?.name === "AbortError") return;
+            renderQuickScan({ ok: false, message: "Quick scan could not finish yet. You can still run the full review below." });
+        }
     };
 
     const cloneCanvas = (sourceCanvas) => {

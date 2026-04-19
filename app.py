@@ -1542,19 +1542,41 @@ def index() -> str:
     )
 
 
+def build_query_analysis_payload(query_text: str) -> dict[str, Any]:
+    parsed = split_ingredient_list(query_text)
+    if len(parsed) <= 1:
+        candidate = parsed[0] if parsed else query_text
+        report = analyze_ingredient(candidate)
+        return {
+            "kind": "ingredient",
+            "query_text": query_text,
+            "report": report.as_dict(),
+        }
+    product_report = analyze_product(query_text)
+    return {
+        "kind": "product",
+        "query_text": query_text,
+        "report": product_report.as_dict(),
+    }
+
+
 @app.post("/analyze")
 def analyze_page() -> str:
     query_text = request.form.get("query_text", "").strip()
     report = None
     product_report = None
     if query_text:
-        parsed = split_ingredient_list(query_text)
-        if len(parsed) <= 1:
-            candidate = parsed[0] if parsed else query_text
-            report = analyze_ingredient(candidate)
-            log_search(candidate, "ingredient")
+        analysis_payload = build_query_analysis_payload(query_text)
+        if analysis_payload["kind"] == "ingredient":
+            report = IngredientReport(**analysis_payload["report"])
+            log_search(report.ingredient, "ingredient")
         else:
-            product_report = analyze_product(query_text)
+            product_report = ProductReport(
+                **{
+                    **analysis_payload["report"],
+                    "ingredients": [IngredientReport(**item) for item in analysis_payload["report"]["ingredients"]],
+                }
+            )
             log_search(query_text, "product")
     sample_queries = [
         "turmeric",
@@ -1726,6 +1748,20 @@ def analyze_product_api():
     report = analyze_product(ingredient_list)
     log_search(ingredient_list, "product")
     return jsonify({"ok": True, "report": report.as_dict()})
+
+
+@app.post("/api/analyze-query")
+def analyze_query_api():
+    payload = request.get_json(silent=True) or {}
+    query_text = str(payload.get("query_text", "") or "").strip()
+    if not query_text:
+        return jsonify({"ok": False, "message": "Please provide ingredient text to analyze."}), 400
+    analysis_payload = build_query_analysis_payload(query_text)
+    if analysis_payload["kind"] == "ingredient":
+        log_search(analysis_payload["report"]["ingredient"], "ingredient")
+    else:
+        log_search(query_text, "product")
+    return jsonify({"ok": True, **analysis_payload})
 
 
 if __name__ == "__main__":

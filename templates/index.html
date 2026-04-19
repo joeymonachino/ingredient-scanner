@@ -41,7 +41,7 @@
                     </div>
                 </form>
 
-                <div class="sample-row sample-list-row">
+                <div class="sample-row sample-list-row mobile-scroll-row">
                     {% for sample in sample_queries %}
                     <button class="sample-chip" type="button" data-sample-query="{{ sample }}">Use sample</button>
                     {% endfor %}
@@ -64,19 +64,39 @@
                             <div class="crop-preview-frame" id="crop-preview-frame">
                                 <img id="crop-preview-image" alt="Selected label preview for crop review">
                                 <div class="crop-overlay" id="crop-overlay"></div>
+                                <div class="crop-drag-box" id="crop-drag-box" hidden></div>
+                                <div class="crop-tap-hint">Tap or drag on the preview to set the crop</div>
                             </div>
                         </div>
                         <div class="crop-controls">
-                            <p class="micro-note">Tighten the crop box around the ingredient block before OCR runs.</p>
-                            <label class="search-label" for="crop-top">Top</label>
-                            <input id="crop-top" name="crop_top" type="range" min="0" max="95" value="0">
-                            <label class="search-label" for="crop-bottom">Bottom</label>
-                            <input id="crop-bottom" name="crop_bottom" type="range" min="5" max="100" value="100">
-                            <label class="search-label" for="crop-left">Left</label>
-                            <input id="crop-left" name="crop_left" type="range" min="0" max="95" value="0">
-                            <label class="search-label" for="crop-right">Right</label>
-                            <input id="crop-right" name="crop_right" type="range" min="5" max="100" value="100">
-                            <button class="sample-chip crop-reset" type="button" id="crop-reset">Reset Crop</button>
+                            <p class="micro-note">Tighten the crop box around the ingredient block before OCR runs, use one of the quick presets, or tap the preview to snap to a likely crop.</p>
+                            <div class="crop-preset-row mobile-scroll-row" aria-label="Crop presets">
+                                <button class="sample-chip crop-preset-chip is-active" type="button" data-crop-preset="full">Full photo</button>
+                                <button class="sample-chip crop-preset-chip" type="button" data-crop-preset="ingredients">Ingredient block</button>
+                                <button class="sample-chip crop-preset-chip" type="button" data-crop-preset="top">Top label</button>
+                                <button class="sample-chip crop-preset-chip" type="button" data-crop-preset="tight">Tight center</button>
+                            </div>
+                            <div class="crop-slider-grid">
+                                <div class="crop-slider-card">
+                                    <label class="search-label" for="crop-top">Top <span class="crop-value" id="crop-top-value">0%</span></label>
+                                    <input id="crop-top" name="crop_top" type="range" min="0" max="95" value="0">
+                                </div>
+                                <div class="crop-slider-card">
+                                    <label class="search-label" for="crop-bottom">Bottom <span class="crop-value" id="crop-bottom-value">100%</span></label>
+                                    <input id="crop-bottom" name="crop_bottom" type="range" min="5" max="100" value="100">
+                                </div>
+                                <div class="crop-slider-card">
+                                    <label class="search-label" for="crop-left">Left <span class="crop-value" id="crop-left-value">0%</span></label>
+                                    <input id="crop-left" name="crop_left" type="range" min="0" max="95" value="0">
+                                </div>
+                                <div class="crop-slider-card">
+                                    <label class="search-label" for="crop-right">Right <span class="crop-value" id="crop-right-value">100%</span></label>
+                                    <input id="crop-right" name="crop_right" type="range" min="5" max="100" value="100">
+                                </div>
+                            </div>
+                            <div class="crop-actions-row mobile-scroll-row">
+                                <button class="sample-chip crop-reset" type="button" id="crop-reset">Reset Crop</button>
+                            </div>
                         </div>
                     </div>
 
@@ -85,7 +105,7 @@
                     {% endif %}
                 </form>
 
-                <div class="detail-nav-row">
+                <div class="detail-nav-row mobile-scroll-row">
                     <a class="sample-chip link-chip" href="{{ url_for('ingredient_index') }}">Ingredient index</a>
                     <a class="sample-chip link-chip" href="{{ url_for('about_page') }}">About</a>
                     <a class="sample-chip link-chip" href="{{ url_for('methodology_page') }}">Methodology</a>
@@ -109,6 +129,12 @@
         </section>
 
         {% if photo_upload %}
+        <section class="mobile-jump-bar" aria-label="Scan workflow shortcuts">
+            <a class="sample-chip link-chip" href="#browser-ocr-card">Scan status</a>
+            <a class="sample-chip link-chip" href="#quick-scan-card">Quick result</a>
+            <a class="sample-chip link-chip" href="#photo-preview-card">Preview</a>
+            <a class="sample-chip link-chip" href="#ocr-editor-card">Review text</a>
+        </section>
         <section class="results-grid photo-results-grid">
             <article class="result-card spotlight needs-context wide" id="browser-ocr-card">
                 <p class="eyebrow">Photo Upload</p>
@@ -119,52 +145,69 @@
                     <span class="confidence-pill {{ photo_upload.ocr_reconstruction_confidence }}" id="photo-upload-reconstruction-pill">reconstruction {{ photo_upload.ocr_reconstruction_confidence }}</span>
                 </div>
                 <p class="result-copy" id="photo-upload-next-step">{{ photo_upload.next_step }}</p>
-                <p class="soft-copy" id="photo-upload-helper-text">{{ photo_upload.helper_text }}</p>
-                {% if photo_upload.ocr_reconstruction_note %}
-                <p class="soft-copy" id="photo-upload-reconstruction-note">{{ photo_upload.ocr_reconstruction_note }}</p>
-                {% endif %}
 
-                <div class="meta-grid">
-                    <div class="meta-item">
-                        <span class="meta-label">File Type</span>
-                        <strong id="photo-upload-mime-type">{{ photo_upload.mime_type }}</strong>
+                <details class="scan-details-panel">
+                    <summary>Show scan details</summary>
+                    <div class="scan-details-content">
+                        <p class="soft-copy" id="photo-upload-helper-text">{{ photo_upload.helper_text }}</p>
+                        {% if photo_upload.ocr_reconstruction_note %}
+                        <p class="soft-copy" id="photo-upload-reconstruction-note">{{ photo_upload.ocr_reconstruction_note }}</p>
+                        {% endif %}
+
+                        <div class="meta-grid compact-meta-grid">
+                            <div class="meta-item">
+                                <span class="meta-label">File Type</span>
+                                <strong id="photo-upload-mime-type">{{ photo_upload.mime_type }}</strong>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Approx Size</span>
+                                <strong id="photo-upload-size-kb">{{ photo_upload.size_kb }} KB</strong>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">OCR Lines</span>
+                                <strong id="photo-upload-ocr-lines">{{ photo_upload.ocr_line_count }}</strong>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">OCR Confidence</span>
+                                <strong id="photo-upload-ocr-confidence">{{ photo_upload.ocr_confidence if photo_upload.ocr_confidence is not none else 'n/a' }}</strong>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">OCR Provider</span>
+                                <strong id="photo-upload-ocr-provider">{{ photo_upload.ocr_provider }}</strong>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Manual Crop</span>
+                                <strong id="photo-upload-manual-crop">{{ 'yes' if photo_upload.crop_applied else 'no' }}</strong>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">Repair Ratio</span>
+                                <strong id="photo-upload-repair-ratio">{{ photo_upload.ocr_repair_ratio }}</strong>
+                            </div>
+                        </div>
                     </div>
-                    <div class="meta-item">
-                        <span class="meta-label">Approx Size</span>
-                        <strong id="photo-upload-size-kb">{{ photo_upload.size_kb }} KB</strong>
-                    </div>
-                    <div class="meta-item">
-                        <span class="meta-label">OCR Lines</span>
-                        <strong id="photo-upload-ocr-lines">{{ photo_upload.ocr_line_count }}</strong>
-                    </div>
-                    <div class="meta-item">
-                        <span class="meta-label">OCR Confidence</span>
-                        <strong id="photo-upload-ocr-confidence">{{ photo_upload.ocr_confidence if photo_upload.ocr_confidence is not none else 'n/a' }}</strong>
-                    </div>
-                    <div class="meta-item">
-                        <span class="meta-label">OCR Provider</span>
-                        <strong id="photo-upload-ocr-provider">{{ photo_upload.ocr_provider }}</strong>
-                    </div>
-                    <div class="meta-item">
-                        <span class="meta-label">Manual Crop</span>
-                        <strong id="photo-upload-manual-crop">{{ 'yes' if photo_upload.crop_applied else 'no' }}</strong>
-                    </div>
-                    <div class="meta-item">
-                        <span class="meta-label">Repair Ratio</span>
-                        <strong id="photo-upload-repair-ratio">{{ photo_upload.ocr_repair_ratio }}</strong>
-                    </div>
-                </div>
+                </details>
             </article>
 
-            <article class="result-card wide">
+            <article class="result-card wide quick-scan-card" id="quick-scan-card" hidden>
+                <p class="eyebrow">Quick Scan</p>
+                <h3 id="quick-scan-title">Shopping verdict</h3>
+                <div class="sample-row inline-status-row">
+                    <span class="signal-pill" id="quick-scan-signal">scanning</span>
+                </div>
+                <p class="result-copy" id="quick-scan-summary">We are turning the label into a fast shopping verdict now.</p>
+                <div class="quick-scan-grid" id="quick-scan-grid"></div>
+                <div class="quick-scan-list" id="quick-scan-list"></div>
+            </article>
+
+            <article class="result-card wide" id="photo-preview-card">
                 <p class="eyebrow">Preview</p>
                 <h3>Uploaded label image</h3>
                 <img class="upload-preview" id="uploaded-label-preview" src="{{ photo_upload.ocr_preview_url or photo_upload.preview_url }}" data-original-src="{{ photo_upload.preview_url }}" data-ocr-src="{{ photo_upload.ocr_preview_url or photo_upload.preview_url }}" alt="Uploaded ingredient label preview used for OCR">
             </article>
 
-            <article class="result-card wide">
+            <article class="result-card wide" id="ocr-editor-card">
                 <p class="eyebrow">Extracted Text</p>
-                <h3>Review this before analysis</h3>
+                <h3>Review or edit before a deeper analysis</h3>
                 <form class="product-form" method="post" action="/analyze">
                     <label class="search-label" for="ocr-query-text">Editable OCR ingredient text</label>
                     <textarea
@@ -173,8 +216,8 @@
                         rows="8"
                         placeholder="OCR text will appear here after a readable label photo upload."
                     >{{ photo_upload.ocr_text or '' }}</textarea>
-                    <div class="search-row">
-                        <button type="submit">Analyze Extracted Text</button>
+                    <div class="search-row mobile-primary-row">
+                        <button type="submit">Run Full Review</button>
                     </div>
                 </form>
 
@@ -392,7 +435,7 @@
                 </a>
                 {% endfor %}
             </div>
-            <div class="detail-nav-row">
+            <div class="detail-nav-row mobile-scroll-row">
                 <a class="sample-chip link-chip" href="{{ url_for('ingredient_index') }}">View full ingredient index</a>
             </div>
         </section>

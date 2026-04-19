@@ -1,6 +1,6 @@
 {
   "totals": {
-    "searches": 18,
+    "searches": 19,
     "ingredient_pages": 45,
     "index_pages": 7
   },
@@ -10,7 +10,7 @@
     "turmeric": 1
   },
   "product_queries": {
-    "ingredients: potatoes, sunflower oil, sea salt": 1,
+    "ingredients: potatoes, sunflower oil, sea salt": 2,
     "water, almondmilk, carrageenan, sea salt": 1,
     "ingredients: sunflower oil, sea salt, paprika": 1,
     "ingredients: mustard seed, vinegar, salt, apple cider vinegar, wheat mustard (water, vinegar, mustard seed, salt, turmeric, spices), molasses, horseradish t,natural flavorings), onion powder, xanthan gum, tor (water, natural": 1,
@@ -54,6 +54,10 @@
     "mayonnaise": 1
   },
   "recent_events": [
+    {
+      "kind": "search:product",
+      "value": "ingredients: potatoes, sunflower oil, sea salt"
+    },
     {
       "kind": "search:product",
       "value": "ingredients: enriched wheat flour, thiamin mononitrate, riboflavin, niacinamide, folic acid, reduced iron, soybean lecithin, corn syrup solids"
