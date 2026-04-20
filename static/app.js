@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const quickScanSummary = document.getElementById("quick-scan-summary");
     const quickScanGrid = document.getElementById("quick-scan-grid");
     const quickScanList = document.getElementById("quick-scan-list");
+    const quickScanChipRow = document.getElementById("quick-scan-chip-row");
     const cropInputs = {
         top: document.getElementById("crop-top"),
         bottom: document.getElementById("crop-bottom"),
@@ -339,6 +340,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (ocrQueryText) {
             ocrQueryText.value = ocr.suggested_merged_text || ocr.suggested_text || ocr.candidate_text || ocr.raw_text || "";
             if (ocrQueryText.value.trim()) {
+                runQuickScanAnalysis.variantTexts = Array.isArray(ocr.variantTexts) ? ocr.variantTexts : [];
                 runQuickScanAnalysis(ocrQueryText.value.trim());
             }
         }
@@ -346,38 +348,32 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const renderQuickScan = (payload) => {
-        if (!quickScanCard || !quickScanSignal || !quickScanSummary || !quickScanGrid || !quickScanList) return;
+        if (!quickScanCard || !quickScanSignal || !quickScanSummary || !quickScanGrid || !quickScanList || !quickScanChipRow) return;
         quickScanCard.hidden = false;
         quickScanGrid.innerHTML = "";
         quickScanList.innerHTML = "";
+        quickScanChipRow.innerHTML = "";
 
         if (!payload || !payload.ok) {
             quickScanSignal.textContent = "needs review";
+            quickScanSignal.className = "signal-pill needs-context";
+            quickScanTitle.textContent = "Fast shopping verdict";
             quickScanSummary.textContent = payload?.message || "We could not turn this scan into a confident shopping verdict yet.";
             return;
         }
 
         const report = payload.report || {};
-        const kind = payload.kind || "product";
-        const signal = kind === "ingredient" ? report.shopper_signal : report.overall_signal;
-        quickScanSignal.textContent = signal || "needs review";
-        quickScanSignal.className = `signal-pill ${(signal || "needs context").replace(/\s+/g, "-")}`;
-        quickScanTitle.textContent = kind === "ingredient" ? (report.ingredient || "Ingredient quick read") : (report.verdict_title || "Shopping verdict");
-        quickScanSummary.textContent = kind === "ingredient"
-            ? (report.quick_blurb || report.confidence_reason || "Quick ingredient read is ready.")
-            : (report.verdict_summary || "Quick label verdict is ready.");
+        const signal = report.overall_signal || "needs context";
+        quickScanSignal.textContent = signal;
+        quickScanSignal.className = `signal-pill ${signal.replace(/\s+/g, "-")}`;
+        quickScanTitle.textContent = report.title || "Fast shopping verdict";
+        quickScanSummary.textContent = report.summary || "Quick scan is ready.";
 
-        const stats = kind === "ingredient"
-            ? [
-                { label: "Signal", value: report.shopper_signal || "needs review" },
-                { label: "Processing", value: report.processing_level || "unknown" },
-                { label: "Confidence", value: report.confidence_label || "unknown" },
-              ]
-            : [
-                { label: "Avoid", value: report.flag_counts?.avoid ?? 0 },
-                { label: "Caution", value: report.flag_counts?.caution ?? 0 },
-                { label: "Okay", value: report.flag_counts?.okay ?? 0 },
-              ];
+        const stats = [
+            { label: "Avoid", value: report.counts?.avoid ?? 0 },
+            { label: "Caution", value: report.counts?.caution ?? 0 },
+            { label: "Confidence", value: report.quick_confidence || "low confidence" },
+        ];
 
         stats.forEach((stat) => {
             const item = document.createElement("div");
@@ -386,16 +382,24 @@ document.addEventListener("DOMContentLoaded", () => {
             quickScanGrid.appendChild(item);
         });
 
-        const highlights = kind === "ingredient"
-            ? (report.cautions?.slice(0, 3) || [report.confidence_reason].filter(Boolean))
-            : (report.top_concerns?.slice(0, 4) || []);
-        if (!highlights.length && kind !== "ingredient") {
-            highlights.push("No major concerns were surfaced by this quick scan.");
+        (report.matches || []).forEach((match) => {
+            const chip = document.createElement("span");
+            chip.className = `sample-chip quick-scan-chip ${match.signal.replace(/\s+/g, "-")}`;
+            chip.textContent = `${match.name} ? ${match.signal}`;
+            quickScanChipRow.appendChild(chip);
+        });
+
+        const highlights = (report.matches || []).slice(0, 4).map((match) => {
+            const voteText = typeof match.vote_ratio === "number" ? `${Math.round(match.vote_ratio * 100)}% of scan passes` : "likely match";
+            return `${match.name}: ${match.signal} match, seen as "${match.matched_text || match.name}" with ${voteText}.`;
+        });
+        if (!highlights.length) {
+            highlights.push("No strong ingredient matches were confirmed. Refine the OCR text if this label matters.");
         }
         highlights.forEach((entry) => {
             const row = document.createElement("div");
             row.className = "quick-scan-item";
-            row.innerHTML = `<strong>${kind === "ingredient" ? "Why it was flagged" : "Watch for"}:</strong> ${entry}`;
+            row.innerHTML = `<strong>Likely spotted:</strong> ${entry}`;
             quickScanList.appendChild(row);
         });
     };
@@ -411,10 +415,11 @@ document.addEventListener("DOMContentLoaded", () => {
         quickScanAbortController?.abort();
         quickScanAbortController = new AbortController();
         try {
+            const variantTexts = Array.isArray(runQuickScanAnalysis.variantTexts) ? runQuickScanAnalysis.variantTexts : [];
             const response = await fetch("/api/analyze-query", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ query_text: queryText }),
+                body: JSON.stringify({ query_text: queryText, query_texts: variantTexts.length ? variantTexts : undefined }),
                 signal: quickScanAbortController.signal,
             });
             const payload = await response.json();
@@ -688,14 +693,22 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             let bestResult = null;
+            const completedVariants = [];
             for (const variant of variants) {
                 const current = await runVariantOcr(variant);
+                completedVariants.push(current);
                 if (!bestResult || current.variantScore > bestResult.variantScore) {
                     bestResult = current;
                 }
             }
 
-            updateBrowserOcrUi(bestResult, bestResult.tesseractConfidence ?? null, bestResult.variantName || "");
+            if (bestResult) {
+                const variantTexts = completedVariants
+                    .map((variant) => variant.suggested_merged_text || variant.suggested_text || variant.candidate_text || variant.raw_text || "")
+                    .filter((value, index, array) => value && array.indexOf(value) === index);
+                bestResult.variantTexts = variantTexts;
+            }
+            updateBrowserOcrUi(bestResult, bestResult?.tesseractConfidence ?? null, bestResult?.variantName || "");
         } catch (error) {
             if (photoUploadOcrStatusPill) photoUploadOcrStatusPill.textContent = "unavailable";
             if (photoUploadNextStep) photoUploadNextStep.textContent = "Browser OCR did not finish cleanly on this photo.";

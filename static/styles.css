@@ -828,6 +828,14 @@ input[type="file"] {
         padding: 11px 12px;
     }
 
+    .collapsible-card summary {
+        padding: 14px 16px;
+    }
+
+    .collapsible-card-content {
+        padding: 0 16px 16px;
+    }
+
     .scan-details-panel {
         border-radius: 16px;
     }
@@ -875,6 +883,88 @@ input[type="file"] {
     margin-top: 16px;
 }
 
+.quick-scan-note {
+    margin-top: 10px;
+}
+
+.quick-scan-actions {
+    margin-top: 14px;
+}
+
+.photo-guidance-row {
+    margin-top: 10px;
+}
+
+.photo-tip {
+    background: rgba(255, 255, 255, 0.66);
+}
+
+.quick-scan-chip-row {
+    margin-top: 14px;
+}
+
+.quick-scan-chip {
+    font-weight: 700;
+}
+
+.quick-scan-chip.avoid {
+    border-color: rgba(140, 63, 47, 0.28);
+    color: var(--red);
+}
+
+.quick-scan-chip.caution {
+    border-color: rgba(154, 106, 28, 0.28);
+    color: var(--amber);
+}
+
+.quick-scan-chip.okay {
+    border-color: rgba(54, 95, 60, 0.28);
+    color: var(--green);
+}
+.collapsible-card {
+    padding: 0;
+    overflow: hidden;
+}
+
+.collapsible-card summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.collapsible-card summary::-webkit-details-marker {
+    display: none;
+}
+
+.collapsible-card summary::after {
+    content: "+";
+    color: var(--muted);
+    font-size: 1.15rem;
+    flex: 0 0 auto;
+}
+
+.collapsible-card[open] summary::after {
+    content: "?";
+}
+
+.collapsible-card summary strong {
+    display: block;
+    font-size: 1.02rem;
+    line-height: 1.35;
+}
+
+.collapsible-card-content {
+    padding: 0 20px 20px;
+    border-top: 1px solid rgba(82, 97, 74, 0.12);
+}
+
+.compact-form {
+    margin-top: 0;
+}
 .quick-scan-item {
     padding: 12px 14px;
     border-radius: 16px;

@@ -1520,6 +1520,177 @@ def top_ingredient_records(limit: int = 12) -> list[dict[str, Any]]:
     return sorted(POLICY_RECORDS, key=lambda record: record.get("canonical_name", ""))[:limit]
 
 
+SCAN_SIGNAL_PRIORITY = {"avoid": 0, "caution": 1, "unknown": 2, "needs context": 3, "okay": 4}
+
+
+def normalize_scan_phrase(text: str) -> str:
+    return re.sub(r"[^a-z0-9]+", " ", text.lower()).strip()
+
+
+def build_scan_alias_index() -> list[dict[str, Any]]:
+    aliases: list[dict[str, Any]] = []
+    seen: set[tuple[str, str]] = set()
+    for record in POLICY_RECORDS:
+        canonical_name = str(record.get("canonical_name", "")).strip()
+        signal = str(record.get("signal", "needs context")).strip().lower() or "needs context"
+        for alias in [canonical_name, *record.get("aliases", [])]:
+            normalized = normalize_scan_phrase(str(alias))
+            if not normalized:
+                continue
+            word_count = len(normalized.split())
+            if word_count == 0 or word_count > 4:
+                continue
+            key = (canonical_name.lower(), normalized)
+            if key in seen:
+                continue
+            seen.add(key)
+            aliases.append({
+                "canonical_name": canonical_name,
+                "alias": str(alias),
+                "normalized": normalized,
+                "word_count": word_count,
+                "signal": signal,
+            })
+    return aliases
+
+
+SCAN_ALIAS_INDEX = build_scan_alias_index()
+
+
+def scan_text_ngrams(text: str, max_words: int = 4) -> list[str]:
+    tokens = re.findall(r"[a-z0-9]+", text.lower())
+    phrases: list[str] = []
+    for start in range(len(tokens)):
+        for length in range(1, max_words + 1):
+            end = start + length
+            if end > len(tokens):
+                break
+            phrases.append(" ".join(tokens[start:end]))
+    return phrases
+
+
+def collect_quick_scan_matches(query_texts: list[str]) -> list[dict[str, Any]]:
+    matches: dict[str, dict[str, Any]] = {}
+    variant_count = max(1, len([text for text in query_texts if str(text).strip()]))
+
+    for query_text in query_texts:
+        normalized_text = normalize_scan_phrase(query_text)
+        phrases = scan_text_ngrams(query_text)
+        seen_in_variant: set[str] = set()
+
+        for entry in SCAN_ALIAS_INDEX:
+            normalized_alias = entry["normalized"]
+            word_count = entry["word_count"]
+            if normalized_alias and normalized_alias in normalized_text:
+                score = 1.0
+                candidate_phrase = normalized_alias
+            else:
+                score = 0.0
+                candidate_phrase = ""
+                for phrase in phrases:
+                    if abs(len(phrase.split()) - word_count) > 1:
+                        continue
+                    if phrase and normalized_alias and phrase[0] != normalized_alias[0]:
+                        continue
+                    ratio = difflib.SequenceMatcher(None, phrase, normalized_alias).ratio()
+                    threshold = 0.9 if word_count == 1 else 0.8
+                    if ratio >= threshold and ratio > score:
+                        score = ratio
+                        candidate_phrase = phrase
+            if score <= 0:
+                continue
+
+            canonical_name = entry["canonical_name"]
+            if canonical_name in seen_in_variant:
+                continue
+            seen_in_variant.add(canonical_name)
+            existing = matches.get(canonical_name)
+            if existing is None:
+                matches[canonical_name] = {
+                    "name": canonical_name,
+                    "signal": entry["signal"],
+                    "matched_text": candidate_phrase,
+                    "confidence": round(score, 2),
+                    "votes": 1,
+                    "variant_count": variant_count,
+                }
+            else:
+                existing["votes"] += 1
+                if score > existing["confidence"]:
+                    existing["confidence"] = round(score, 2)
+                    existing["matched_text"] = candidate_phrase
+
+    ordered = sorted(
+        matches.values(),
+        key=lambda item: (
+            SCAN_SIGNAL_PRIORITY.get(item["signal"], 99),
+            -(item["votes"] / max(1, item["variant_count"])),
+            -item["confidence"],
+            item["name"],
+        ),
+    )
+    deduped: list[dict[str, Any]] = []
+    seen_match_texts: set[str] = set()
+    for item in ordered:
+        item["vote_ratio"] = round(item["votes"] / max(1, item["variant_count"]), 2)
+        normalized_match_text = normalize_scan_phrase(item.get("matched_text", ""))
+        if normalized_match_text and normalized_match_text in seen_match_texts:
+            continue
+        if normalized_match_text:
+            seen_match_texts.add(normalized_match_text)
+        deduped.append(item)
+    return deduped
+
+
+def build_quick_scan_report(query_text: str | list[str]) -> dict[str, Any]:
+    query_texts = [query_text] if isinstance(query_text, str) else [text for text in query_text if str(text).strip()]
+    ordered_matches = collect_quick_scan_matches(query_texts)
+    avoid_count = sum(1 for item in ordered_matches if item["signal"] == "avoid")
+    caution_count = sum(1 for item in ordered_matches if item["signal"] == "caution")
+    okay_count = sum(1 for item in ordered_matches if item["signal"] == "okay")
+    top_vote_ratio = max((item["vote_ratio"] for item in ordered_matches), default=0)
+    average_confidence = round(sum(item["confidence"] for item in ordered_matches) / len(ordered_matches), 2) if ordered_matches else 0.0
+
+    if len(ordered_matches) >= 3 and top_vote_ratio >= 0.6 and average_confidence >= 0.88:
+        quick_confidence = "high confidence"
+    elif len(ordered_matches) >= 1 and average_confidence >= 0.8:
+        quick_confidence = "medium confidence"
+    else:
+        quick_confidence = "low confidence"
+
+    if avoid_count:
+        overall_signal = "avoid"
+        title = "Quick scan flagged avoid ingredients"
+        summary = "This scan likely spotted ingredients you may want to put back or double-check right away."
+    elif caution_count:
+        overall_signal = "caution"
+        title = "Quick scan found caution ingredients"
+        summary = "This scan likely spotted ingredients worth a closer look before you buy."
+    elif okay_count:
+        overall_signal = "okay"
+        title = "Quick scan looks relatively clean"
+        summary = "This scan mostly found simpler ingredients by the current policy model."
+    else:
+        overall_signal = "needs context"
+        title = "Quick scan needs a clearer read"
+        summary = "We did not match enough ingredient text confidently yet. Review or refine the OCR if this label matters."
+
+    return {
+        "overall_signal": overall_signal,
+        "title": title,
+        "summary": summary,
+        "quick_confidence": quick_confidence,
+        "variant_count": len(query_texts),
+        "counts": {
+            "avoid": avoid_count,
+            "caution": caution_count,
+            "okay": okay_count,
+        },
+        "match_count": len(ordered_matches),
+        "matches": ordered_matches[:6],
+    }
+
+
 @app.get("/")
 def index() -> str:
     sample_queries = [
@@ -1754,14 +1925,13 @@ def analyze_product_api():
 def analyze_query_api():
     payload = request.get_json(silent=True) or {}
     query_text = str(payload.get("query_text", "") or "").strip()
-    if not query_text:
+    query_texts = payload.get("query_texts") or []
+    normalized_query_texts = [str(item).strip() for item in query_texts if str(item).strip()]
+    if not query_text and not normalized_query_texts:
         return jsonify({"ok": False, "message": "Please provide ingredient text to analyze."}), 400
-    analysis_payload = build_query_analysis_payload(query_text)
-    if analysis_payload["kind"] == "ingredient":
-        log_search(analysis_payload["report"]["ingredient"], "ingredient")
-    else:
-        log_search(query_text, "product")
-    return jsonify({"ok": True, **analysis_payload})
+    quick_scan = build_quick_scan_report(normalized_query_texts or query_text)
+    log_search(query_text or " | ".join(normalized_query_texts[:3]), "product")
+    return jsonify({"ok": True, "kind": "scan", "query_text": query_text or " ".join(normalized_query_texts), "report": quick_scan})
 
 
 if __name__ == "__main__":

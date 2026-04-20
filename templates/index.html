@@ -58,6 +58,12 @@
                         <button type="submit">Upload Photo</button>
                     </div>
                     <p class="micro-note" id="photo-upload-status">Use a clear photo of the ingredient panel. OCR now runs in your browser after upload.</p>
+                    <div class="photo-guidance-row mobile-scroll-row">
+                        <span class="sample-chip photo-tip">Fill the frame with ingredients</span>
+                        <span class="sample-chip photo-tip">Avoid glare</span>
+                        <span class="sample-chip photo-tip">Hold steady</span>
+                        <span class="sample-chip photo-tip">Use ingredient panel only</span>
+                    </div>
 
                     <div class="crop-tool" id="crop-tool">
                         <div class="crop-preview-shell">
@@ -136,6 +142,23 @@
             <a class="sample-chip link-chip" href="#ocr-editor-card">Review text</a>
         </section>
         <section class="results-grid photo-results-grid">
+            <article class="result-card wide quick-scan-card" id="quick-scan-card" hidden>
+                <p class="eyebrow">Quick Scan Only</p>
+                <h3 id="quick-scan-title">Fast shopping verdict</h3>
+                <div class="sample-row inline-status-row">
+                    <span class="signal-pill" id="quick-scan-signal">scanning</span>
+                </div>
+                <p class="result-copy" id="quick-scan-summary">We are turning the label into a fast shopping verdict now.</p>
+                <p class="soft-copy quick-scan-note">Use this for a quick shelf decision. If the wording looks off or the verdict feels incomplete, refine the OCR reading below.</p>
+                <div class="sample-row quick-scan-actions mobile-scroll-row">
+                    <a class="sample-chip link-chip" href="#ocr-editor-card">Review text / refine OCR</a>
+                    <a class="sample-chip link-chip" href="#browser-ocr-card">See scan status</a>
+                </div>
+                <div class="sample-row quick-scan-chip-row mobile-scroll-row" id="quick-scan-chip-row"></div>
+                <div class="quick-scan-grid" id="quick-scan-grid"></div>
+                <div class="quick-scan-list" id="quick-scan-list"></div>
+            </article>
+
             <article class="result-card spotlight needs-context wide" id="browser-ocr-card">
                 <p class="eyebrow">Photo Upload</p>
                 <h2>{{ photo_upload.filename }}</h2>
@@ -188,63 +211,66 @@
                 </details>
             </article>
 
-            <article class="result-card wide quick-scan-card" id="quick-scan-card" hidden>
-                <p class="eyebrow">Quick Scan</p>
-                <h3 id="quick-scan-title">Shopping verdict</h3>
-                <div class="sample-row inline-status-row">
-                    <span class="signal-pill" id="quick-scan-signal">scanning</span>
+            <details class="result-card wide collapsible-card" id="photo-preview-card">
+                <summary>
+                    <span>
+                        <span class="eyebrow">Refine</span>
+                        <strong>Review photo and refine OCR if needed</strong>
+                    </span>
+                </summary>
+                <div class="collapsible-card-content">
+                    <p class="eyebrow">Preview</p>
+                    <h3>Uploaded label image</h3>
+                    <img class="upload-preview" id="uploaded-label-preview" src="{{ photo_upload.ocr_preview_url or photo_upload.preview_url }}" data-original-src="{{ photo_upload.preview_url }}" data-ocr-src="{{ photo_upload.ocr_preview_url or photo_upload.preview_url }}" alt="Uploaded ingredient label preview used for OCR">
                 </div>
-                <p class="result-copy" id="quick-scan-summary">We are turning the label into a fast shopping verdict now.</p>
-                <div class="quick-scan-grid" id="quick-scan-grid"></div>
-                <div class="quick-scan-list" id="quick-scan-list"></div>
-            </article>
+            </details>
 
-            <article class="result-card wide" id="photo-preview-card">
-                <p class="eyebrow">Preview</p>
-                <h3>Uploaded label image</h3>
-                <img class="upload-preview" id="uploaded-label-preview" src="{{ photo_upload.ocr_preview_url or photo_upload.preview_url }}" data-original-src="{{ photo_upload.preview_url }}" data-ocr-src="{{ photo_upload.ocr_preview_url or photo_upload.preview_url }}" alt="Uploaded ingredient label preview used for OCR">
-            </article>
+            <details class="result-card wide collapsible-card" id="ocr-editor-card">
+                <summary>
+                    <span>
+                        <span class="eyebrow">Refine Text</span>
+                        <strong>Review or edit before a deeper analysis</strong>
+                    </span>
+                </summary>
+                <div class="collapsible-card-content">
+                    <form class="product-form compact-form" method="post" action="/analyze">
+                        <label class="search-label" for="ocr-query-text">Editable OCR ingredient text</label>
+                        <textarea
+                            id="ocr-query-text"
+                            name="query_text"
+                            rows="8"
+                            placeholder="OCR text will appear here after a readable label photo upload."
+                        >{{ photo_upload.ocr_text or '' }}</textarea>
+                        <div class="search-row mobile-primary-row">
+                            <button type="submit">Run Full Review</button>
+                        </div>
+                    </form>
 
-            <article class="result-card wide" id="ocr-editor-card">
-                <p class="eyebrow">Extracted Text</p>
-                <h3>Review or edit before a deeper analysis</h3>
-                <form class="product-form" method="post" action="/analyze">
-                    <label class="search-label" for="ocr-query-text">Editable OCR ingredient text</label>
-                    <textarea
-                        id="ocr-query-text"
-                        name="query_text"
-                        rows="8"
-                        placeholder="OCR text will appear here after a readable label photo upload."
-                    >{{ photo_upload.ocr_text or '' }}</textarea>
-                    <div class="search-row mobile-primary-row">
-                        <button type="submit">Run Full Review</button>
+                    <div class="ocr-suggestion-card" id="ocr-suggestion-card" {% if not photo_upload.ocr_has_suggested_changes and not photo_upload.ocr_suggested_merged_text %}hidden{% endif %}>
+                        <p class="eyebrow">Suggested Repairs</p>
+                        <h3>Likely fixes for OCR misses</h3>
+                        <pre class="ocr-raw-text" id="ocr-suggested-text">{{ photo_upload.ocr_suggested_text }}</pre>
+                        <div class="sample-row mobile-scroll-row">
+                            <button class="sample-chip link-chip" type="button" id="use-ocr-suggestion">Use Suggested Repairs</button>
+                            <button class="sample-chip link-chip" type="button" id="use-ocr-merged-suggestion" {% if not photo_upload.ocr_suggested_merged_text %}hidden{% endif %}>Use Merged Label Suggestion</button>
+                        </div>
+                        <details class="ocr-raw-details" id="ocr-merged-details" {% if not photo_upload.ocr_suggested_merged_text %}hidden{% endif %}>
+                            <summary>Show merged label suggestion</summary>
+                            <pre class="ocr-raw-text" id="ocr-merged-suggested-text">{{ photo_upload.ocr_suggested_merged_text }}</pre>
+                        </details>
+                        <div class="ocr-change-list" id="ocr-change-list">
+                            {% for change in photo_upload.ocr_suggested_changes %}
+                            <p class="soft-copy"><strong>{{ change.from }}</strong> -> <strong>{{ change.to }}</strong></p>
+                            {% endfor %}
+                        </div>
                     </div>
-                </form>
 
-                <div class="ocr-suggestion-card" id="ocr-suggestion-card" {% if not photo_upload.ocr_has_suggested_changes and not photo_upload.ocr_suggested_merged_text %}hidden{% endif %}>
-                    <p class="eyebrow">Suggested Repairs</p>
-                    <h3>Likely fixes for OCR misses</h3>
-                    <pre class="ocr-raw-text" id="ocr-suggested-text">{{ photo_upload.ocr_suggested_text }}</pre>
-                    <div class="sample-row">
-                        <button class="sample-chip link-chip" type="button" id="use-ocr-suggestion">Use Suggested Repairs</button>
-                        <button class="sample-chip link-chip" type="button" id="use-ocr-merged-suggestion" {% if not photo_upload.ocr_suggested_merged_text %}hidden{% endif %}>Use Merged Label Suggestion</button>
-                    </div>
-                    <details class="ocr-raw-details" id="ocr-merged-details" {% if not photo_upload.ocr_suggested_merged_text %}hidden{% endif %}>
-                        <summary>Show merged label suggestion</summary>
-                        <pre class="ocr-raw-text" id="ocr-merged-suggested-text">{{ photo_upload.ocr_suggested_merged_text }}</pre>
+                    <details class="ocr-raw-details" id="ocr-raw-details" {% if not photo_upload.ocr_raw_text or photo_upload.ocr_raw_text == photo_upload.ocr_text %}hidden{% endif %}>
+                        <summary>Show raw OCR text</summary>
+                        <pre class="ocr-raw-text" id="ocr-raw-text">{{ photo_upload.ocr_raw_text }}</pre>
                     </details>
-                    <div class="ocr-change-list" id="ocr-change-list">
-                        {% for change in photo_upload.ocr_suggested_changes %}
-                        <p class="soft-copy"><strong>{{ change.from }}</strong> -> <strong>{{ change.to }}</strong></p>
-                        {% endfor %}
-                    </div>
                 </div>
-
-                <details class="ocr-raw-details" id="ocr-raw-details" {% if not photo_upload.ocr_raw_text or photo_upload.ocr_raw_text == photo_upload.ocr_text %}hidden{% endif %}>
-                    <summary>Show raw OCR text</summary>
-                    <pre class="ocr-raw-text" id="ocr-raw-text">{{ photo_upload.ocr_raw_text }}</pre>
-                </details>
-            </article>
+            </details>
         </section>
         {% endif %}
 
